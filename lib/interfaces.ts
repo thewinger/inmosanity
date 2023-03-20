@@ -1,3 +1,5 @@
+import { Image } from 'sanity'
+
 export interface IFrontPage {
   featured: IFeatured[]
   latest: IPropiedad[]
@@ -6,11 +8,13 @@ export interface IFrontPage {
 export interface IFeatured {
   title: string
   slug: string
+  coverImage: Image
+  tipo: string
+  operacion: string
 }
 
 export interface IPropiedad {
   _id: string
-  coverImage: string
   title: string
   slug: string
   bathrooms: string
@@ -19,4 +23,10 @@ export interface IPropiedad {
   tipo: string
   price: string
   operacion: string
+  coverImage: Image
+  images?: string[]
+  caracteristicas?: string[]
+  description?: string
+  size?: number
+  year?: number
 }
