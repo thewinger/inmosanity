@@ -22,11 +22,13 @@
     "next-sanity": "^3.1.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sanity": "^3.1.4",
+    "react-icons": "^4.8.0",
+    "sanity": "^3.7.0",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
+    "@types/styled-components": "^5.1.26",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.31.0",
     "eslint-config-next": "13.0.8-canary.5",

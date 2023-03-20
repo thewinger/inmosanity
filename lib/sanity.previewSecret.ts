@@ -1,6 +1,6 @@
 import { groq, SanityClient } from 'next-sanity'
 
-import { createRandomUUID } from './uuid'
+import { createRandomUUID } from './sanity.uuid'
 
 // updated within the hour, if it's older it'll create a new secret or return null
 const query = (ttl: number) => groq`
