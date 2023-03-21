@@ -3,7 +3,7 @@
  */
 
 import { visionTool } from '@sanity/vision'
-import { schemas } from 'lib/sanity_schemas'
+import { schema } from 'lib/sanity.schema'
 import { defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
 
@@ -16,9 +16,7 @@ export default defineConfig({
   projectId,
   dataset,
   //edit schemas in './sanity/schema'
-  schema: {
-    types: schemas,
-  },
+  schema: schema,
   plugins: [
     deskTool({ defaultDocumentNode, structure }),
     // Vision lets you query your content with GROQ in the studio

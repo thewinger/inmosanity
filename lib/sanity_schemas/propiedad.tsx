@@ -89,12 +89,12 @@ export default {
     {
       name: 'bedrooms',
       title: 'Dormitorios',
-      type: 'string',
+      type: 'number',
     },
     {
       name: 'bathrooms',
       title: 'Baños',
-      type: 'string',
+      type: 'number',
     },
     {
       name: 'description',

@@ -1,13 +1,16 @@
-import {ReactElement} from 'react'
-import {ReactComponentLike} from 'prop-types'
+import { ReactElement } from 'react'
+import { ReactComponentLike } from 'prop-types'
 
 type Meta = {
-  parent: {[key: string]: any}
+  parent: { [key: string]: any }
   path: string[]
-  document: {[key: string]: any}
+  document: { [key: string]: any }
 }
 
-type CustomRuleCallback = (field: any, meta: Meta) => true | string | Promise<true | string>
+type CustomRuleCallback = (
+  field: any,
+  meta: Meta
+) => true | string | Promise<true | string>
 
 export type RuleType = {
   required: () => RuleType
@@ -16,7 +19,7 @@ export type RuleType = {
   max: (max: number) => RuleType
   length: (exactLength: number) => RuleType
   greaterThan: (gt: number) => RuleType
-  uri: (options: {scheme: string[]}) => RuleType
+  uri: (options: { scheme: string[] }) => RuleType
   precision: (precision: number) => RuleType
   integer: () => RuleType
 }
@@ -40,7 +43,7 @@ type CommonFieldProps = {
 
 export type StringField = CommonFieldProps & {
   options?: {
-    list: {title: string; value: string}[]
+    list: { title: string; value: string }[]
     layout?: string
   }
 }
@@ -67,24 +70,29 @@ export type BlockField = {
   children: (Field | Span)[]
 }
 
-type ArrayOf = ObjectType | ReferenceField | ImageField | {type: string} | BlockField
+type ArrayOf =
+  | ObjectType
+  | ReferenceField
+  | ImageField
+  | { type: string }
+  | BlockField
 
 export type ArrayField = CommonFieldProps & {
   name: string
   of: ArrayOf[]
 }
 
-type FilterFunctionResult = {filter: string; filterParams?: string}
+type FilterFunctionResult = { filter: string; filterParams?: string }
 type FilterFunction = (args: {
-  document: {[key: string]: any}
+  document: { [key: string]: any }
   parentPath: string[]
   parent: {}[]
 }) => FilterFunctionResult
 type ReferenceField = CommonFieldProps & {
-  to: {type: string}[]
+  to: { type: string }[]
   options: {
     filter: string | FilterFunction
-    filterParams?: {[key: string]: string}
+    filterParams?: { [key: string]: string }
   }
 }
 
@@ -105,15 +113,18 @@ export type Field =
   | BlockField
 
 type Preview = {
-  select?: {[key: string]: string}
-  prepare?: (selection: {[key: string]: any}) => {title?: string; subtitle?: string} // eslint-disable-line @typescript-eslint/no-explicit-any
+  select?: { [key: string]: string }
+  prepare?: (selection: { [key: string]: any }) => {
+    title?: string
+    subtitle?: string
+  }
   component?: (props: PreviewProps) => ReactElement
 }
 
 type Fieldset = {
   name: string
   title: string
-  options?: {collapsible: boolean; collapsed?: boolean}
+  options?: { collapsible: boolean; collapsed?: boolean }
 }
 
 export type ObjectType = {
@@ -125,7 +136,7 @@ export type ObjectType = {
   preview?: Preview
   fieldsets?: Fieldset[]
   description?: string
-  options?: {collapsible?: boolean; collapsed?: boolean}
+  options?: { collapsible?: boolean; collapsed?: boolean }
 }
 
 export type Document = {
@@ -136,11 +147,11 @@ export type Document = {
   validation?: Validation
   preview?: Preview
   fieldsets?: Fieldset[]
-  initialValue?: {[key: string]: any} // eslint-disable-line @typescript-eslint/no-explicit-any
+  initialValue?: { [key: string]: any }
   orderings?: {
     name: string
     title: string
-    by: {field: string; direction: string}[]
+    by: { field: string; direction: string }[]
   }[]
 }
 
@@ -150,4 +161,4 @@ export type PreviewProps = {
   }
 }
 
-export type Body2TextProps = {children: React.FunctionComponent<any>}
+export type Body2TextProps = { children: React.FunctionComponent<any> }
