@@ -3,10 +3,9 @@ import 'styles/global.css'
 import { Inter } from '@next/font/google'
 import { AppProps } from 'next/app'
 
-const sans = Inter({
-  variable: '--font-sans',
+const inter = Inter({
   subsets: ['latin'],
-  weight: ['500', '700', '800'],
+  variable: '--font-inter',
 })
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -15,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <style jsx global>
         {`
           :root {
-            --font-sans: ${sans.style.fontFamily};
+            --font-inter: ${inter.variable};
           }
         `}
       </style>
