@@ -11,9 +11,6 @@ export default function SearchPage({ propiedades }: IProps) {
     <Layout>
       <>
         <div>SearchPage</div>
-        {propiedades.map((propiedad) => {
-          ;<Link href="/propiedad/propiedad.slug">{propiedad.title}</Link>
-        })}
       </>
     </Layout>
   )
