@@ -1,5 +1,13 @@
 import { Image } from 'sanity'
 
+export interface Settings {
+  title?: string
+  description?: any[]
+  ogImage?: {
+    title?: string
+  }
+}
+
 export interface IFrontPage {
   featured: IFeatured[]
   latest: IPropiedad[]
@@ -20,13 +28,22 @@ export interface IPropiedad {
   bathrooms: string
   bedrooms: string
   localizacion: string
+  localizacionPadre?: Parent
   tipo: string
   price: string
   operacion: string
   coverImage: Image
-  images?: string[]
+  images?: Image[]
   caracteristicas?: string[]
   description?: string
   size?: number
   year?: number
+}
+
+interface Parent {
+  parent: parentTitle
+}
+
+interface parentTitle {
+  title: string
 }
