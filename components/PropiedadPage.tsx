@@ -79,9 +79,10 @@ export default function PropiedadPage(props: PropiedadPageProps) {
             <div className="flex items-center gap-1 text-lg text-zinc-500">
               <MapPin size={24} weight="duotone" color="currentColor" />
               <div className="capitalize text-zinc-800">
-                {propiedad.localizacionPadre && (
-                  <span>{propiedad.localizacionPadre.parent.title} - </span>
-                )}
+                {propiedad.localizacionPadre &&
+                  propiedad.localizacionPadre.parent && (
+                    <span>{propiedad.localizacionPadre.parent.title} - </span>
+                  )}
                 <span>{propiedad.localizacion}</span>
               </div>
             </div>
