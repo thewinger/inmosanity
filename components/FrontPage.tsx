@@ -2,6 +2,7 @@ import { IFeatured, IPropiedad } from 'lib/interfaces'
 import Link from 'next/link'
 import PropiedadCard from './Card'
 import FeaturedSlider from './FeaturedSlider'
+import Layout from './Layout'
 
 export interface IFrontPageProps {
   featured: IFeatured[]
@@ -12,7 +13,7 @@ export default function FrontPage(props: IFrontPageProps) {
   const { featured, latest } = props
 
   return (
-    <>
+    <Layout>
       <section className="relative pb-6">
         <h2 className="p-2 px-4 text-lg font-semibold uppercase tracking-wide text-zinc-800 lg:px-0">
           Destacados
@@ -31,6 +32,6 @@ export default function FrontPage(props: IFrontPageProps) {
           ))}
         </div>
       </section>
-    </>
+    </Layout>
   )
 }
