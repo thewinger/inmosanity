@@ -47,3 +47,22 @@ interface Parent {
 interface parentTitle {
   title: string
 }
+
+interface IFilter {
+  min: string
+  max: string
+}
+
+interface IFilterOption {
+  name: string
+  value: string
+}
+
+export interface IFiltersDD {
+  priceDD: IFilter
+  bedroomsDD: IFilter
+  bathroomsDD: IFilter
+  operacionDD: IFilterOption[]
+  localizacionDD: IFilterOption[]
+  tipoDD: IFilterOption[]
+}

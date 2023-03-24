@@ -1,8 +1,9 @@
 import { createClient } from 'next-sanity'
 
 import { apiVersion, dataset, projectId, useCdn } from './env'
-import { IFrontPage, IPropiedad } from './interfaces'
+import { IFiltersDD, IFrontPage, IPropiedad } from './interfaces'
 import {
+  filtersDropdownValues,
   frontPageQuery,
   propiedadBySlugQuery,
   propiedadSlugsQuery,
@@ -15,6 +16,13 @@ export const client = projectId
 export async function getFrontPage(): Promise<IFrontPage> {
   if (client) {
     return await client.fetch(frontPageQuery)
+  }
+  return
+}
+
+export async function getFiltersDropdownValues(): Promise<IFiltersDD> {
+  if (client) {
+    return await client.fetch(filtersDropdownValues)
   }
   return
 }

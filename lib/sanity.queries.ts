@@ -43,10 +43,10 @@ export const propiedadBySlugQuery = groq`
   }
 `
 
-export const formInitialValues = groq`
+export const filtersDropdownValues = groq`
 {
-  "transacciones": array::unique(*[_type == "propiedad" ].operacion),
-  "localizacion": {
+  "transaccionesDD": array::unique(*[_type == "propiedad" ].operacion),
+  "localizacionDD": {
     "parentLocalizacion": *[_type == 'localizacion' && !defined(parent) && count(*[ _type == 'propiedad' && references(^._id)]) > 0]{
       _id,
       title,
@@ -56,7 +56,7 @@ export const formInitialValues = groq`
       }
     } | order(title asc)
   },
-  "maxPrice": math::max(*[_type == 'propiedad'].price),
-  "bathrooms": math::max(*[_type == 'propiedad'].bathrooms),
-  "bedrooms": math::max(*[_type == 'propiedad'].bedrooms),
+  "maxPriceDD": math::max(*[_type == 'propiedad'].price),
+  "bathroomsDD": math::max(*[_type == 'propiedad'].bathrooms),
+  "bedroomsDD": math::max(*[_type == 'propiedad'].bedrooms),
 }`
