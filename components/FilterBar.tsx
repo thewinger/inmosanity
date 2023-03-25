@@ -133,7 +133,7 @@ export default function FilterBar() {
 
   return (
     <div
-      ref={wrapperRef}
+      ref={wrapperRef} 
       className="flex items-center gap-2 border-b-2 border-zinc-200 px-4 py-2 md:px-6"
     >
       <Select>
@@ -142,7 +142,7 @@ export default function FilterBar() {
         </SelectTrigger>
         <SelectContent>
           {operacionInit.map((operacion) => (
-            <SelectItem value={operacion.value}>{operacion.name}</SelectItem>
+            <SelectItem key={operacion.value} value={operacion.value}>{operacion.name}</SelectItem>
           ))}
         </SelectContent>
       </Select>

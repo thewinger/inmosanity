@@ -36,7 +36,7 @@ export default function PropiedadCard({ propiedad }: Props) {
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between gap-4 sm:justify-start">
                 <h3 className=" text-xl font-semibold tracking-wide text-zinc-900 ">
-                  <div className="flex items-baseline">
+                  <div className="relative flex items-center gap-2">
                     <span className="font-bold ">
                       {formatEUR(propiedad.price)}
                     </span>

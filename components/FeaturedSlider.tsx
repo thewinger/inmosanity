@@ -17,9 +17,9 @@ const FeaturedSlider = ({ propiedades }: PropType) => {
   })
 
   return (
-    <div className="embla overflow-x-hidden">
+    <div className="embla">
       <div className="embla__viewport overflow-x-hidden h-full " ref={mainViewportRef}>
-        <div className="embla__container -ml-4 flex flex-row gap-2 overflow-x-hidden">
+        <div className="embla__container -ml-4 flex flex-row gap-2">
           {propiedades.map((propiedad) => (
             <Link
               key={propiedad.slug}
