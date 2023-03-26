@@ -13,25 +13,22 @@ export const client = projectId
   : null
 
 export async function getFrontPage(): Promise<IFrontPage> {
-  if (client) {
-    return await client.fetch(frontPageQuery)
-  }
-  return
+  return await client.fetch(frontPageQuery)
 }
 
 export async function getAllPropiedadesSlug(): Promise<
   Pick<IPropiedad, 'slug'>[]
 > {
-  if (client) {
-    const slugs = (await client.fetch<string[]>(propiedadSlugsQuery)) || []
-    return slugs.map((slug) => ({ slug }))
-  }
-  return []
+  const slugs = (await client.fetch<string[]>(propiedadSlugsQuery)) || []
+  return slugs.map((slug) => ({ slug }))
 }
 
-export async function getPropiedadBySlug(slug: string): Promise<IPropiedad> {
-  if (client) {
-    return (await client.fetch(propiedadBySlugQuery, { slug })) || ({} as any)
-  }
-  return {} as any
+export async function getPropiedadBySlug({
+  slug,
+  token,
+}: {
+  slug: string
+  token?: string
+}): Promise<IPropiedad> {
+  return await client.fetch(propiedadBySlugQuery, { slug })
 }

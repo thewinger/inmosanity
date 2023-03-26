@@ -10,9 +10,8 @@ import { formatEUR } from 'lib/helpers'
 import { IPropiedad } from 'lib/interfaces'
 import { urlForImage } from 'lib/sanity.image'
 import { notFound } from 'next/navigation'
-import Layout from './Layout'
-import Pill from './Pill'
-import ProductSlider from './ProductSlider'
+import ProductSlider from '../ProductSlider'
+import Pill from './ui/Pill'
 
 export interface PropiedadPageProps {
   preview?: boolean
@@ -42,7 +41,7 @@ export default function PropiedadPage(props: PropiedadPageProps) {
   })
 
   return (
-    <Layout>
+    <>
       <div className="relative mx-auto mb-24 grid max-w-5xl auto-rows-auto grid-cols-1 gap-4 bg-white pt-4 pb-12 text-zinc-800 lg:grid-cols-2 lg:gap-y-10 lg:px-6 lg:shadow-md xl:shadow-md">
         <div className="lg:-col-end-1 relative flex flex-col md:flex-row md:items-start md:gap-2 lg:row-span-3">
           <Pill>{propiedad.operacion.replace('-', ' ').toUpperCase()}</Pill>
@@ -176,6 +175,6 @@ export default function PropiedadPage(props: PropiedadPageProps) {
           Contactar
         </button>
       </div>
-    </Layout>
+    </>
   )
 }

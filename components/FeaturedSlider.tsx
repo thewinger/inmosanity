@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { IFeatured } from 'lib/interfaces'
 import Shimmer from 'lib/Shimmer'
 import { urlForImage } from 'lib/sanity.image'
-import Pill from './Pill'
+import Pill from './ui/Pill'
 
 type PropType = {
   propiedades: IFeatured[]

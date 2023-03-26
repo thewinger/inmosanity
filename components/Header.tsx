@@ -1,10 +1,12 @@
-import { Envelope, Phone } from '@phosphor-icons/react'
+'use client'
+
+import { MdOutlineEmail, MdOutlinePhoneInTalk } from 'react-icons/md'
 import Image from 'next/image'
 import Link from 'next/link'
-import FilterBar from './FilterBar'
+/* import FilterBar from './FilterBar' */
 import logo from '/public/Logo_Inmogolf.png'
 
-export default function Header() {
+const Header = () => {
   return (
     <header className="bg-white">
       <div className="flex items-center justify-between border-b border-zinc-100 px-4 py-2 md:px-6">
@@ -15,11 +17,11 @@ export default function Header() {
 
         <div className="flex justify-between gap-4 text-green-600">
           <a href="mailto:info@inmogolfbonalba.com">
-            <Envelope size={32} weight="duotone" color="currentColor" />
+            <MdOutlineEmail size={32} />
           </a>
 
           <a href="">
-            <Phone size={32} weight="duotone" color="currentColor" />
+            <MdOutlinePhoneInTalk size={32} />
           </a>
         </div>
       </div>
@@ -29,3 +31,5 @@ export default function Header() {
     </header>
   )
 }
+
+export default Header
