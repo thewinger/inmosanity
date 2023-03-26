@@ -1,3 +1,4 @@
+'use client'
 import { IFiltersDD } from '@/lib/interfaces'
 import { getFiltersDropdownValues } from '@/lib/sanity.client'
 /* import { MdOutlineTune } from '@react-icons/md' */

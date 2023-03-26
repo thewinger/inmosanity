@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useEffect, useCallback } from 'react'
 import { Thumb } from './ProductSliderThumb'
 import useEmblaCarousel from 'embla-carousel-react'
