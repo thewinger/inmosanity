@@ -25,7 +25,7 @@ const Header = () => {
           </a>
         </div>
       </div>
-      <FilterBar />
+      {/* <FilterBar /> */}
     </header>
   )
 }

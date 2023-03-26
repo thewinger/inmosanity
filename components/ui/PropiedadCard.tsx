@@ -27,6 +27,7 @@ export default function PropiedadCard({ propiedad }: Props) {
               className="relative block h-auto w-full "
               src={urlForImage(propiedad.coverImage).url()}
               alt={propiedad.title}
+              sizes="(max-width: 768px) 100vw, 768px"
               fill
               priority
             />

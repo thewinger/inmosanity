@@ -43,7 +43,7 @@ const ProductSlider = ({ slides }: PropType) => {
     <div className="flex w-full flex-col">
       <div className="embla relative m-0 mb-4 block w-full overflow-hidden rounded p-0">
         <div className="embla__viewport w-full" ref={mainViewportRef}>
-          <div className="embla__container flex h-full gap-2 overflow-x-hidden">
+          <div className="embla__container xoverflow-x-hidden flex h-full gap-2">
             {slides.map((slide, index) => (
               <div className="embla__slide min-w-full" key={index}>
                 <div className="embla__slide__inner relative aspect-[3/2] overflow-hidden rounded">
@@ -52,6 +52,7 @@ const ProductSlider = ({ slides }: PropType) => {
                     src={slide.sourceUrl}
                     alt={slide.title}
                     fill
+                    sizes="(max-width: 1024px) 100vw, 768px"
                     placeholder="blur"
                     blurDataURL={Shimmer}
                     priority
@@ -64,11 +65,8 @@ const ProductSlider = ({ slides }: PropType) => {
       </div>
 
       <div className="embla embla--thumb relative m-0  block w-full overflow-hidden p-0">
-        <div
-          className="embla__viewport h-16 w-full sm:h-20"
-          ref={thumbViewportRef}
-        >
-          <div className="embla__container embla__container--thumb flex h-full gap-1 overflow-x-hidden">
+        <div className="embla__viewport w-full " ref={thumbViewportRef}>
+          <div className="embla__container embla__container--thumb xoverflow-x-hidden flex h-full gap-1">
             {slides &&
               slides.map((slide, index) => (
                 <Thumb

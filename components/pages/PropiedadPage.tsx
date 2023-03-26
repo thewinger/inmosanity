@@ -4,6 +4,14 @@ import { urlForImage } from 'lib/sanity.image'
 import { notFound } from 'next/navigation'
 import ProductSlider from '../ProductSlider'
 import Pill from '../ui/Pill'
+import {
+  MdOutlineBathtub,
+  MdOutlineBed,
+  MdOutlineEditCalendar,
+  MdOutlineHouse,
+  MdOutlineLocationOn,
+  MdOutlineStraighten,
+} from 'react-icons/md'
 
 export interface PropiedadPageProps {
   preview?: boolean
@@ -37,7 +45,7 @@ export default function PropiedadPage(props: PropiedadPageProps) {
       <div className="relative mx-auto mb-24 grid max-w-5xl auto-rows-auto grid-cols-1 gap-4 bg-white pt-4 pb-12 text-zinc-800 lg:grid-cols-2 lg:gap-y-10 lg:px-6 lg:shadow-md xl:shadow-md">
         <div className="lg:-col-end-1 relative flex flex-col md:flex-row md:items-start md:gap-2 lg:row-span-3">
           <Pill>{propiedad.operacion.replace('-', ' ').toUpperCase()}</Pill>
-          <div className="sliderContainer lg:px4 flex grow items-center justify-center overflow-x-hidden">
+          <div className="sliderContainer lg:px4 relative flex grow items-center justify-center overflow-x-hidden">
             <ProductSlider key={propiedad.slug} slides={imagesUrl} />
           </div>
         </div>
@@ -61,14 +69,16 @@ export default function PropiedadPage(props: PropiedadPageProps) {
           </div>
           <div className="mb-2 flex flex-col gap-1">
             <div className="flex items-center gap-1 text-lg text-zinc-500">
-              <Buildings size={24} weight="duotone" color="currentColor" />
+              <MdOutlineHouse size={24} />
+              {/* <Buildings size={24} weight="duotone" color="currentColor" /> */}
               <span className="text-md  capitalize text-zinc-800">
                 {propiedad.tipo}
               </span>
             </div>
 
             <div className="flex items-center gap-1 text-lg text-zinc-500">
-              <MapPin size={24} weight="duotone" color="currentColor" />
+              <MdOutlineLocationOn size={24} />
+              {/* <MapPin size={24} weight="duotone" color="currentColor" /> */}
               <div className="capitalize text-zinc-800">
                 {propiedad.localizacionPadre &&
                   propiedad.localizacionPadre.parent && (
@@ -82,7 +92,8 @@ export default function PropiedadPage(props: PropiedadPageProps) {
           <div className="grid grid-flow-col grid-rows-1 border-y border-zinc-300 py-4">
             {propiedad.bedrooms && (
               <div className="flex items-center justify-center gap-1">
-                <Bed size={20} weight="duotone" color="currentColor" />
+                <MdOutlineBed size={20} />
+                {/* <Bed size={20} weight="duotone" color="currentColor" /> */}
                 <span className="text-md  text-zinc-800">
                   {propiedad.bedrooms}
                 </span>
@@ -91,7 +102,8 @@ export default function PropiedadPage(props: PropiedadPageProps) {
 
             {propiedad.bathrooms && (
               <div className="flex items-center justify-center gap-1">
-                <Bathtub size={20} weight="duotone" color="currentColor" />
+                <MdOutlineBathtub size={20} />
+                {/* <Bathtub size={20} weight="duotone" color="currentColor" /> */}
                 <span className="text-md  text-zinc-800">
                   {propiedad.bathrooms}
                 </span>
@@ -99,7 +111,8 @@ export default function PropiedadPage(props: PropiedadPageProps) {
             )}
             {propiedad.size && (
               <div className="flex items-center justify-center gap-1">
-                <Ruler size={20} weight="duotone" color="currentColor" />
+                <MdOutlineStraighten size={20} />
+                {/* <Ruler size={20} weight="duotone" color="currentColor" /> */}
                 <span className="text-md">{propiedad.size}</span>
                 <span className="">
                   m<sup className="font-features sups">2</sup>
@@ -108,12 +121,8 @@ export default function PropiedadPage(props: PropiedadPageProps) {
             )}
             {propiedad.year && (
               <div className="flex items-center justify-center gap-1">
-                {/* <span className="text-zinc-600">año</span> */}
-                <CalendarBlank
-                  size={20}
-                  weight="duotone"
-                  color="currentColor"
-                />
+                <MdOutlineEditCalendar size={20} />
+                {/* <CalendarBlank size={20} weight="duotone" color="currentColor" /> */}
                 <span className="">{propiedad.year}</span>
               </div>
             )}
