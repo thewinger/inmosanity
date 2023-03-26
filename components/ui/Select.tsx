@@ -3,7 +3,7 @@
 import * as React from 'react'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { cn } from '@/lib/helpers'
-import { CaretUpDown, Check } from '@phosphor-icons/react'
+import { MdOutlineCheck, MdOutlineUnfoldMore } from 'react-icons/md'
 
 const Select = SelectPrimitive.Root
 
@@ -24,7 +24,8 @@ const SelectTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <CaretUpDown size={16} className="opacity-50" />
+    {/* <CaretUpDown size={16} className="opacity-50" /> */}
+    <MdOutlineUnfoldMore size={16} className="opacity-50" />
   </SelectPrimitive.Trigger>
 ))
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
@@ -79,7 +80,8 @@ const SelectItem = React.forwardRef<
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <Check size={16} />
+        <MdOutlineCheck size={16} />
+        {/* <Check size={16} /> */}
       </SelectPrimitive.ItemIndicator>
     </span>
 

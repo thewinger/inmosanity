@@ -3,9 +3,9 @@
 import * as React from 'react'
 import * as SheetPrimitive from '@radix-ui/react-dialog'
 import { VariantProps, cva } from 'class-variance-authority'
-import { X } from '@phosphor-icons/react'
 
 import { cn } from '@/lib/helpers'
+import { MdOutlineClose } from 'react-icons/md'
 
 const Sheet = SheetPrimitive.Root
 
@@ -159,7 +159,7 @@ const SheetContent = React.forwardRef<
     >
       {children}
       <SheetPrimitive.Close className="absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-zinc-100 dark:focus:ring-zinc-400 dark:focus:ring-offset-zinc-900 dark:data-[state=open]:bg-zinc-800">
-        <X size={16} />
+        <MdOutlineClose size={16} />
         <span className="sr-only">Close</span>
       </SheetPrimitive.Close>
     </SheetPrimitive.Content>

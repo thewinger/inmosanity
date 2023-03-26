@@ -1,8 +1,9 @@
 import { IFiltersDD } from '@/lib/interfaces'
 import { getFiltersDropdownValues } from '@/lib/sanity.client'
-import { Faders, MagnifyingGlass } from '@phosphor-icons/react'
+/* import { MdOutlineTune } from '@react-icons/md' */
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
+import { MdOutlineSearch } from 'react-icons/md'
 import {
   Select,
   SelectContent,
@@ -133,7 +134,7 @@ export default function FilterBar() {
 
   return (
     <div
-      ref={wrapperRef} 
+      ref={wrapperRef}
       className="flex items-center gap-2 border-b-2 border-zinc-200 px-4 py-2 md:px-6"
     >
       <Select>
@@ -142,13 +143,15 @@ export default function FilterBar() {
         </SelectTrigger>
         <SelectContent>
           {operacionInit.map((operacion) => (
-            <SelectItem key={operacion.value} value={operacion.value}>{operacion.name}</SelectItem>
+            <SelectItem key={operacion.value} value={operacion.value}>
+              {operacion.name}
+            </SelectItem>
           ))}
         </SelectContent>
       </Select>
       {/* <button className="flex h-10  w-fit  items-center justify-between gap-2 rounded-md border border-zinc-300 bg-transparent py-2 px-3 text-sm placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-700 dark:text-zinc-50 dark:focus:ring-zinc-400 dark:focus:ring-offset-zinc-900">
         <span>Filtros</span>
-        <Faders size={16} />
+        <MdOutlineTune size={16} />
       </button> */}
       <Sheet>
         <SheetTrigger
@@ -172,7 +175,8 @@ export default function FilterBar() {
         ref={buscarRef}
         className="flex gap-1 rounded-md bg-green-600 p-2  text-white"
       >
-        <MagnifyingGlass size={24} weight="bold" />
+        <MdOutlineSearch size={24} />
+        {/* <MagnifyingGlass size={24} weight="bold" /> */}
         <span className="hidden md:inline">Buscar</span>
       </button>
     </div>

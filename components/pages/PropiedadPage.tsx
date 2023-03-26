@@ -1,17 +1,9 @@
-import {
-  Bathtub,
-  Bed,
-  Buildings,
-  CalendarBlank,
-  MapPin,
-  Ruler,
-} from '@phosphor-icons/react'
 import { formatEUR } from 'lib/helpers'
 import { IPropiedad } from 'lib/interfaces'
 import { urlForImage } from 'lib/sanity.image'
 import { notFound } from 'next/navigation'
 import ProductSlider from '../ProductSlider'
-import Pill from './ui/Pill'
+import Pill from '../ui/Pill'
 
 export interface PropiedadPageProps {
   preview?: boolean

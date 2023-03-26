@@ -3,7 +3,7 @@ import { Thumb } from './ProductSliderThumb'
 import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
 import Shimmer from './Shimmer'
-import { ILocalImage } from './PropiedadPage'
+import { ILocalImage } from './pages/PropiedadPage'
 
 type PropType = {
   slides: ILocalImage[]
