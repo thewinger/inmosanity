@@ -45,18 +45,36 @@ export const propiedadBySlugQuery = groq`
 
 export const filtersDropdownValues = groq`
 {
-  "transaccionesDD": array::unique(*[_type == "propiedad" ].operacion),
+  "operacionDD": array::unique(*[_type == "propiedad" ].operacion),
+  "tipoDD": array::unique(*[_type =="tipo" ]{
+      "name": title,
+      "value":_id
+    }),
   "localizacionDD": {
     "parentLocalizacion": *[_type == 'localizacion' && !defined(parent) && count(*[ _type == 'propiedad' && references(^._id)]) > 0]{
-      _id,
-      title,
+      "value": _id,
+      "name": title,
       "childLocalizacion": *[_type == 'localizacion' && references(^._id) && count(*[ _type == 'propiedad' && references(^._id)]) > 0]{
-        _id,
-        title
+        "value": _id,
+        "name": title,
       }
     } | order(title asc)
   },
-  "maxPriceDD": math::max(*[_type == 'propiedad'].price),
-  "bathroomsDD": math::max(*[_type == 'propiedad'].bathrooms),
-  "bedroomsDD": math::max(*[_type == 'propiedad'].bedrooms),
+  "maxPriceSaleDD": {
+    "min": 0,
+    "max": math::max(*[_type == 'propiedad' && operacion != 'en-alquiler'].price),
+  },
+  "maxPriceRentDD": {
+    "min": 0,
+    "max": math::max(*[_type == 'propiedad' && operacion == 'en-alquiler'].price),
+  },
+  "bathroomsDD": {
+    "min": 0,
+    "max": math::max(*[_type == 'propiedad'].bathrooms),
+  },
+
+  "bedroomsDD": {
+    "min": 0,
+    "max": math::max(*[_type == 'propiedad'].bedrooms),
+  },
 }`

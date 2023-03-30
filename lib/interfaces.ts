@@ -49,8 +49,8 @@ interface parentTitle {
 }
 
 interface IFilter {
-  min: string
-  max: string
+  min: number
+  max: number
 }
 
 interface IFilterOption {
@@ -58,11 +58,19 @@ interface IFilterOption {
   value: string
 }
 
+interface IParentLocalizacion extends IFilterOption {
+  childLocalizacion?: IFilterOption[]
+}
+interface IFilterLocalizacion {
+  parentLocalizacion: IParentLocalizacion[]
+}
+
 export interface IFiltersDD {
-  priceDD: IFilter
+  priceRentDD: IFilter
+  priceSaleDD: IFilter
   bedroomsDD: IFilter
   bathroomsDD: IFilter
-  operacionDD: IFilterOption[]
-  localizacionDD: IFilterOption[]
+  operacionDD: string[]
+  localizacionDD: IFilterLocalizacion[]
   tipoDD: IFilterOption[]
 }

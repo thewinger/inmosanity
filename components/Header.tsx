@@ -1,12 +1,14 @@
-'use client'
-
 import { MdOutlineEmail, MdOutlinePhoneInTalk } from 'react-icons/md'
 import Image from 'next/image'
 import Link from 'next/link'
-/* import FilterBar from './FilterBar' */
+import FilterBar from './FilterBar'
 import logo from '/public/Logo_Inmogolf.png'
+import { getFiltersDropdownValues } from '@/lib/sanity.client'
 
-const Header = () => {
+const Header = async () => {
+  const filters = await getFiltersDropdownValues()
+  console.log('header', filters)
+
   return (
     <header className="bg-white">
       <div className="flex items-center justify-between border-b border-zinc-100 px-4 py-2 md:px-6">
@@ -25,7 +27,7 @@ const Header = () => {
           </a>
         </div>
       </div>
-      {/* <FilterBar /> */}
+      <FilterBar {...filters} />
     </header>
   )
 }

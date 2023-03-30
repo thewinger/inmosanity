@@ -1,17 +1,15 @@
 'use client'
 import { IFiltersDD } from '@/lib/interfaces'
-import { getFiltersDropdownValues } from '@/lib/sanity.client'
-/* import { MdOutlineTune } from '@react-icons/md' */
-import { useRouter } from 'next/router'
-import { useEffect, useRef, useState } from 'react'
-import { MdOutlineSearch } from 'react-icons/md'
+import TuneIcon from '@mui/icons-material/Tune'
+import SearchIcon from '@mui/icons-material/Search'
+import { useState } from 'react'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from './ui/Select'
+} from './ui/select'
 import {
   Sheet,
   SheetContent,
@@ -20,6 +18,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet'
+import FilterForm from './FilterForm'
+import { Label } from './ui/label'
 
 interface IFilter {
   min: string
@@ -31,7 +31,7 @@ interface IFilterOption {
   value: string
 }
 
-interface IProps {
+interface IFilters {
   priceInit: IFilter
   bedroomsInit: IFilter
   bathroomsInit: IFilter
@@ -90,18 +90,25 @@ let tipoInit = [
   },
 ]
 
-export default function FilterBar() {
-  const router = useRouter()
-
-  const [showMore, setShowMore] = useState(false)
-  const [visible, setVisible] = useState(false)
-  const wrapperRef = useRef<HTMLDivElement>(null)
-  const transaccionRef = useRef<HTMLButtonElement>(null)
-  const buscarRef = useRef<HTMLButtonElement>(null)
-  const showMoreRef = useRef<HTMLButtonElement>(null)
-
-  const [filtersDD, setFiltersDD] = useState<IFiltersDD>()
-  const [priceState, setPriceState] = useState<IFilter>(priceInit)
+export default function FilterBar({
+  bathroomsDD,
+  bedroomsDD,
+  priceRentDD,
+  priceSaleDD,
+  localizacionDD,
+  operacionDD,
+  tipoDD,
+}: IFiltersDD) {
+  const [filtersDD, setFiltersDD] = useState<IFiltersDD>({
+    bathroomsDD,
+    bedroomsDD,
+    priceRentDD,
+    priceSaleDD,
+    localizacionDD,
+    operacionDD,
+    tipoDD,
+  })
+  /* const [priceState, setPriceState] = useState<IFilter>(priceInit)
   const [bedroomsState, setBedroomsState] = useState<IFilter>(bedroomsInit)
   const [bathroomsState, setbathroomsState] = useState<IFilter>(bathroomsInit)
   const [tipoState, setTipoState] = useState<IFilterOption>(tipoInit[0])
@@ -112,13 +119,9 @@ export default function FilterBar() {
     localizacionInit[0]
   )
 
-  useEffect(() => {
-    getFiltersDropdownValues().then((res) => setFiltersDD(res))
-  }, [])
+  useEffect(() => {}, []) */
 
-  console.log('filters', filtersDD)
-
-  const handleApplyFilters = () => {
+  /* const handleApplyFilters = () => {
     const queryFilters = {
       precio: `${priceState.min}_${priceState.max}`,
       habitaciones: `${bedroomsState.min}_${bedroomsState.max}`,
@@ -126,58 +129,63 @@ export default function FilterBar() {
       tipo: tipoState.value,
       operacion: operacionState.value,
       localizacion: localizacionState.value,
-    }
-    router.push({
+    } */
+  /* router.push({
       pathname: '/propiedades',
       query: queryFilters,
     })
-  }
+  } */
 
   return (
-    <div
-      ref={wrapperRef}
-      className="flex items-center gap-2 border-b-2 border-zinc-200 px-4 py-2 md:px-6"
-    >
+    <div className="flex items-center gap-2 border-b-2 border-zinc-200 px-4 py-2 md:px-6">
       <Select>
-        <SelectTrigger ref={transaccionRef} className="xgrow self-stretch">
+        <SelectTrigger className="xgrow self-stretch">
           <SelectValue placeholder="Tipo de Operacion" className="text-left" />
         </SelectTrigger>
-        <SelectContent>
-          {operacionInit.map((operacion) => (
-            <SelectItem key={operacion.value} value={operacion.value}>
-              {operacion.name}
+        <SelectContent
+          position="popper"
+          className="max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]"
+        >
+          {filtersDD.operacionDD?.map((item) => (
+            <SelectItem key={item} value={item}>
+              {item.replace('-', ' ')}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
-      {/* <button className="flex h-10  w-fit  items-center justify-between gap-2 rounded-md border border-zinc-300 bg-transparent py-2 px-3 text-sm placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-700 dark:text-zinc-50 dark:focus:ring-zinc-400 dark:focus:ring-offset-zinc-900">
-        <span>Filtros</span>
-        <MdOutlineTune size={16} />
-      </button> */}
       <Sheet>
-        <SheetTrigger
-          ref={showMoreRef}
-          className="flex h-10  w-fit  items-center justify-between gap-2 rounded-md border border-zinc-300 bg-transparent py-2 px-3 text-sm placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-700 dark:text-zinc-50 dark:focus:ring-zinc-400 dark:focus:ring-offset-zinc-900"
-        >
+        <SheetTrigger className="flex h-10  w-fit  items-center justify-between gap-2 rounded-md border border-zinc-300 bg-transparent py-2 px-3 text-sm placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-700 dark:text-zinc-50 dark:focus:ring-zinc-400 dark:focus:ring-offset-zinc-900">
           <span>Filtros</span>
-          <Faders size={16} />
+          <TuneIcon className="h-4 w-4" />
         </SheetTrigger>
-        <SheetContent position="bottom" size="full">
+        <SheetContent position="right" size="full">
           <SheetHeader>
-            <SheetTitle>Are you sure absolutely sure?</SheetTitle>
+            <SheetTitle>Filtros</SheetTitle>
             <SheetDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
+              <div className="grid w-full max-w-sm items-center gap-1.5">
+                <Label htmlFor="tipo">Tipo de propiedad</Label>
+                <Select name="tipo" defaultValue="Todas">
+                  <SelectTrigger className="self-stretch">
+                    <SelectValue
+                      placeholder="Tipo de Propiedad"
+                      className="text-left"
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {filtersDD.tipoDD?.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </SheetDescription>
           </SheetHeader>
         </SheetContent>
       </Sheet>
-      <button
-        ref={buscarRef}
-        className="flex gap-1 rounded-md bg-green-600 p-2  text-white"
-      >
-        <MdOutlineSearch size={24} />
-        {/* <MagnifyingGlass size={24} weight="bold" /> */}
+      <button className="flex gap-1 rounded-md bg-green-600 p-2  text-white">
+        <SearchIcon className="h-6 w-6" />
         <span className="hidden md:inline">Buscar</span>
       </button>
     </div>

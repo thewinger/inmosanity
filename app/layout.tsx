@@ -9,6 +9,12 @@ const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
 })
+
+export const metadata: Metadata = {
+  title: 'Inmogolf Bonalba'
+  description: 'Inmobiliaria '
+}
+
 type Props = {
   children?: ReactNode
 }
