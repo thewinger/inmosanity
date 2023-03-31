@@ -68,8 +68,8 @@ interface IFilterLocalizacion {
 export interface IFiltersDD {
   priceRentDD: IFilter
   priceSaleDD: IFilter
-  bedroomsDD: IFilter
-  bathroomsDD: IFilter
+  bedroomsDD: number
+  bathroomsDD: number
   operacionDD: string[]
   localizacionDD: IFilterLocalizacion[]
   tipoDD: IFilterOption[]

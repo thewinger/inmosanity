@@ -1,13 +1,18 @@
+//Change these to material-icons
 import { MdOutlineEmail, MdOutlinePhoneInTalk } from 'react-icons/md'
 import Image from 'next/image'
 import Link from 'next/link'
 import FilterBar from './FilterBar'
 import logo from '/public/Logo_Inmogolf.png'
 import { getFiltersDropdownValues } from '@/lib/sanity.client'
+import { Suspense } from 'react'
 
-const Header = async () => {
+function FiltersFallback() {
+  return <>Loading...</>
+}
+
+export default async function Header() {
   const filters = await getFiltersDropdownValues()
-  console.log('header', filters)
 
   return (
     <header className="bg-white">
@@ -27,9 +32,9 @@ const Header = async () => {
           </a>
         </div>
       </div>
-      <FilterBar {...filters} />
+      <Suspense fallback={<FiltersFallback />}>
+        <FilterBar {...filters} />
+      </Suspense>
     </header>
   )
 }
-
-export default Header

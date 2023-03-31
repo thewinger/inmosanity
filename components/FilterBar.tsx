@@ -1,8 +1,9 @@
 'use client'
+
 import { IFiltersDD } from '@/lib/interfaces'
 import TuneIcon from '@mui/icons-material/Tune'
 import SearchIcon from '@mui/icons-material/Search'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import {
   Select,
   SelectContent,
@@ -19,75 +20,16 @@ import {
   SheetTrigger,
 } from './ui/sheet'
 import { Label } from './ui/label'
-
-interface IFilter {
-  min: string
-  max: string
-}
-
-interface IFilterOption {
-  name: string
-  value: string
-}
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 interface IFilters {
-  priceInit: IFilter
-  bedroomsInit: IFilter
-  bathroomsInit: IFilter
-  operacionInit: IFilterOption[]
-  localizacionInit: IFilterOption[]
-  tipoInit: IFilterOption[]
+  price?: string
+  bedrooms?: number
+  bathrooms?: number
+  operacion?: string
+  localizacion?: string
+  tipo?: string
 }
-
-const PAGE_SIZE = 2
-
-let priceInit = {
-  min: '0',
-  max: '100000',
-}
-
-let bedroomsInit = {
-  min: '0',
-  max: '5',
-}
-
-let bathroomsInit = {
-  min: '0',
-  max: '5',
-}
-
-let operacionInit = [
-  {
-    name: 'Todas',
-    value: 'all',
-  },
-  {
-    name: 'En Venta',
-    value: 'en-venta',
-  },
-  {
-    name: 'En Alquiler',
-    value: 'en-alquiler',
-  },
-  {
-    name: 'Obra nueva',
-    value: 'obra-nueva',
-  },
-]
-
-let localizacionInit = [
-  {
-    name: 'Todas',
-    value: 'all',
-  },
-]
-
-let tipoInit = [
-  {
-    name: 'Todas',
-    value: 'all',
-  },
-]
 
 export default function FilterBar({
   bathroomsDD,
@@ -99,45 +41,46 @@ export default function FilterBar({
   tipoDD,
 }: IFiltersDD) {
   const [filtersDD, setFiltersDD] = useState<IFiltersDD>({
-    bathroomsDD,
-    bedroomsDD,
     priceRentDD,
     priceSaleDD,
+    bathroomsDD,
+    bedroomsDD,
     localizacionDD,
     operacionDD,
     tipoDD,
   })
-  /* const [priceState, setPriceState] = useState<IFilter>(priceInit)
-  const [bedroomsState, setBedroomsState] = useState<IFilter>(bedroomsInit)
-  const [bathroomsState, setbathroomsState] = useState<IFilter>(bathroomsInit)
-  const [tipoState, setTipoState] = useState<IFilterOption>(tipoInit[0])
-  const [operacionState, setOperacionState] = useState<IFilterOption>(
-    operacionInit[0]
-  )
-  const [localizacionState, setLocalizacionState] = useState<IFilterOption>(
-    localizacionInit[0]
+
+  const [filters, setFilters] = useState<IFilters>({})
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()!
+
+  const updateFilters = (key: string, value: string) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [key]: value,
+    }))
+  }
+
+  const createQueryString = useCallback(
+    (filters: IFilters) => {
+      const params = new URLSearchParams(searchParams)
+      for (const [key, value] of Object.entries(filters)) {
+        params.set(key, value)
+      }
+
+      return params.toString()
+    },
+    [searchParams]
   )
 
-  useEffect(() => {}, []) */
-
-  /* const handleApplyFilters = () => {
-    const queryFilters = {
-      precio: `${priceState.min}_${priceState.max}`,
-      habitaciones: `${bedroomsState.min}_${bedroomsState.max}`,
-      baños: `${bathroomsState.min}_${bathroomsState.max}`,
-      tipo: tipoState.value,
-      operacion: operacionState.value,
-      localizacion: localizacionState.value,
-    } */
-  /* router.push({
-      pathname: '/propiedades',
-      query: queryFilters,
-    })
-  } */
+  const handleFilters = async () => {
+    router.push(`/propiedades?` + createQueryString(filters))
+  }
 
   return (
     <div className="flex items-center gap-2 border-b-2 border-zinc-200 px-4 py-2 md:px-6">
-      <Select>
+      <Select onValueChange={(value) => updateFilters('operacion', value)}>
         <SelectTrigger className="xgrow self-stretch">
           <SelectValue placeholder="Tipo de Operacion" className="text-left" />
         </SelectTrigger>
@@ -163,7 +106,11 @@ export default function FilterBar({
             <SheetDescription>
               <div className="grid w-full max-w-sm items-center gap-1.5">
                 <Label htmlFor="tipo">Tipo de propiedad</Label>
-                <Select name="tipo" defaultValue="Todas">
+                <Select
+                  name="tipo"
+                  defaultValue="Todas"
+                  onValueChange={(value) => updateFilters('tipo', value)}
+                >
                   <SelectTrigger className="self-stretch">
                     <SelectValue
                       placeholder="Tipo de Propiedad"
@@ -179,11 +126,21 @@ export default function FilterBar({
                   </SelectContent>
                 </Select>
               </div>
+              <button
+                onClick={handleFilters}
+                className="flex gap-1 rounded-md bg-green-600 p-2  text-white"
+              >
+                <SearchIcon className="h-6 w-6" />
+                <span className="hidden md:inline">Buscar</span>
+              </button>
             </SheetDescription>
           </SheetHeader>
         </SheetContent>
       </Sheet>
-      <button className="flex gap-1 rounded-md bg-green-600 p-2  text-white">
+      <button
+        onClick={handleFilters}
+        className="flex gap-1 rounded-md bg-green-600 p-2  text-white"
+      >
         <SearchIcon className="h-6 w-6" />
         <span className="hidden md:inline">Buscar</span>
       </button>
