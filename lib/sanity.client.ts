@@ -18,16 +18,13 @@ export async function getFrontPage(): Promise<IFrontPage> {
 }
 
 export async function getFiltersDropdownValues(): Promise<IFiltersDD> {
-  if (client) {
-    return await client.fetch(filtersDropdownValues)
-  }
-  return
+  return await client.fetch(filtersDropdownValues)
 }
 
 export async function getAllPropiedadesSlug(): Promise<
   Pick<IPropiedad, 'slug'>[]
 > {
-  const slugs = (await client.fetch<string[]>(propiedadSlugsQuery)) || []
+  const slugs: string[] = await client.fetch(propiedadSlugsQuery)
   return slugs.map((slug) => ({ slug }))
 }
 

@@ -2,6 +2,7 @@ import 'styles/global.css'
 
 import { ReactNode } from 'react'
 import { Inter } from '@next/font/google'
+import type { Metadata } from 'next'
 
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({
@@ -11,8 +12,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Inmogolf Bonalba'
-  description: 'Inmobiliaria '
+  title: 'Inmogolf Bonalba',
+  description: 'Inmobiliaria en el campo de golf Bonalba',
 }
 
 type Props = {

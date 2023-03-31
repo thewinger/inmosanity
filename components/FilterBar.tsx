@@ -18,7 +18,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet'
-import FilterForm from './FilterForm'
 import { Label } from './ui/label'
 
 interface IFilter {
