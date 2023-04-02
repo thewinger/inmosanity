@@ -2,6 +2,7 @@
 
 import { IFeatured, IPropiedad } from 'lib/interfaces'
 import Link from 'next/link'
+
 import FeaturedSlider from '../FeaturedSlider'
 import PropiedadCard from '../ui/PropiedadCard'
 

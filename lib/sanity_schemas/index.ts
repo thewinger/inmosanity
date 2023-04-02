@@ -1,13 +1,15 @@
 import caracteristicas from './caracteristicas'
-import localizacion from './localizacion'
 import imagen from './imagen'
+import localizacion from './localizacion'
 import propiedad from './propiedad'
 import tipoPropiedad from './tipo-propiedad'
 
-export const schemas = [
+const schemas = [
   propiedad,
   imagen,
   localizacion,
   tipoPropiedad,
   caracteristicas,
 ]
+
+export default schemas

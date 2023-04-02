@@ -1,11 +1,13 @@
 //Change these to material-icons
-import { MdOutlineEmail, MdOutlinePhoneInTalk } from 'react-icons/md'
 import Image from 'next/image'
 import Link from 'next/link'
-import FilterBar from './FilterBar'
+import { Suspense } from 'react'
+import { MdOutlineEmail, MdOutlinePhoneInTalk } from 'react-icons/md'
+
 import logo from '/public/Logo_Inmogolf.png'
 import { getFiltersDropdownValues } from '@/lib/sanity.client'
-import { Suspense } from 'react'
+
+import FilterBar from './FilterBar'
 
 function FiltersFallback() {
   return <>Loading...</>

@@ -1,13 +1,14 @@
+import BathtubTwoToneIcon from '@mui/icons-material/BathtubTwoTone'
+import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
+import HotelTwoToneIcon from '@mui/icons-material/HotelTwoTone'
 import HouseTwoToneIcon from '@mui/icons-material/HouseTwoTone'
 import PlaceTwoToneIcon from '@mui/icons-material/PlaceTwoTone'
-import HotelTwoToneIcon from '@mui/icons-material/HotelTwoTone'
-import BathtubTwoToneIcon from '@mui/icons-material/BathtubTwoTone'
 import StraightenTwoToneIcon from '@mui/icons-material/StraightenTwoTone'
-import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
 import { formatEUR } from 'lib/helpers'
 import { IPropiedad } from 'lib/interfaces'
 import { urlForImage } from 'lib/sanity.image'
 import Image from 'next/image'
+
 import Pill from './Pill'
 
 type Props = {

@@ -1,5 +1,6 @@
-import { DefaultDocumentNodeResolver, StructureResolver } from 'sanity/desk'
 import { HiHomeModern } from 'react-icons/hi2'
+import { DefaultDocumentNodeResolver, StructureResolver } from 'sanity/desk'
+
 import { IFramePreviewView } from './sanity_components/IFramePreviewView'
 
 export const structure: StructureResolver = (S) =>

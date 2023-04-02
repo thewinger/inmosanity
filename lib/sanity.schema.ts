@@ -1,4 +1,5 @@
 import { SchemaTypeDefinition } from 'sanity'
+
 import caracteristicas from './sanity_schemas/caracteristicas'
 import imagen from './sanity_schemas/imagen'
 import localizacion from './sanity_schemas/localizacion'

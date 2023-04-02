@@ -1,22 +1,18 @@
-import {HiOutlineMap} from 'react-icons/hi2'
+import { HiOutlineMap } from 'react-icons/hi2'
+import { PreviewProps } from 'sanity'
 
-interface IPrepare {
-  title: string
-  subtitle: string
-}
-
-export default {
+const localizacion = {
   name: 'localizacion',
   title: 'Localización',
   type: 'document',
   icon: HiOutlineMap,
   fields: [
-    {name: 'title', title: 'Zona', type: 'string'},
+    { name: 'title', title: 'Zona', type: 'string' },
     {
       name: 'parent',
       title: 'Ciudad',
       type: 'reference',
-      to: [{type: 'localizacion'}],
+      to: [{ type: 'localizacion' }],
       // This ensures we cannot select other "children"
       options: {
         filter: '!defined(parent)',
@@ -29,9 +25,11 @@ export default {
       title: 'title',
       subtitle: 'parent.title',
     },
-    prepare: ({title, subtitle}: IPrepare) => ({
+    prepare: ({ title, subtitle }: PreviewProps) => ({
       title,
       subtitle: subtitle ? `– ${subtitle}` : ``,
     }),
   },
 }
+
+export default localizacion

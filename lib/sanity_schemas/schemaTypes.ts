@@ -1,5 +1,5 @@
-import { ReactElement } from 'react'
 import { ReactComponentLike } from 'prop-types'
+import { ReactElement } from 'react'
 
 type Meta = {
   parent: { [key: string]: any }
@@ -156,9 +156,7 @@ export type Document = {
 }
 
 export type PreviewProps = {
-  value: {
-    [key: string]: any
-  }
+  [key: string]: any
 }
 
 export type Body2TextProps = { children: React.FunctionComponent<any> }

@@ -1,8 +1,10 @@
-import { HiHome } from 'react-icons/hi2'
 import { isUniqueAcrossAllDocuments } from 'lib/sanity.isUniqueAcrossAllDocuments'
-import { RuleType, PreviewProps } from './schemaTypes'
+import { HiHome } from 'react-icons/hi2'
+import { PreviewProps } from 'sanity'
 
-export default {
+import { RuleType } from './schemaTypes'
+
+const propiedad = {
   name: 'propiedad',
   title: 'Propiedad',
   type: 'document',
@@ -130,3 +132,5 @@ export default {
     }),
   },
 }
+
+export default propiedad

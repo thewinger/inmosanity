@@ -2,8 +2,6 @@ import { formatEUR } from 'lib/helpers'
 import { IPropiedad } from 'lib/interfaces'
 import { urlForImage } from 'lib/sanity.image'
 import { notFound } from 'next/navigation'
-import ProductSlider from '../ProductSlider'
-import Pill from '../ui/Pill'
 import {
   MdOutlineBathtub,
   MdOutlineBed,
@@ -12,6 +10,9 @@ import {
   MdOutlineLocationOn,
   MdOutlineStraighten,
 } from 'react-icons/md'
+
+import ProductSlider from '../ProductSlider'
+import Pill from '../ui/Pill'
 
 export interface PropiedadPageProps {
   preview?: boolean

@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
-import { Thumb } from './ProductSliderThumb'
 import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
-import Shimmer from './Shimmer'
+import React, { useCallback, useEffect, useState } from 'react'
+
 import { ILocalImage } from './pages/PropiedadPage'
+import { Thumb } from './ProductSliderThumb'
+import Shimmer from './Shimmer'
 
 type PropType = {
   slides: ILocalImage[]

@@ -1,10 +1,11 @@
 'use client'
 
-import * as React from 'react'
-import * as SelectPrimitive from '@radix-ui/react-select'
-import { cn } from '@/lib/helpers'
 import CheckIcon from '@mui/icons-material/Check'
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore'
+import * as SelectPrimitive from '@radix-ui/react-select'
+import * as React from 'react'
+
+import { cn } from '@/lib/helpers'
 const Select = SelectPrimitive.Root
 
 const SelectGroup = SelectPrimitive.Group
@@ -18,7 +19,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'flex h-10 w-full items-center justify-between rounded-md border border-zinc-300 bg-transparent py-2 px-3 text-sm capitalize text-zinc-700 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-700 dark:text-zinc-50 dark:focus:ring-zinc-400 dark:focus:ring-offset-zinc-900',
+      'flex h-10 w-full items-center justify-between rounded-md border border-zinc-300 bg-transparent py-2 px-3 text-sm capitalize text-zinc-700 placeholder:text-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400  disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-700 dark:text-zinc-50 dark:focus-visible:ring-zinc-400',
       className
     )}
     {...props}
@@ -72,7 +73,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pr-2 pl-8 text-sm font-medium capitalize outline-none focus:bg-zinc-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-zinc-700',
+      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pr-2 pl-8 text-sm font-medium capitalize outline-none hover:bg-zinc-100  focus:bg-zinc-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-zinc-700',
       className
     )}
     {...props}
@@ -102,11 +103,11 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName
 
 export {
   Select,
-  SelectGroup,
-  SelectValue,
-  SelectTrigger,
   SelectContent,
-  SelectLabel,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectSeparator,
+  SelectTrigger,
+  SelectValue,
 }

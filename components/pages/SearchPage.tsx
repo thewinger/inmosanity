@@ -1,5 +1,6 @@
 import { IPropiedad } from 'lib/interfaces'
 import Link from 'next/link'
+
 import Layout from './Layout'
 
 interface IProps {

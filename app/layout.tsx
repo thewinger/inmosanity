@@ -1,8 +1,8 @@
 import 'styles/global.css'
 
-import { ReactNode } from 'react'
-import { Inter } from 'next/font/google'
 import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import { ReactNode } from 'react'
 
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({
@@ -23,7 +23,7 @@ type Props = {
 export default async function RootLayout({ children }: Props) {
   return (
     <html lang="es" className={`${inter.variable}`}>
-      <body>{children}</body>
+      <body className="bg-zinc-50">{children}</body>
     </html>
   )
 }

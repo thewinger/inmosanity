@@ -1,9 +1,10 @@
 import useEmblaCarousel from 'embla-carousel-react'
-import Link from 'next/link'
-import Image from 'next/image'
 import { IFeatured } from 'lib/interfaces'
-import Shimmer from 'lib/Shimmer'
 import { urlForImage } from 'lib/sanity.image'
+import Shimmer from 'lib/Shimmer'
+import Image from 'next/image'
+import Link from 'next/link'
+
 import Pill from './ui/Pill'
 
 type PropType = {
