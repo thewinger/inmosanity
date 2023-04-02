@@ -16,7 +16,13 @@ import {
   SelectValue,
 } from './ui/select'
 
-import { Collapsible } from './ui/collapsible'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from './ui/collapsible'
+
+import { Button } from './ui/button'
 
 interface IFilters {
   price?: string
@@ -47,6 +53,7 @@ export default function FilterBar({
   })
 
   const [filters, setFilters] = useState<IFilters>({})
+  const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()!
 
@@ -74,51 +81,71 @@ export default function FilterBar({
   }
 
   return (
-    <div className="flex items-center gap-2 border-b-2 border-zinc-200 px-4 py-2 md:px-6">
-      <Select onValueChange={(value) => updateFilters('operacion', value)}>
-        <SelectTrigger className="self-stretch">
-          <SelectValue placeholder="Tipo de Operacion" className="text-left" />
-        </SelectTrigger>
-        <SelectContent
-          position="popper"
-          className="max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]"
-        >
-          {filtersDD.operacionDD?.map((item) => (
-            <SelectItem key={item} value={item}>
-              {item.replace('-', ' ')}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-      <div className="grid w-full max-w-sm items-center gap-1.5">
-        <Label htmlFor="tipo">Tipo de propiedad</Label>
-        <Select
-          name="tipo"
-          defaultValue="Todas"
-          onValueChange={(value) => updateFilters('tipo', value)}
-        >
-          <SelectTrigger className="self-stretch">
+    <Collapsible
+      open={isOpen}
+      onOpenChange={setIsOpen}
+      className="border-b-2 border-zinc-200 px-4 py-2 md:px-6"
+    >
+      <div className="flex items-center gap-2">
+        <Select onValueChange={(value) => updateFilters('operacion', value)}>
+          <SelectTrigger className="shrink-0 grow  self-stretch">
             <SelectValue
-              placeholder="Tipo de Propiedad"
+              placeholder="Tipo de Operacion"
               className="text-left"
             />
           </SelectTrigger>
-          <SelectContent>
-            {filtersDD.tipoDD?.map((item) => (
-              <SelectItem key={item.value} value={item.value}>
-                {item.name}
+          <SelectContent
+            position="popper"
+            className="max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]"
+          >
+            {filtersDD.operacionDD?.map((item) => (
+              <SelectItem key={item} value={item}>
+                {item.replace('-', ' ')}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
+
+        <CollapsibleTrigger asChild>
+          <button className="relative flex h-10 shrink grow-0 items-center justify-center gap-2 rounded-md bg-white bg-gradient-to-b  from-white/[0.08] py-2 px-3 text-sm text-zinc-700 shadow-[0px_1px_1px_-1px_rgb(0_0_0_/_0.08),_0px_2px_2px_-1px_rgb(0_0_0_/_0.08),_0px_0px_0px_1px_rgb(0_0_0_/_0.06),_inset_0px_1px_0px_#fff,_inset_0px_1px_2px_1px_#fff,_inset_0px_1px_2px_rgb(0_0_0_/_.06),_inset_0px_-4px_8px_-4px_rgb(0_0_0_/_0.04)] outline-none transition ">
+            <span>Filtros</span>
+            <TuneIcon className="h-4 w-4" />
+          </button>
+        </CollapsibleTrigger>
+
+        <button
+          onClick={handleFilters}
+          className="flex gap-1 rounded-md bg-green-600 p-2 text-white"
+        >
+          <SearchIcon className="h-6 w-6" />
+          <span className="sr-only hidden md:inline">Buscar</span>
+        </button>
       </div>
-      <button
-        onClick={handleFilters}
-        className="flex gap-1 rounded-md bg-green-600 p-2 text-white"
-      >
-        <SearchIcon className="h-6 w-6" />
-        <span className="sr-only hidden md:inline">Buscar</span>
-      </button>
-    </div>
+
+      <CollapsibleContent className="flex flex-col gap-2">
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="tipo">Tipo de propiedad</Label>
+          <Select
+            name="tipo"
+            defaultValue="Todas"
+            onValueChange={(value) => updateFilters('tipo', value)}
+          >
+            <SelectTrigger className="self-stretch">
+              <SelectValue
+                placeholder="Tipo de Propiedad"
+                className="text-left"
+              />
+            </SelectTrigger>
+            <SelectContent>
+              {filtersDD.tipoDD?.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
   )
 }
