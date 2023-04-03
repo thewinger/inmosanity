@@ -1,5 +1,4 @@
 import { HiOutlineMap } from 'react-icons/hi2'
-import { PreviewProps } from 'sanity'
 
 const localizacion = {
   name: 'localizacion',
@@ -25,7 +24,7 @@ const localizacion = {
       title: 'title',
       subtitle: 'parent.title',
     },
-    prepare: ({ title, subtitle }: PreviewProps) => ({
+    prepare: ({ title, subtitle }) => ({
       title,
       subtitle: subtitle ? `– ${subtitle}` : ``,
     }),

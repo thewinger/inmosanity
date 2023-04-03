@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 export default async function IndexRoute() {
   const { featured, latest } = await getFrontPage()
 
-  if (!featured && !latest) {
+  if (!featured || !latest) {
     notFound()
   }
 

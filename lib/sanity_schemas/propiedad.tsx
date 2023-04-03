@@ -1,7 +1,6 @@
 import { RuleType } from './schemaTypes'
 import { isUniqueAcrossAllDocuments } from 'lib/sanity.isUniqueAcrossAllDocuments'
 import { HiHome } from 'react-icons/hi2'
-import { PreviewProps } from 'sanity'
 
 const propiedad = {
   name: 'propiedad',
@@ -45,7 +44,13 @@ const propiedad = {
       name: 'images',
       title: 'Galería de imagenes',
       type: 'array',
-      of: [{ type: 'imagen' }],
+      of: [
+        {
+          name: 'image',
+          type: 'image',
+          title: 'Image',
+        },
+      ],
       options: {
         layout: 'grid',
       },
@@ -124,7 +129,7 @@ const propiedad = {
       subtitle: 'tipo.title',
       media: 'images.0.asset',
     },
-    prepare: ({ title, subtitle, media }: PreviewProps) => ({
+    prepare: ({ title, subtitle, media }) => ({
       title,
       subtitle: subtitle ? `${subtitle}` : ``,
       media,

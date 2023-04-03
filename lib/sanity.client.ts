@@ -12,18 +12,20 @@ export const client = projectId
   ? createClient({ apiVersion, dataset, projectId, useCdn })
   : null
 
-export async function getFrontPage(): Promise<IFrontPage | undefined> {
+export async function getFrontPage(): Promise<IFrontPage> {
   if (client) {
-    return await client?.fetch(frontPageQuery)
+    return (await client?.fetch(frontPageQuery)) || ({} as any)
   }
 
-  return
+  return {} as any
 }
 
-export async function getFiltersDropdownValues(): Promise<
-  IFiltersDD | undefined
-> {
-  return await client?.fetch(filtersDropdownValues)
+export async function getFiltersDropdownValues(): Promise<IFiltersDD> {
+  if (client) {
+    return (await client?.fetch(filtersDropdownValues)) || ({} as any)
+  }
+
+  return {} as any
 }
 
 export async function getAllPropiedadesSlug(): Promise<
@@ -40,10 +42,10 @@ export async function getPropiedadBySlug({
   slug,
 }: {
   slug: string
-}): Promise<IPropiedad | undefined> {
+}): Promise<IPropiedad> {
   if (client) {
-    return await client.fetch(propiedadBySlugQuery, { slug })
+    return (await client.fetch(propiedadBySlugQuery, { slug })) || ({} as any)
   }
 
-  return
+  return {} as any
 }
