@@ -1,3 +1,5 @@
+import ProductSlider from '../ProductSlider'
+import Pill from '../ui/Pill'
 import { formatEUR } from 'lib/helpers'
 import { IPropiedad } from 'lib/interfaces'
 import { urlForImage } from 'lib/sanity.image'
@@ -10,9 +12,6 @@ import {
   MdOutlineLocationOn,
   MdOutlineStraighten,
 } from 'react-icons/md'
-
-import ProductSlider from '../ProductSlider'
-import Pill from '../ui/Pill'
 
 export interface PropiedadPageProps {
   preview?: boolean
@@ -56,7 +55,7 @@ export default function PropiedadPage(props: PropiedadPageProps) {
             <h1 className="grow text-xl font-semibold tracking-wide">
               {propiedad.title}
             </h1>
-            <button className=" hidden rounded-md bg-gradient-to-b from-green-600 to-green-700 px-4 py-2 text-white shadow shadow-green-700/50 hover:from-green-600 sm:block">
+            <button className=" hidden rounded-md bg-gradient-to-b from-green-600 to-green-700 px-4 py-2 text-white shadow-sm shadow-green-700/50 hover:from-green-600 sm:block">
               Contactar
             </button>
           </div>
@@ -174,7 +173,7 @@ export default function PropiedadPage(props: PropiedadPageProps) {
             )}
           </div>
         )}
-        <button className="grow rounded-md bg-gradient-to-b from-green-600 to-green-700 px-4 py-2 text-white shadow shadow-green-700/50 hover:from-green-600">
+        <button className="grow rounded-md bg-gradient-to-b from-green-600 to-green-700 px-4 py-2 text-white shadow-sm shadow-green-700/50 hover:from-green-600">
           Contactar
         </button>
       </div>

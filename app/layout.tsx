@@ -1,8 +1,8 @@
-import 'styles/global.css'
-
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ReactNode } from 'react'
+import { RemoveScroll } from 'react-remove-scroll'
+import 'styles/global.css'
 
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({
@@ -23,7 +23,8 @@ type Props = {
 export default async function RootLayout({ children }: Props) {
   return (
     <html lang="es" className={`${inter.variable}`}>
-      <body className="bg-zinc-50">{children}</body>
+      {/* <body className={`bg-zinc-50 ${RemoveScroll.classNames.fullWidth}`}> */}
+      <body className={`bg-zinc-50 !mr-0`}>{children}</body>
     </html>
   )
 }

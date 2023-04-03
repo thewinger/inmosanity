@@ -1,9 +1,11 @@
 {
-  "extends": ["next", "plugin:prettier/recommended"],
-  "plugins": ["simple-import-sort"],
+  "extends": [
+    "next",
+    "plugin:prettier/recommended",
+    "plugin:tailwindcss/recommended"
+  ],
   "rules": {
-    "simple-import-sort/imports": "warn",
-    "simple-import-sort/exports": "warn",
     "react-hooks/exhaustive-deps": "error"
-  }
+  },
+  "plugins": ["tailwindcss"]
 }
