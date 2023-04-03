@@ -45,13 +45,13 @@ const SelectContent = React.forwardRef<
       )}
       {...props}
     >
-      <SelectPrimitive.ScrollUpButton className=" w-full grid place-items-center">
+      <SelectPrimitive.ScrollUpButton className=" grid w-full place-items-center">
         <KeyboardArrowUpIcon className="h-4 w-4 opacity-75" />
       </SelectPrimitive.ScrollUpButton>
       <SelectPrimitive.Viewport className="p-1">
         {children}
       </SelectPrimitive.Viewport>
-      <SelectPrimitive.ScrollDownButton className="w-full grid place-items-center">
+      <SelectPrimitive.ScrollDownButton className="grid w-full place-items-center">
         <KeyboardArrowDownIcon className="h-4 w-4 opacity-75" />
       </SelectPrimitive.ScrollDownButton>
     </SelectPrimitive.Content>

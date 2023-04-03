@@ -15,7 +15,7 @@ export default function FilterBarFallback() {
 
   return (
     <div className="relative">
-      <div className="inset-0 bg-white shadow-sm shadow-zinc-200 px-4 py-2 w-full md:px-6 data-[state=open]:relative  data-[state=open]:z-50">
+      <div className="inset-0 w-full bg-white px-4 py-2 shadow-sm shadow-zinc-200 data-[state=open]:relative data-[state=open]:z-50  md:px-6">
         <div className="flex items-center gap-2">
           <Select>
             <SelectTrigger className="shrink-0 grow  self-stretch">
@@ -36,7 +36,7 @@ export default function FilterBarFallback() {
             </SelectContent>
           </Select>
 
-          <button className="ring-1 ring-zinc-200 hover:ring-zinc-300 relative flex h-10 shrink grow-0 items-center justify-center gap-2 shadow-sm rounded-md bg-gradient-to-b from-white to-zinc-50 py-2 px-3 text-sm text-zinc-700  outline-none transition ">
+          <button className="relative flex h-10 shrink grow-0 items-center justify-center gap-2 rounded-md bg-gradient-to-b from-white to-zinc-50 px-3 py-2 text-sm text-zinc-700 shadow-sm outline-none ring-1 ring-zinc-200  transition hover:ring-zinc-300 ">
             <span>Filtros</span>
             <TuneIcon className="h-4 w-4" />
           </button>

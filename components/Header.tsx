@@ -12,7 +12,7 @@ export default async function Header() {
   const filters = await getFiltersDropdownValues()
 
   return (
-    <header className="absolute top-0 inset-x-0 z-50 grid grid-flow-row auto-rows-auto divide-y divide-zinc-100 bg-white">
+    <header className="absolute inset-x-0 top-0 z-50 grid grid-flow-row auto-rows-auto divide-y divide-zinc-100 bg-white">
       <div className="flex items-center justify-between  px-4 py-2 md:px-6">
         <Link href={`/`}>
           <h1 className="sr-only">Inmogolf Bonalba</h1>

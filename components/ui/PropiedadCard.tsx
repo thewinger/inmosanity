@@ -1,3 +1,4 @@
+import Pill from './Pill'
 import BathtubTwoToneIcon from '@mui/icons-material/BathtubTwoTone'
 import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
 import HotelTwoToneIcon from '@mui/icons-material/HotelTwoTone'
@@ -8,8 +9,6 @@ import { formatEUR } from 'lib/helpers'
 import { IPropiedad } from 'lib/interfaces'
 import { urlForImage } from 'lib/sanity.image'
 import Image from 'next/image'
-
-import Pill from './Pill'
 
 type Props = {
   propiedad: IPropiedad

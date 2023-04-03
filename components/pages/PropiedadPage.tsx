@@ -2,7 +2,6 @@ import ProductSlider from '../ProductSlider'
 import Pill from '../ui/Pill'
 import { formatEUR } from 'lib/helpers'
 import { IPropiedad } from 'lib/interfaces'
-import { urlForImage } from 'lib/sanity.image'
 import { notFound } from 'next/navigation'
 import {
   MdOutlineBathtub,
@@ -32,21 +31,15 @@ export default function PropiedadPage(props: PropiedadPageProps) {
   if (!slug) {
     notFound()
   }
-
-  const imagesUrl: ILocalImage[] = propiedad.images.map((imagen) => {
-    return {
-      sourceUrl: urlForImage(imagen).url(),
-      title: imagen.asset._ref,
-    }
-  })
-
   return (
     <>
-      <div className="relative mx-auto mb-24 grid max-w-5xl auto-rows-auto grid-cols-1 gap-4 bg-white pt-4 pb-12 text-zinc-800 lg:grid-cols-2 lg:gap-y-10 lg:px-6 lg:shadow-md xl:shadow-md">
+      <div className="relative mx-auto mb-24 grid max-w-5xl auto-rows-auto grid-cols-1 gap-4 bg-white pb-12 pt-4 text-zinc-800 lg:grid-cols-2 lg:gap-y-10 lg:px-6 lg:shadow-md xl:shadow-md">
         <div className="lg:-col-end-1 relative flex flex-col md:flex-row md:items-start md:gap-2 lg:row-span-3">
           <Pill>{propiedad.operacion.replace('-', ' ').toUpperCase()}</Pill>
           <div className="sliderContainer lg:px4 relative flex grow items-center justify-center overflow-x-hidden">
-            <ProductSlider key={propiedad.slug} slides={imagesUrl} />
+            {propiedad.images && (
+              <ProductSlider key={propiedad.slug} slides={propiedad.images} />
+            )}
           </div>
         </div>
 
@@ -129,7 +122,7 @@ export default function PropiedadPage(props: PropiedadPageProps) {
           </div>
         </div>
 
-        <div className="my-6 mx-4 lg:col-start-2 lg:my-0">
+        <div className="mx-4 my-6 lg:col-start-2 lg:my-0">
           {propiedad.caracteristicas && (
             <div className="rounded-lg border-2 border-zinc-100 bg-zinc-50 p-2">
               <ul className="flex flex-1 list-inside list-none flex-wrap justify-center gap-4 p-2 capitalize">
@@ -162,7 +155,7 @@ export default function PropiedadPage(props: PropiedadPageProps) {
           </div>
         )}
       </div>
-      <div className="fixed bottom-0 left-0 right-0 m-2 flex items-center justify-around rounded-xl border-2 border-white bg-white/60 p-4 shadow-xl backdrop-blur sm:hidden md:hidden">
+      <div className="fixed inset-x-0 bottom-0 m-2 flex items-center justify-around rounded-xl border-2 border-white bg-white/60 p-4 shadow-xl backdrop-blur sm:hidden md:hidden">
         {propiedad.price && (
           <div className="flex grow items-baseline">
             <span className="text-2xl font-bold text-zinc-900 ">

@@ -12,7 +12,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from './ui/select'
+} from '@/components/ui/select'
 import { IFiltersDD } from '@/lib/interfaces'
 import CloseIcon from '@mui/icons-material/Close'
 import SearchIcon from '@mui/icons-material/Search'
@@ -81,7 +81,7 @@ export default function FilterBar({
       <Collapsible
         open={isOpen}
         onOpenChange={setIsOpen}
-        className="inset-0 bg-white shadow-sm shadow-zinc-200 px-4 py-2 w-full md:px-6 "
+        className="inset-0 w-full bg-white px-4 py-2 shadow-sm shadow-zinc-200 md:px-6 "
       >
         <div className="flex items-center gap-2">
           <Select onValueChange={(value) => updateFilters('operacion', value)}>
@@ -109,7 +109,7 @@ export default function FilterBar({
                 isOpen
                   ? 'bg-gradient-to-b from-zinc-100 to-zinc-50'
                   : 'bg-gradient-to-b from-white to-zinc-50'
-              } ring-1 ring-zinc-200 hover:ring-zinc-300 relative flex h-10 shrink grow-0 items-center justify-center gap-2 shadow-sm rounded-md  py-2 px-3 text-sm text-zinc-700  outline-none transition `}
+              } relative flex h-10 shrink grow-0 items-center justify-center gap-2 rounded-md px-3 py-2 text-sm text-zinc-700  shadow-sm outline-none ring-1 ring-zinc-200  transition hover:ring-zinc-300 `}
             >
               <span>Filtros</span>
               {isOpen ? (
@@ -131,7 +131,7 @@ export default function FilterBar({
 
         <CollapsibleContent className="flex flex-col gap-2 ">
           <div className="my-6">
-            <div className="grid w-full justify-stretch max-w-sm items-center gap-1.5">
+            <div className="grid w-full max-w-sm items-center justify-stretch gap-1.5">
               <Label htmlFor="tipo">Tipo de propiedad</Label>
               <Select
                 name="tipo"

@@ -27,7 +27,7 @@ const FeaturedSlider = ({ propiedades }: PropType) => {
             <Link
               key={propiedad.slug}
               href={`/propiedad/${propiedad.slug}`}
-              className="embla__slide relative aspect-[3/2] min-w-0 flex-shrink-0 flex-grow-0 basis-5/6"
+              className="embla__slide relative aspect-[3/2] min-w-0 shrink-0 grow-0 basis-5/6"
             >
               <Pill>
                 {`${propiedad.tipo} - ${propiedad.operacion.replace('-', ' ')}`}

@@ -1,8 +1,7 @@
+import { RuleType } from './schemaTypes'
 import { isUniqueAcrossAllDocuments } from 'lib/sanity.isUniqueAcrossAllDocuments'
 import { HiHome } from 'react-icons/hi2'
 import { PreviewProps } from 'sanity'
-
-import { RuleType } from './schemaTypes'
 
 const propiedad = {
   name: 'propiedad',

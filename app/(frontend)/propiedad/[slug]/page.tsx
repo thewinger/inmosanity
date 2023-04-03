@@ -1,7 +1,6 @@
+import PropiedadPage from '@/components/pages/PropiedadPage'
 import { getAllPropiedadesSlug, getPropiedadBySlug } from 'lib/sanity.client'
 import type { Metadata } from 'next'
-
-import PropiedadPage from '@/components/pages/PropiedadPage'
 
 interface IParams {
   params: {

@@ -1,5 +1,3 @@
-import { createClient } from 'next-sanity'
-
 import { apiVersion, dataset, projectId, useCdn } from './env'
 import { IFiltersDD, IFrontPage, IPropiedad } from './interfaces'
 import {
@@ -8,32 +6,44 @@ import {
   propiedadBySlugQuery,
   propiedadSlugsQuery,
 } from './sanity.queries'
+import { createClient } from 'next-sanity'
 
 export const client = projectId
   ? createClient({ apiVersion, dataset, projectId, useCdn })
   : null
 
-export async function getFrontPage(): Promise<IFrontPage> {
-  return await client.fetch(frontPageQuery)
+export async function getFrontPage(): Promise<IFrontPage | undefined> {
+  if (client) {
+    return await client?.fetch(frontPageQuery)
+  }
+
+  return
 }
 
-export async function getFiltersDropdownValues(): Promise<IFiltersDD> {
-  return await client.fetch(filtersDropdownValues)
+export async function getFiltersDropdownValues(): Promise<
+  IFiltersDD | undefined
+> {
+  return await client?.fetch(filtersDropdownValues)
 }
 
 export async function getAllPropiedadesSlug(): Promise<
   Pick<IPropiedad, 'slug'>[]
 > {
-  const slugs: string[] = await client.fetch(propiedadSlugsQuery)
-  return slugs.map((slug) => ({ slug }))
+  if (client) {
+    const slugs: string[] = await client?.fetch(propiedadSlugsQuery)
+    return slugs?.map((slug) => ({ slug }))
+  }
+  return []
 }
 
 export async function getPropiedadBySlug({
   slug,
-  token,
 }: {
   slug: string
-  token?: string
-}): Promise<IPropiedad> {
-  return await client.fetch(propiedadBySlugQuery, { slug })
+}): Promise<IPropiedad | undefined> {
+  if (client) {
+    return await client.fetch(propiedadBySlugQuery, { slug })
+  }
+
+  return
 }

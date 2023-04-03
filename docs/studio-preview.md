@@ -10,9 +10,8 @@ To add Studio preview to a document schema:
 
 ```ts
 // ./sanity/structure.ts
-import { DefaultDocumentNodeResolver, StructureResolver } from 'sanity/desk'
-
 import { IFramePreviewView } from './components/IFramePreviewView'
+import { DefaultDocumentNodeResolver, StructureResolver } from 'sanity/desk'
 
 // Example on how to add views for a schemaType
 // https://www.sanity.io/docs/create-custom-document-views-with-structure-builder
