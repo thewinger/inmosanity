@@ -48,20 +48,20 @@ const ProductSlider = ({ slides }: PropType) => {
   })
 
   return (
-    <div className="flex w-full flex-col">
-      <div className="embla relative m-0 mb-4 block w-full overflow-hidden rounded p-0">
-        <div className="embla__viewport w-full" ref={mainViewportRef}>
-          <div className="embla__container xoverflow-x-hidden flex h-full gap-2">
+    <div className='flex w-full flex-col'>
+      <div className='embla relative m-0 mb-4 block w-full overflow-hidden rounded p-0'>
+        <div className='embla__viewport w-full' ref={mainViewportRef}>
+          <div className='embla__container xoverflow-x-hidden flex h-full gap-2'>
             {formattedSlides.map((slide, index) => (
-              <div className="embla__slide min-w-full" key={index}>
-                <div className="embla__slide__inner relative aspect-[3/2] overflow-hidden rounded">
+              <div className='embla__slide min-w-full' key={index}>
+                <div className='embla__slide__inner relative aspect-[3/2] overflow-hidden rounded'>
                   <Image
-                    className="embla__slide__img relative block rounded object-cover"
+                    className='embla__slide__img relative block rounded object-cover'
                     src={slide.sourceUrl}
                     alt={slide.title ? slide.title : ''}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 768px"
-                    placeholder="blur"
+                    sizes='(max-width: 1024px) 100vw, 768px'
+                    placeholder='blur'
                     blurDataURL={Shimmer}
                     priority
                   />
@@ -72,9 +72,9 @@ const ProductSlider = ({ slides }: PropType) => {
         </div>
       </div>
 
-      <div className="embla embla--thumb relative m-0  block w-full overflow-hidden p-0">
-        <div className="embla__viewport w-full " ref={thumbViewportRef}>
-          <div className="embla__container embla__container--thumb xoverflow-x-hidden flex h-full gap-1">
+      <div className='embla embla--thumb relative m-0  block w-full overflow-hidden p-0'>
+        <div className='embla__viewport w-full ' ref={thumbViewportRef}>
+          <div className='embla__container embla__container--thumb xoverflow-x-hidden flex h-full gap-1'>
             {formattedSlides.map((slide, index) => (
               <Thumb
                 onClick={() => onThumbClick(index)}

@@ -18,14 +18,14 @@ export const Thumb = ({ selected, onClick, imgSrc, imgTitle }: PropType) => (
   >
     <button
       onClick={onClick}
-      className="embla__slide__inner embla__slide__inner--thumb relative aspect-[3/2] w-full"
-      type="button"
+      className='embla__slide__inner embla__slide__inner--thumb relative aspect-[3/2] w-full'
+      type='button'
     >
       <Image
-        className="embla__slide__thumbnail  relative block rounded object-cover"
+        className='embla__slide__thumbnail  relative block rounded object-cover'
         src={imgSrc}
         alt={imgTitle}
-        sizes="(max-width: 420px) 100vw, 420px"
+        sizes='(max-width: 420px) 100vw, 420px'
         fill
         priority
       />

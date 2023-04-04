@@ -8,7 +8,7 @@ export default function IndexRoute({ children }: { children: ReactNode }) {
     <>
       {/* @ts-expect-error Server Component */}
       <Header />
-      <main className="pt-32">{children}</main>
+      <main className='pt-32'>{children}</main>
       <Footer />
     </>
   )

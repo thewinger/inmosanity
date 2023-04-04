@@ -22,7 +22,7 @@ type Props = {
 
 export default async function RootLayout({ children }: Props) {
   return (
-    <html lang="es" className={`${inter.variable}`}>
+    <html lang='es' className={`${inter.variable}`}>
       {/* <body className={`bg-zinc-50 ${RemoveScroll.classNames.fullWidth}`}> */}
       <body className={`!mr-0 bg-zinc-50`}>{children}</body>
     </html>

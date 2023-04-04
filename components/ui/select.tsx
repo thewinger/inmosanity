@@ -27,7 +27,7 @@ const SelectTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <UnfoldMoreIcon className="h-4 w-4 opacity-50" />
+    <UnfoldMoreIcon className='h-4 w-4 opacity-50' />
   </SelectPrimitive.Trigger>
 ))
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
@@ -45,14 +45,14 @@ const SelectContent = React.forwardRef<
       )}
       {...props}
     >
-      <SelectPrimitive.ScrollUpButton className=" grid w-full place-items-center">
-        <KeyboardArrowUpIcon className="h-4 w-4 opacity-75" />
+      <SelectPrimitive.ScrollUpButton className=' grid w-full place-items-center'>
+        <KeyboardArrowUpIcon className='h-4 w-4 opacity-75' />
       </SelectPrimitive.ScrollUpButton>
-      <SelectPrimitive.Viewport className="p-1">
+      <SelectPrimitive.Viewport className='p-1'>
         {children}
       </SelectPrimitive.Viewport>
-      <SelectPrimitive.ScrollDownButton className="grid w-full place-items-center">
-        <KeyboardArrowDownIcon className="h-4 w-4 opacity-75" />
+      <SelectPrimitive.ScrollDownButton className='grid w-full place-items-center'>
+        <KeyboardArrowDownIcon className='h-4 w-4 opacity-75' />
       </SelectPrimitive.ScrollDownButton>
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
@@ -86,9 +86,9 @@ const SelectItem = React.forwardRef<
     )}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className='absolute left-2 flex h-3.5 w-3.5 items-center justify-center'>
       <SelectPrimitive.ItemIndicator>
-        <CheckIcon className="h-4 w-4" />
+        <CheckIcon className='h-4 w-4' />
       </SelectPrimitive.ItemIndicator>
     </span>
 
