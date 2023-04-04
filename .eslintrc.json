@@ -1,8 +1,0 @@
-{
-  "extends": ["next", "plugin:prettier/recommended"],
-  "rules": {
-    "react-hooks/exhaustive-deps": "error"
-  },
-
-  "plugins": ["tailwindcss"]
-}

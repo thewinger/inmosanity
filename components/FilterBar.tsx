@@ -37,6 +37,7 @@ export default function FilterBar({
   localizacionDD,
   operacionDD,
   tipoDD,
+  total,
 }: IFiltersDD) {
   const [filtersDD, setFiltersDD] = useState<IFiltersDD>({
     priceRentDD,
@@ -46,6 +47,7 @@ export default function FilterBar({
     localizacionDD,
     operacionDD,
     tipoDD,
+    total,
   })
 
   const [filters, setFilters] = useState<IFilters>({})
@@ -76,27 +78,26 @@ export default function FilterBar({
     router.push(`/propiedades?` + createQueryString(filters))
   }
 
+  console.log(filtersDD)
+
   return (
-    <div className="relative">
+    <div className='relative'>
       <Collapsible
         open={isOpen}
         onOpenChange={setIsOpen}
-        className="inset-0 w-full bg-white px-4 py-2 shadow-sm shadow-zinc-200 md:px-6 "
+        className='inset-0 w-full bg-white px-4 py-2 shadow-sm shadow-zinc-200 md:px-6 '
       >
-        <div className="flex items-center gap-2">
+        <div className='flex items-center gap-2'>
           <Select onValueChange={(value) => updateFilters('operacion', value)}>
-            <SelectTrigger className="shrink-0 grow  self-stretch">
-              <SelectValue
-                placeholder="Tipo de Operacion"
-                className="text-left"
-              />
+            <SelectTrigger className='shrink-0 grow  self-stretch'>
+              <SelectValue placeholder='Tipo de operación' className='' />
             </SelectTrigger>
             <SelectContent
-              position="popper"
-              className="max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]"
+              position='popper'
+              className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
             >
-              {filtersDD.operacionDD?.map((item) => (
-                <SelectItem key={item} value={item}>
+              {filtersDD.operacionDD?.map((item, i) => (
+                <SelectItem key={i} value={item}>
                   {item.replace('-', ' ')}
                 </SelectItem>
               ))}
@@ -113,40 +114,64 @@ export default function FilterBar({
             >
               <span>Filtros</span>
               {isOpen ? (
-                <CloseIcon className="h-4 w-4" />
+                <CloseIcon className='h-4 w-4' />
               ) : (
-                <TuneIcon className="h-4 w-4" />
+                <TuneIcon className='h-4 w-4' />
               )}
             </button>
           </CollapsibleTrigger>
 
           <button
             onClick={handleFilters}
-            className="flex gap-1 rounded-md bg-gradient-to-b from-green-600 to-emerald-700 p-2 text-white"
+            className='flex gap-1 rounded-md bg-gradient-to-b from-green-600 to-emerald-700 p-2 text-white'
           >
-            <SearchIcon className="h-6 w-6" />
-            <span className="sr-only hidden md:inline">Buscar</span>
+            <SearchIcon className='h-6 w-6' />
+            <span className='sr-only hidden md:inline'>Buscar</span>
           </button>
         </div>
 
-        <CollapsibleContent className="flex flex-col gap-2 ">
-          <div className="my-6">
-            <div className="grid w-full max-w-sm items-center justify-stretch gap-1.5">
-              <Label htmlFor="tipo">Tipo de propiedad</Label>
+        <CollapsibleContent className=''>
+          <div className='my-6 flex flex-col gap-4 '>
+            <div className='grid w-full max-w-sm items-center justify-stretch gap-1.5'>
+              <Label htmlFor='tipo'>Tipo de propiedad</Label>
               <Select
-                name="tipo"
-                defaultValue="Todas"
+                name='tipo'
                 onValueChange={(value) => updateFilters('tipo', value)}
               >
-                <SelectTrigger className="">
+                <SelectTrigger>
                   <SelectValue
-                    placeholder="Seleccione un tipo de propiedad..."
-                    className="text-left"
+                    placeholder='Seleccione un tipo de propiedad...'
+                    className=''
                   />
                 </SelectTrigger>
                 <SelectContent
-                  position="popper"
-                  className="max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]"
+                  position='popper'
+                  className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
+                >
+                  {filtersDD.tipoDD?.map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className='grid w-full max-w-sm items-center justify-stretch gap-1.5'>
+              <Label htmlFor='tipo'>Localizacion</Label>
+              <Select
+                name='localizacion'
+                onValueChange={(value) => updateFilters('localizacion', value)}
+              >
+                <SelectTrigger>
+                  <SelectValue
+                    placeholder='Seleccione localizacion...'
+                    className=''
+                  />
+                </SelectTrigger>
+                <SelectContent
+                  position='popper'
+                  className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
                 >
                   {filtersDD.tipoDD?.map((item) => (
                     <SelectItem key={item.value} value={item.value}>

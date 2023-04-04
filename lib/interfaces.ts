@@ -48,29 +48,33 @@ interface parentTitle {
   title: string
 }
 
-interface IFilter {
+export interface IFilterNum {
   min: number
   max: number
 }
 
-interface IFilterOption {
+export interface IFilterString {
   name: string
   value: string
 }
 
-interface IParentLocalizacion extends IFilterOption {
-  childLocalizacion?: IFilterOption[]
+interface ILocalizacion extends IFilterString {
+  name: string
+  value: string
+  count: number
 }
-interface IFilterLocalizacion {
-  parentLocalizacion: IParentLocalizacion[]
+
+export interface IFilterParentLocalizacion extends ILocalizacion {
+  childLocalizacion: ILocalizacion[]
 }
 
 export interface IFiltersDD {
-  priceRentDD: IFilter
-  priceSaleDD: IFilter
-  bedroomsDD: number
-  bathroomsDD: number
+  priceRentDD: IFilterNum
+  priceSaleDD: IFilterNum
+  bedroomsDD: IFilterNum
+  bathroomsDD: IFilterNum
   operacionDD: string[]
-  localizacionDD: IFilterLocalizacion[]
-  tipoDD: IFilterOption[]
+  localizacionDD: IFilterParentLocalizacion[]
+  tipoDD: IFilterString[]
+  total: number
 }

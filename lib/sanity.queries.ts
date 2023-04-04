@@ -43,38 +43,57 @@ export const propiedadBySlugQuery = groq`
   }
 `
 
-export const filtersDropdownValues = groq`
-{
-  "operacionDD": array::unique(*[_type == "propiedad" ].operacion),
-  "tipoDD": array::unique(*[_type =="tipo" ]{
-      "name": title,
-      "value":_id
-    }),
-  "localizacionDD": {
-    "parentLocalizacion": *[_type == 'localizacion' && !defined(parent) && count(*[ _type == 'propiedad' && references(^._id)]) > 0]{
+export const operacionDD = groq`
+  array::unique(*[_type == "propiedad" ].operacion)
+`
+
+export const tipoDD = groq`
+  array::unique(*[_type =="tipo"  && count(*[ _type == 'propiedad' && references(^._id)]) > 0]{
+    "name": title,
+    "value":_id
+  })
+`
+export const localizacionDD = groq`
+  *[_type == 'localizacion' && !defined(parent) && count(*[ _type == 'propiedad' && references(^._id)]) > 0]{
+    "value": _id,
+    "name": title,
+    "count": count(*[ _type == 'propiedad' && references(^._id)]),
+    "childLocalizacion": *[_type == 'localizacion' && references(^._id) && count(*[ _type == 'propiedad' && references(^._id)]) > 0]{
       "value": _id,
       "name": title,
-      "childLocalizacion": *[_type == 'localizacion' && references(^._id) && count(*[ _type == 'propiedad' && references(^._id)]) > 0]{
-        "value": _id,
-        "name": title,
-      }
-    } | order(title asc)
-  },
-  "maxPriceSaleDD": {
+      "count": count(*[ _type == 'propiedad' && references(^._id)]),
+    }
+  } | order(title asc)
+`
+
+export const maxPriceSaleDD = groq`
+  {
     "min": 0,
     "max": math::max(*[_type == 'propiedad' && operacion != 'en-alquiler'].price),
-  },
-  "maxPriceRentDD": {
+  }
+`
+
+export const maxPriceRentDD = groq`
+  {
     "min": 0,
     "max": math::max(*[_type == 'propiedad' && operacion == 'en-alquiler'].price),
-  },
-  "bathroomsDD": {
+  }
+`
+
+export const bathroomsDD = groq`
+  {
     "min": 0,
     "max": math::max(*[_type == 'propiedad'].bathrooms),
-  },
+  }
+`
 
-  "bedroomsDD": {
+export const bedroomsDD = groq`
+  {
     "min": 0,
     "max": math::max(*[_type == 'propiedad'].bedrooms),
-  },
-}`
+  }
+`
+
+export const total = groq`
+  count(*[_type == 'propiedad'])
+`

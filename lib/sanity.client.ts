@@ -1,10 +1,24 @@
 import { apiVersion, dataset, projectId, useCdn } from './env'
-import { IFiltersDD, IFrontPage, IPropiedad } from './interfaces'
 import {
-  filtersDropdownValues,
+  IFilterNum,
+  IFilterParentLocalizacion,
+  IFiltersDD,
+  IFilterString,
+  IFrontPage,
+  IPropiedad,
+} from './interfaces'
+import {
+  bathroomsDD,
+  bedroomsDD,
   frontPageQuery,
+  localizacionDD,
+  maxPriceRentDD,
+  maxPriceSaleDD,
+  operacionDD,
   propiedadBySlugQuery,
   propiedadSlugsQuery,
+  tipoDD,
+  total,
 } from './sanity.queries'
 import { createClient } from 'next-sanity'
 
@@ -22,7 +36,45 @@ export async function getFrontPage(): Promise<IFrontPage> {
 
 export async function getFiltersDropdownValues(): Promise<IFiltersDD> {
   if (client) {
-    return (await client?.fetch(filtersDropdownValues)) || ({} as any)
+    const bathroomsData = client.fetch(bathroomsDD)
+    const bedroomsData = client.fetch(bedroomsDD)
+    const priceRentData = client.fetch(maxPriceRentDD)
+    const priceSaleData = client.fetch(maxPriceSaleDD)
+    const localizacionData = client.fetch(localizacionDD)
+    const tipoData = client.fetch(tipoDD)
+    const operacionData = client.fetch(operacionDD)
+    const totalData = client.fetch(total)
+
+    const [
+      bathroomsValues,
+      bedroomsValues,
+      priceRentValues,
+      priceSaleValues,
+      localizacionValues,
+      tipoValues,
+      operacionValues,
+      totalValues,
+    ] = await Promise.all([
+      bathroomsData,
+      bedroomsData,
+      priceRentData,
+      priceSaleData,
+      localizacionData,
+      tipoData,
+      operacionData,
+      totalData,
+    ])
+
+    return {
+      bathroomsDD: bathroomsValues,
+      bedroomsDD: bedroomsValues,
+      priceRentDD: priceRentValues,
+      priceSaleDD: priceSaleValues,
+      localizacionDD: localizacionValues,
+      tipoDD: tipoValues,
+      operacionDD: operacionValues,
+      total: totalValues,
+    }
   }
 
   return {} as any
