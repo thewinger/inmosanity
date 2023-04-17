@@ -1,14 +1,16 @@
-import Pill from './Pill'
-import BathtubTwoToneIcon from '@mui/icons-material/BathtubTwoTone'
-import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
-import HotelTwoToneIcon from '@mui/icons-material/HotelTwoTone'
-import HouseTwoToneIcon from '@mui/icons-material/HouseTwoTone'
-import PlaceTwoToneIcon from '@mui/icons-material/PlaceTwoTone'
-import StraightenTwoToneIcon from '@mui/icons-material/StraightenTwoTone'
 import { formatEUR } from 'lib/helpers'
 import { IPropiedad } from 'lib/interfaces'
 import { urlForImage } from 'lib/sanity.image'
 import Image from 'next/image'
+import {
+  BathtubIcon,
+  BedIcon,
+  BuildingsIcon,
+  CalendarBlankIcon,
+  MapPinIcon,
+  RulerIcon,
+} from './icons'
+import Pill from './Pill'
 
 type Props = {
   propiedad: IPropiedad
@@ -48,14 +50,14 @@ export default function PropiedadCard({ propiedad }: Props) {
 
               <div className=' mb-2 flex flex-col gap-1'>
                 <div className='flex items-center gap-1 text-lg text-zinc-500'>
-                  <HouseTwoToneIcon className='h-6 w-6' />
+                  <BuildingsIcon size={24} weight='duotone' />
                   <span className='capitalize text-zinc-700'>
                     {propiedad.tipo}
                   </span>
                 </div>
 
                 <div className='flex items-center gap-1 text-lg text-zinc-500'>
-                  <PlaceTwoToneIcon className='h-6 w-6' />
+                  <MapPinIcon size={24} weight='duotone' />
                   <div className='capitalize text-zinc-700'>
                     {propiedad.localizacionPadre && (
                       <span>{propiedad.localizacionPadre.parent.title} - </span>
@@ -68,21 +70,20 @@ export default function PropiedadCard({ propiedad }: Props) {
               <div className='text-md grid grid-flow-col grid-rows-1 border-t border-zinc-300 pt-4'>
                 {propiedad.bedrooms && (
                   <div className='flex items-center justify-center gap-1 text-zinc-500'>
-                    <HotelTwoToneIcon className='h-5 w-5' />
-                    {/* <MdOutlineBed size={20} /> */}
+                    <BedIcon size={20} weight='duotone' />
                     <span className='text-zinc-700'>{propiedad.bedrooms}</span>
                   </div>
                 )}
 
                 {propiedad.bathrooms && (
                   <div className='flex items-center justify-center gap-1 text-zinc-500'>
-                    <BathtubTwoToneIcon className='h-5 w-5' />
+                    <BathtubIcon size={24} weight='duotone' />
                     <span className='text-zinc-700'>{propiedad.bathrooms}</span>
                   </div>
                 )}
                 {propiedad.size && (
                   <div className='flex items-center justify-center gap-1 text-zinc-500'>
-                    <StraightenTwoToneIcon className='h-5 w-5' />
+                    <RulerIcon size={20} weight='duotone' />
                     <span className='text-md text-zinc-700'>
                       {propiedad.size}
                     </span>
@@ -93,7 +94,7 @@ export default function PropiedadCard({ propiedad }: Props) {
                 )}
                 {propiedad.year && (
                   <div className='flex items-center justify-center gap-1 text-zinc-500'>
-                    <CalendarMonthTwoToneIcon className='h-5 w-5' />
+                    <CalendarBlankIcon size={20} weight='duotone' />
                     <span className='text-zinc-700'>{propiedad.year}</span>
                   </div>
                 )}

@@ -1,10 +1,12 @@
-'use client'
-
+import { IFiltersDD } from '@/lib/interfaces'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useCallback, useState } from 'react'
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from './ui/collapsible'
+import { FadersIcon, XIcon } from './ui/icons'
 import { Label } from './ui/label'
 import {
   Select,
@@ -13,12 +15,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select'
-import { IFiltersDD } from '@/lib/interfaces'
-import CloseIcon from '@mui/icons-material/Close'
-import SearchIcon from '@mui/icons-material/Search'
-import TuneIcon from '@mui/icons-material/Tune'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useState } from 'react'
 
 interface IFilters {
   price?: string
@@ -29,7 +25,7 @@ interface IFilters {
   tipo?: string
 }
 
-export default function FilterBar({
+const FilterBar = ({
   bathroomsDD,
   bedroomsDD,
   priceRentDD,
@@ -38,7 +34,7 @@ export default function FilterBar({
   operacionDD,
   tipoDD,
   total,
-}: IFiltersDD) {
+}: IFiltersDD) => {
   const [filtersDD, setFiltersDD] = useState<IFiltersDD>({
     priceRentDD,
     priceSaleDD,
@@ -53,6 +49,7 @@ export default function FilterBar({
   const [filters, setFilters] = useState<IFilters>({})
   const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
+  const pathname = usePathname()
   const searchParams = useSearchParams()!
 
   const updateFilters = (key: string, value: string) => {
@@ -78,57 +75,27 @@ export default function FilterBar({
     router.push(`/propiedades?` + createQueryString(filters))
   }
 
-  console.log(filtersDD)
+  const contentFrontPage = <div className='bg-green-500 pt-32'></div>
 
-  return (
-    <div className='relative'>
+  const contentRest = (
+    <>
       <Collapsible
         open={isOpen}
         onOpenChange={setIsOpen}
         className='inset-0 w-full bg-white px-4 py-2 shadow-sm shadow-zinc-200 md:px-6 '
       >
-        <div className='flex items-center gap-2'>
-          <Select onValueChange={(value) => updateFilters('operacion', value)}>
-            <SelectTrigger className='shrink-0 grow  self-stretch'>
-              <SelectValue placeholder='Tipo de operación' className='' />
-            </SelectTrigger>
-            <SelectContent
-              position='popper'
-              className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
-            >
-              {filtersDD.operacionDD?.map((item, i) => (
-                <SelectItem key={i} value={item}>
-                  {item.replace('-', ' ')}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <CollapsibleTrigger asChild>
-            <button
-              className={`${
-                isOpen
-                  ? 'bg-gradient-to-b from-zinc-100 to-zinc-50'
-                  : 'bg-gradient-to-b from-white to-zinc-50'
-              } relative flex h-10 shrink grow-0 items-center justify-center gap-2 rounded-md px-3 py-2 text-sm text-zinc-700  shadow-sm outline-none ring-1 ring-zinc-200  transition hover:ring-zinc-300 `}
-            >
-              <span>Filtros</span>
-              {isOpen ? (
-                <CloseIcon className='h-4 w-4' />
-              ) : (
-                <TuneIcon className='h-4 w-4' />
-              )}
-            </button>
-          </CollapsibleTrigger>
-
+        <CollapsibleTrigger asChild>
           <button
-            onClick={handleFilters}
-            className='flex gap-1 rounded-md bg-gradient-to-b from-green-600 to-emerald-700 p-2 text-white'
+            className={`${
+              isOpen
+                ? 'bg-gradient-to-b from-zinc-100 to-zinc-50'
+                : 'bg-gradient-to-b from-white to-zinc-100'
+            } relative flex h-10 w-full items-center justify-center gap-2 rounded-md px-3 py-2 text-sm text-zinc-800  shadow-sm shadow-black/5 outline-none ring-1 ring-zinc-200  transition hover:ring-zinc-300 `}
           >
-            <SearchIcon className='h-6 w-6' />
-            <span className='sr-only hidden md:inline'>Buscar</span>
+            <span>Filtros</span>
+            {isOpen ? <XIcon size={16} /> : <FadersIcon size={16} />}
           </button>
-        </div>
+        </CollapsibleTrigger>
 
         <CollapsibleContent className=''>
           <div className='my-6 flex flex-col gap-4 '>
@@ -184,6 +151,14 @@ export default function FilterBar({
           </div>
         </CollapsibleContent>
       </Collapsible>
+    </>
+  )
+
+  return (
+    <div className='relative'>
+      {pathname == '/' ? contentFrontPage : contentRest}
     </div>
   )
 }
+
+export default FilterBar

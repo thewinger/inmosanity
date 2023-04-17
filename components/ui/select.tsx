@@ -1,12 +1,9 @@
 'use client'
 
 import { cn } from '@/lib/helpers'
-import CheckIcon from '@mui/icons-material/Check'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import * as React from 'react'
+import { CaretDownIcon, CaretUpDownIcon, CaretUpIcon, CheckIcon } from './icons'
 
 const Select = SelectPrimitive.Root
 
@@ -21,13 +18,13 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'first-letter:uppercase ring-1 ring-zinc-200 hover:ring-zinc-300 relative flex h-10 items-center justify-between gap-2 rounded-md bg-gradient-to-b from-white to-zinc-50 py-2 px-3 text-sm text-zinc-700  outline-none transition',
+      'relative flex h-10 items-center justify-between gap-2 rounded-md bg-input px-3 py-2 text-base font-medium text-zinc-700 shadow-input outline-none  transition  first-letter:uppercase hover:outline-2 focus:outline-2',
       className
     )}
     {...props}
   >
     {children}
-    <UnfoldMoreIcon className='h-4 w-4 opacity-50' />
+    <CaretUpDownIcon size={16} className='opacity-50' />
   </SelectPrimitive.Trigger>
 ))
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
@@ -40,19 +37,19 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        ' relative z-50 overflow-hidden rounded-md border border-zinc-100 bg-white text-zinc-700 shadow-md animate-in fade-in-80 dark:border-zinc-800 dark:bg-zinc-800 dark:text-zinc-400',
+        ' xborder xborder-zinc-100 relative z-50 overflow-hidden rounded-md bg-input text-zinc-700 shadow-md animate-in fade-in-80',
         className
       )}
       {...props}
     >
       <SelectPrimitive.ScrollUpButton className=' grid w-full place-items-center'>
-        <KeyboardArrowUpIcon className='h-4 w-4 opacity-75' />
+        <CaretUpIcon size={16} className='opacity-75' />
       </SelectPrimitive.ScrollUpButton>
       <SelectPrimitive.Viewport className='p-1'>
         {children}
       </SelectPrimitive.Viewport>
       <SelectPrimitive.ScrollDownButton className='grid w-full place-items-center'>
-        <KeyboardArrowDownIcon className='h-4 w-4 opacity-75' />
+        <CaretDownIcon size={16} className='opacity-75' />
       </SelectPrimitive.ScrollDownButton>
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
@@ -66,7 +63,7 @@ const SelectLabel = React.forwardRef<
   <SelectPrimitive.Label
     ref={ref}
     className={cn(
-      'py-1.5 pr-2 pl-8 text-sm font-semibold text-zinc-900 dark:text-zinc-300',
+      'py-1.5 pl-8 pr-2 text-sm font-semibold text-zinc-700',
       className
     )}
     {...props}
@@ -81,14 +78,14 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pr-2 pl-8 text-sm font-medium  outline-none hover:bg-zinc-100  focus:bg-zinc-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-zinc-700 first-letter:capitalize',
+      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm font-medium  outline-none first-letter:capitalize  hover:bg-zinc-100 focus:bg-zinc-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 ',
       className
     )}
     {...props}
   >
     <span className='absolute left-2 flex h-3.5 w-3.5 items-center justify-center'>
       <SelectPrimitive.ItemIndicator>
-        <CheckIcon className='h-4 w-4' />
+        <CheckIcon size={16} />
       </SelectPrimitive.ItemIndicator>
     </span>
 
@@ -103,7 +100,7 @@ const SelectSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Separator
     ref={ref}
-    className={cn('-mx-1 my-1 h-px bg-zinc-100 dark:bg-zinc-700', className)}
+    className={cn('-mx-1 my-1 h-px bg-zinc-100 ', className)}
     {...props}
   />
 ))

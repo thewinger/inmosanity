@@ -1,10 +1,12 @@
-import Pill from './ui/Pill'
+'use client'
+
 import useEmblaCarousel from 'embla-carousel-react'
-import Shimmer from 'lib/Shimmer'
 import { IFeatured } from 'lib/interfaces'
 import { urlForImage } from 'lib/sanity.image'
+import Shimmer from 'lib/Shimmer'
 import Image from 'next/image'
 import Link from 'next/link'
+import Pill from './ui/Pill'
 
 type PropType = {
   propiedades: IFeatured[]
@@ -34,7 +36,7 @@ const FeaturedSlider = ({ propiedades }: PropType) => {
               </Pill>
               {propiedad && propiedad.coverImage && (
                 <Image
-                  className='block  w-full rounded object-cover'
+                  className='block  w-full rounded-md object-cover'
                   src={urlForImage(propiedad.coverImage).url()}
                   alt={propiedad.title}
                   fill

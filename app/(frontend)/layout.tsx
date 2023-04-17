@@ -1,5 +1,6 @@
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { ReactNode } from 'react'
 
 export default function IndexRoute({ children }: { children: ReactNode }) {
@@ -8,8 +9,9 @@ export default function IndexRoute({ children }: { children: ReactNode }) {
     <>
       {/* @ts-expect-error Server Component */}
       <Header />
-      <main className='pt-32'>{children}</main>
+      <main className=''>{children}</main>
       <Footer />
+      <TailwindIndicator />
     </>
   )
 }

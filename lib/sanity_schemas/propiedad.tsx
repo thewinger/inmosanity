@@ -1,6 +1,6 @@
-import { RuleType } from './schemaTypes'
 import { isUniqueAcrossAllDocuments } from 'lib/sanity.isUniqueAcrossAllDocuments'
 import { HiHome } from 'react-icons/hi2'
+import { RuleType } from './schemaTypes'
 
 const propiedad = {
   name: 'propiedad',
@@ -77,6 +77,13 @@ const propiedad = {
       to: [{ type: 'tipo' }],
     },
     {
+      name: 'localizacion',
+      title: 'Localización',
+      type: 'reference',
+      to: [{ type: 'localizacion' }],
+      options: { filter: 'defined(parent)' },
+    },
+    {
       name: 'price',
       title: 'Precio',
       type: 'number',
@@ -106,13 +113,6 @@ const propiedad = {
       name: 'description',
       title: 'Descripción',
       type: 'text',
-    },
-    {
-      name: 'localizacion',
-      title: 'Localización',
-      type: 'reference',
-      to: [{ type: 'localizacion' }],
-      options: { filter: 'defined(parent)' },
     },
     {
       name: 'caracteristicas',

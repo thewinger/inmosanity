@@ -1,16 +1,16 @@
-import ProductSlider from '../ProductSlider'
-import Pill from '../ui/Pill'
 import { formatEUR } from 'lib/helpers'
 import { IPropiedad } from 'lib/interfaces'
 import { notFound } from 'next/navigation'
+import ProductSlider from '../ProductSlider'
 import {
-  MdOutlineBathtub,
-  MdOutlineBed,
-  MdOutlineEditCalendar,
-  MdOutlineHouse,
-  MdOutlineLocationOn,
-  MdOutlineStraighten,
-} from 'react-icons/md'
+  BathtubIcon,
+  BedIcon,
+  BuildingsIcon,
+  CalendarBlankIcon,
+  MapPinIcon,
+  RulerIcon,
+} from '../ui/icons'
+import Pill from '../ui/Pill'
 
 export interface PropiedadPageProps {
   preview?: boolean
@@ -62,16 +62,14 @@ export default function PropiedadPage(props: PropiedadPageProps) {
           </div>
           <div className='mb-2 flex flex-col gap-1'>
             <div className='flex items-center gap-1 text-lg text-zinc-500'>
-              <MdOutlineHouse size={24} />
-              {/* <Buildings size={24} weight="duotone" color="currentColor" /> */}
+              <BuildingsIcon size={24} weight='duotone' color='currentColor' />
               <span className='text-md  capitalize text-zinc-800'>
                 {propiedad.tipo}
               </span>
             </div>
 
             <div className='flex items-center gap-1 text-lg text-zinc-500'>
-              <MdOutlineLocationOn size={24} />
-              {/* <MapPin size={24} weight="duotone" color="currentColor" /> */}
+              <MapPinIcon size={24} weight='duotone' color='currentColor' />
               <div className='capitalize text-zinc-800'>
                 {propiedad.localizacionPadre &&
                   propiedad.localizacionPadre.parent && (
@@ -85,8 +83,7 @@ export default function PropiedadPage(props: PropiedadPageProps) {
           <div className='grid grid-flow-col grid-rows-1 border-y border-zinc-300 py-4'>
             {propiedad.bedrooms && (
               <div className='flex items-center justify-center gap-1'>
-                <MdOutlineBed size={20} />
-                {/* <Bed size={20} weight="duotone" color="currentColor" /> */}
+                <BedIcon size={20} weight='duotone' color='currentColor' />
                 <span className='text-md  text-zinc-800'>
                   {propiedad.bedrooms}
                 </span>
@@ -95,8 +92,7 @@ export default function PropiedadPage(props: PropiedadPageProps) {
 
             {propiedad.bathrooms && (
               <div className='flex items-center justify-center gap-1'>
-                <MdOutlineBathtub size={20} />
-                {/* <Bathtub size={20} weight="duotone" color="currentColor" /> */}
+                <BathtubIcon size={20} weight='duotone' color='currentColor' />
                 <span className='text-md  text-zinc-800'>
                   {propiedad.bathrooms}
                 </span>
@@ -104,8 +100,7 @@ export default function PropiedadPage(props: PropiedadPageProps) {
             )}
             {propiedad.size && (
               <div className='flex items-center justify-center gap-1'>
-                <MdOutlineStraighten size={20} />
-                {/* <Ruler size={20} weight="duotone" color="currentColor" /> */}
+                <RulerIcon size={20} weight='duotone' color='currentColor' />
                 <span className='text-md'>{propiedad.size}</span>
                 <span className=''>
                   m<sup className='font-features sups'>2</sup>
@@ -114,8 +109,11 @@ export default function PropiedadPage(props: PropiedadPageProps) {
             )}
             {propiedad.year && (
               <div className='flex items-center justify-center gap-1'>
-                <MdOutlineEditCalendar size={20} />
-                {/* <CalendarBlank size={20} weight="duotone" color="currentColor" /> */}
+                <CalendarBlankIcon
+                  size={20}
+                  weight='duotone'
+                  color='currentColor'
+                />
                 <span className=''>{propiedad.year}</span>
               </div>
             )}

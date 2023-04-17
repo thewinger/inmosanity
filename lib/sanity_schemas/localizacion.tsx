@@ -1,4 +1,5 @@
 import { HiOutlineMap } from 'react-icons/hi2'
+import { defineField } from 'sanity'
 
 const localizacion = {
   name: 'localizacion',
@@ -6,8 +7,8 @@ const localizacion = {
   type: 'document',
   icon: HiOutlineMap,
   fields: [
-    { name: 'title', title: 'Zona', type: 'string' },
-    {
+    defineField({ name: 'title', title: 'Zona', type: 'string' }),
+    defineField({
       name: 'parent',
       title: 'Ciudad',
       type: 'reference',
@@ -16,7 +17,7 @@ const localizacion = {
       options: {
         filter: '!defined(parent)',
       },
-    },
+    }),
   ],
   // Customise the preview so parents are visualised in the studio
   preview: {

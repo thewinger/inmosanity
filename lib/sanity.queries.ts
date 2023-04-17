@@ -53,17 +53,22 @@ export const tipoDD = groq`
     "value":_id
   })
 `
+export const localizacionDDBak = groq`
+  *[_type == 'localizacion' && !(defined(parent))]{
+      title,
+      "count": count(*[_type == 'propiedad' && !(_id in path('drafts.**')) && references(^._id)]),
+      "children": *[ _type == 'localizacion' && references(^._id) && count(*[_type == 'propiedad' && !(_id in path('drafts.**')) && references(^._id)]) > 0]{
+        title,
+        "count": count(*[_type == 'propiedad' && !(_id in path('drafts.**')) && references(^._id)])
+      } | order(title asc),
+  }[ count > 0 || count(children) > 0] | order(title asc)
+`
+
 export const localizacionDD = groq`
-  *[_type == 'localizacion' && !defined(parent) && count(*[ _type == 'propiedad' && references(^._id)]) > 0]{
-    "value": _id,
-    "name": title,
-    "count": count(*[ _type == 'propiedad' && references(^._id)]),
-    "childLocalizacion": *[_type == 'localizacion' && references(^._id) && count(*[ _type == 'propiedad' && references(^._id)]) > 0]{
-      "value": _id,
-      "name": title,
-      "count": count(*[ _type == 'propiedad' && references(^._id)]),
-    }
-  } | order(title asc)
+*[_type == 'localizacion' && !(defined(parent))]{
+    title,
+    "children": *[ _type == 'localizacion' && references(^._id) && count(*[_type == 'propiedad' && !(_id in path('drafts.**')) && references(^._id)]) > 0].title | order(title asc),
+}[ count(children) > 0] | order(title asc)
 `
 
 export const maxPriceSaleDD = groq`

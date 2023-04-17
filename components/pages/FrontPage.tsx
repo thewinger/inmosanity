@@ -1,5 +1,3 @@
-'use client'
-
 import FeaturedSlider from '../FeaturedSlider'
 import PropiedadCard from '../ui/PropiedadCard'
 import { IFeatured, IPropiedad } from 'lib/interfaces'
