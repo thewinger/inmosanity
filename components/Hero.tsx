@@ -1,11 +1,14 @@
-import { IFiltersDD, IFilterString } from '@/lib/interfaces'
+import { FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useState } from 'react'
+import { MagnifyingGlassIcon } from './ui/icons'
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from './ui/select'
@@ -16,6 +19,7 @@ interface IFilters {
   tipo?: string
 }
 
+type HeroProps = IFilters & URLSearchParams
 const Hero = ({
   bathroomsDD,
   bedroomsDD,
@@ -25,41 +29,15 @@ const Hero = ({
   operacionDD,
   tipoDD,
   total,
-}: IFiltersDD) => {
-  const [filtersDD, setFiltersDD] = useState<IFiltersDD>({
-    priceRentDD,
-    priceSaleDD,
-    bathroomsDD,
-    bedroomsDD,
-    localizacionDD,
-    operacionDD,
-    tipoDD,
-    total,
-  })
-
-  const [filters, setFilters] = useState<IFilters>({})
-  const router = useRouter()
-  const searchParams = useSearchParams()!
-
-  function formatOperacionDD(arr: string[]) {
-    let name = ''
-    const array: IFilterString[] = []
-    arr.map((item: string) => {
-      if (item == 'en-alquiler') {
-        name = 'Alquilar'
-      } else if (item == 'en-venta') {
-        name = 'Comprar'
-      } else if (item == 'obra-nueva') {
-        name = 'Obra nueva'
-      }
-
-      array.push({ name: name, value: item })
-    })
-
-    return array
+}: FiltersDD) => {
+  const initialState = {
+    operacion: 'en-venta',
+    tipo: 'tipo-adosado',
   }
 
-  const formattedOperacionDD = formatOperacionDD(operacionDD)
+  const [filters, setFilters] = useState<IFilters>(initialState)
+  const router = useRouter()
+  const searchParams = useSearchParams()!
 
   const updateFilters = (key: string, value: string) => {
     setFilters((prevFilters) => ({
@@ -84,20 +62,20 @@ const Hero = ({
     router.push(`/propiedades?` + createQueryString(filters))
   }
 
-  console.log(filtersDD.localizacionDD)
   return (
-    <div className='relative mb-40 h-56 w-full bg-heroImg bg-cover bg-center bg-no-repeat pt-40'>
-      <div className='relative grid w-full auto-rows-auto grid-cols-1 gap-2 rounded-b-lg rounded-t-xl bg-green-500 p-4'>
+    <div className='relative mb-52 h-56 w-full bg-heroImg bg-cover bg-center bg-no-repeat pt-40'>
+      <div className='xbg-green-600/90 xshadow-xl relative grid w-full auto-rows-auto grid-cols-1 gap-3 rounded-b-lg rounded-t-xl border-2 border-white/30 bg-zinc-50/90 p-4 pb-6 backdrop-blur'>
         <ToggleGroup.Root
-          className='inline-flex gap-1 rounded-lg bg-green-600 p-1'
+          className='inline-flex gap-1 rounded-lg bg-zinc-700/10 p-1'
           type='single'
-          defaultValue='en-venta'
+          defaultValue={initialState.operacion}
+          onValueChange={(value) => updateFilters('operacion', value)}
           aria-label='Tipo de operación'
         >
-          {formattedOperacionDD.map((item) => (
+          {operacionDD.map((item) => (
             <ToggleGroup.Item
               key={item.value}
-              className='h-10 w-full items-center justify-center rounded-md bg-gradient-to-b from-green-600 to-green-600 text-base font-medium capitalize text-white hover:from-green-700 hover:to-green-700  focus:z-10 focus:outline-none  data-[state=on]:bg-input data-[state=on]:text-zinc-700 data-[state=on]:shadow-input '
+              className='xtext-white  h-10 w-full items-center justify-center rounded-md  font-medium capitalize text-zinc-700 hover:bg-input  hover:ring-1 hover:ring-zinc-200   focus:z-10 focus:outline-none  data-[state=on]:bg-input data-[state=on]:text-zinc-700 data-[state=on]:shadow-input '
               value={item.value}
             >
               {item.name}
@@ -107,10 +85,10 @@ const Hero = ({
 
         <Select
           name='tipo'
-          defaultValue={filtersDD.tipoDD[0].value}
+          defaultValue={initialState.tipo}
           onValueChange={(value) => updateFilters('tipo', value)}
         >
-          <SelectTrigger>
+          <SelectTrigger className='hover:shadow-inset'>
             <SelectValue placeholder='Seleccione un tipo de propiedad...' />
           </SelectTrigger>
           <SelectContent
@@ -118,7 +96,7 @@ const Hero = ({
             sideOffset={1}
             className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
           >
-            {filtersDD.tipoDD?.map((item) => (
+            {tipoDD?.map((item) => (
               <SelectItem key={item.value} value={item.value}>
                 {item.name}
               </SelectItem>
@@ -128,24 +106,35 @@ const Hero = ({
 
         <Select
           name='localizacion'
-          defaultValue={filtersDD.localizacionDD[0].value}
           onValueChange={(value) => updateFilters('localizacion', value)}
         >
           <SelectTrigger>
-            <SelectValue placeholder='Seleccione una localización...' />
+            <SelectValue placeholder='Selecciona una localización...' />
           </SelectTrigger>
           <SelectContent
             position='popper'
             sideOffset={1}
             className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
           >
-            {filtersDD.localizacionDD?.map((item) => (
-              <SelectItem key={item.value} value={item.value}>
-                {item.name}
-              </SelectItem>
+            {localizacionDD?.map((localizacion: ParentLocalizacion) => (
+              <SelectGroup key={localizacion.value}>
+                <SelectLabel>{localizacion.name}</SelectLabel>
+                {localizacion.children.map((child) => (
+                  <SelectItem key={child.value} value={child.value}>
+                    - {child.name}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
             ))}
           </SelectContent>
         </Select>
+        <button
+          onClick={() => handleFilters()}
+          className='inline-flex h-10 items-center justify-center gap-1 rounded-md bg-gradient-to-b  from-green-500 via-green-600 via-60% to-green-700 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 '
+        >
+          <MagnifyingGlassIcon weight='bold' className='h-5 w-5' />
+          Buscar
+        </button>
       </div>
     </div>
   )

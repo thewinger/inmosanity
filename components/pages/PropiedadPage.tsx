@@ -1,5 +1,5 @@
 import { formatEUR } from 'lib/helpers'
-import { IPropiedad } from 'lib/interfaces'
+import { Propiedad } from 'lib/interfaces'
 import { notFound } from 'next/navigation'
 import ProductSlider from '../ProductSlider'
 import {
@@ -15,7 +15,7 @@ import Pill from '../ui/Pill'
 export interface PropiedadPageProps {
   preview?: boolean
   loading?: boolean
-  propiedad: IPropiedad
+  propiedad: Propiedad
 }
 
 export interface ILocalImage {

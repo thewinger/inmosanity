@@ -8,12 +8,12 @@ export interface Settings {
   }
 }
 
-export interface IFrontPage {
-  featured: IFeatured[]
-  latest: IPropiedad[]
+export interface FrontPage {
+  featured: Featured[]
+  latest: Propiedad[]
 }
 
-export interface IFeatured {
+export interface Featured {
   title: string
   slug: string
   coverImage: Image
@@ -21,7 +21,7 @@ export interface IFeatured {
   operacion: string
 }
 
-export interface IPropiedad {
+export interface Propiedad {
   _id: string
   title: string
   slug: string
@@ -48,33 +48,32 @@ interface parentTitle {
   title: string
 }
 
-export interface IFilterNum {
+export interface FilterNum {
   min: number
   max: number
 }
 
-export interface IFilterString {
+export interface FilterString {
   name: string
   value: string
 }
 
-interface ILocalizacion extends IFilterString {
+interface Localizacion extends FilterString {
   name: string
   value: string
-  count: number
 }
 
-export interface IFilterParentLocalizacion extends ILocalizacion {
-  childLocalizacion: ILocalizacion[]
+export interface ParentLocalizacion extends Localizacion {
+  children: Localizacion[]
 }
 
-export interface IFiltersDD {
-  priceRentDD: IFilterNum
-  priceSaleDD: IFilterNum
-  bedroomsDD: IFilterNum
-  bathroomsDD: IFilterNum
-  operacionDD: string[]
-  localizacionDD: IFilterParentLocalizacion[]
-  tipoDD: IFilterString[]
+export interface FiltersDD {
+  priceRentDD: number
+  priceSaleDD: number
+  bedroomsDD: number
+  bathroomsDD: number
+  operacionDD: FilterString[]
+  localizacionDD: ParentLocalizacion[]
+  tipoDD: FilterString[]
   total: number
 }

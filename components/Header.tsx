@@ -8,8 +8,8 @@ import { EnvelopeSimpleIcon, PhoneIcon } from './ui/icons'
 
 import logo from '/public/Logo_Inmogolf.png'
 
-export default async function Header() {
-  const filters = await getFiltersDropdownValues()
+const Header = async () => {
+  const filtersDD = await getFiltersDropdownValues()
 
   return (
     <header className='z-50 grid grid-flow-row auto-rows-auto divide-y divide-zinc-100'>
@@ -30,8 +30,10 @@ export default async function Header() {
         </div>
       </div>
       <Suspense fallback={<SubheaderFallback />}>
-        <Subheader {...filters} />
+        <Subheader {...filtersDD} />
       </Suspense>
     </header>
   )
 }
+
+export default Header

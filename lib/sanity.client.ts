@@ -1,12 +1,7 @@
+import { createClient } from 'next-sanity'
 import { apiVersion, dataset, projectId, useCdn } from './env'
-import {
-  IFilterNum,
-  IFilterParentLocalizacion,
-  IFiltersDD,
-  IFilterString,
-  IFrontPage,
-  IPropiedad,
-} from './interfaces'
+import { formatOperacionDD } from './helpers'
+import { FiltersDD, FrontPage, Propiedad } from './interfaces'
 import {
   bathroomsDD,
   bedroomsDD,
@@ -20,13 +15,12 @@ import {
   tipoDD,
   total,
 } from './sanity.queries'
-import { createClient } from 'next-sanity'
 
 export const client = projectId
   ? createClient({ apiVersion, dataset, projectId, useCdn })
   : null
 
-export async function getFrontPage(): Promise<IFrontPage> {
+export async function getFrontPage(): Promise<FrontPage> {
   if (client) {
     return (await client?.fetch(frontPageQuery)) || ({} as any)
   }
@@ -34,7 +28,7 @@ export async function getFrontPage(): Promise<IFrontPage> {
   return {} as any
 }
 
-export async function getFiltersDropdownValues(): Promise<IFiltersDD> {
+export async function getFiltersDropdownValues(): Promise<FiltersDD> {
   if (client) {
     const bathroomsData = client.fetch(bathroomsDD)
     const bedroomsData = client.fetch(bedroomsDD)
@@ -72,7 +66,7 @@ export async function getFiltersDropdownValues(): Promise<IFiltersDD> {
       priceSaleDD: priceSaleValues,
       localizacionDD: localizacionValues,
       tipoDD: tipoValues,
-      operacionDD: operacionValues,
+      operacionDD: formatOperacionDD(operacionValues),
       total: totalValues,
     }
   }
@@ -81,7 +75,7 @@ export async function getFiltersDropdownValues(): Promise<IFiltersDD> {
 }
 
 export async function getAllPropiedadesSlug(): Promise<
-  Pick<IPropiedad, 'slug'>[]
+  Pick<Propiedad, 'slug'>[]
 > {
   if (client) {
     const slugs: string[] = await client?.fetch(propiedadSlugsQuery)
@@ -94,7 +88,7 @@ export async function getPropiedadBySlug({
   slug,
 }: {
   slug: string
-}): Promise<IPropiedad> {
+}): Promise<Propiedad> {
   if (client) {
     return (await client.fetch(propiedadBySlugQuery, { slug })) || ({} as any)
   }

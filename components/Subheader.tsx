@@ -1,31 +1,11 @@
 'use client'
 
-import { IFiltersDD } from '@/lib/interfaces'
+import { FiltersDD } from '@/lib/interfaces'
 import { usePathname } from 'next/navigation'
 import FilterBar from './FilterBar'
 import Hero from './Hero'
 
-const Subheader = ({
-  bathroomsDD,
-  bedroomsDD,
-  priceRentDD,
-  priceSaleDD,
-  localizacionDD,
-  operacionDD,
-  tipoDD,
-  total,
-}: IFiltersDD) => {
-  const filtersDD = {
-    priceRentDD,
-    priceSaleDD,
-    bathroomsDD,
-    bedroomsDD,
-    localizacionDD,
-    operacionDD,
-    tipoDD,
-    total,
-  }
-
+const Subheader = (filtersDD: FiltersDD) => {
   const pathname = usePathname()
 
   return (

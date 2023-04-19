@@ -67,36 +67,41 @@ export const localizacionDDBak = groq`
 export const localizacionDD = groq`
 *[_type == 'localizacion' && !(defined(parent))]{
     title,
-    "children": *[ _type == 'localizacion' && references(^._id) && count(*[_type == 'propiedad' && !(_id in path('drafts.**')) && references(^._id)]) > 0].title | order(title asc),
-}[ count(children) > 0] | order(title asc)
+    _id,
+    "count": count(*[_type == 'propiedad' && !(_id in path('drafts.**')) && references(^._id)]),
+    "children": *[ _type == 'localizacion' && references(^._id) && count(*[_type == 'propiedad' && !(_id in path('drafts.**')) && references(^._id)]) > 0]{
+      title,
+      _id,
+      "count": count(*[_type == 'propiedad' && !(_id in path('drafts.**')) && references(^._id)])
+    } | order(title asc),
+
+}[ count > 0 || count(children) > 0]{
+  "name": title,
+  "value": _id,
+  count(children) > 0 => {
+      children[]{
+        "name": title,
+        "value": _id,
+      }
+        },
+
+} | order(title asc)
 `
 
 export const maxPriceSaleDD = groq`
-  {
-    "min": 0,
-    "max": math::max(*[_type == 'propiedad' && operacion != 'en-alquiler'].price),
-  }
+  math::max(*[_type == 'propiedad' && operacion != 'en-alquiler'].price)
 `
 
 export const maxPriceRentDD = groq`
-  {
-    "min": 0,
-    "max": math::max(*[_type == 'propiedad' && operacion == 'en-alquiler'].price),
-  }
+  math::max(*[_type == 'propiedad' && operacion == 'en-alquiler'].price)
 `
 
 export const bathroomsDD = groq`
-  {
-    "min": 0,
-    "max": math::max(*[_type == 'propiedad'].bathrooms),
-  }
+  math::max(*[_type == 'propiedad'].bathrooms)
 `
 
 export const bedroomsDD = groq`
-  {
-    "min": 0,
-    "max": math::max(*[_type == 'propiedad'].bedrooms),
-  }
+  math::max(*[_type == 'propiedad'].bedrooms)
 `
 
 export const total = groq`

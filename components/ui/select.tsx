@@ -18,7 +18,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'relative flex h-10 items-center justify-between gap-2 rounded-md bg-input px-3 py-2 text-base font-medium text-zinc-700 shadow-input outline-none  transition  first-letter:uppercase hover:outline-2 focus:outline-2',
+      'hover: relative flex h-10 items-center justify-between gap-2 rounded-md bg-input px-3 py-2 text-base font-medium text-zinc-700 shadow-input outline-none transition first-letter:uppercase hover:bg-gradient-to-b hover:from-zinc-100 hover:to-white hover:shadow-sm  hover:ring-1 hover:ring-zinc-200   focus:outline-1 data-[placeholder]:font-normal data-[placeholder]:text-zinc-500',
       className
     )}
     {...props}
@@ -37,7 +37,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        ' xborder xborder-zinc-100 relative z-50 overflow-hidden rounded-md bg-input text-zinc-700 shadow-md animate-in fade-in-80',
+        'relative z-50 overflow-hidden rounded-md bg-input text-zinc-700 shadow-md animate-in fade-in-80',
         className
       )}
       {...props}
@@ -63,7 +63,7 @@ const SelectLabel = React.forwardRef<
   <SelectPrimitive.Label
     ref={ref}
     className={cn(
-      'py-1.5 pl-8 pr-2 text-sm font-semibold text-zinc-700',
+      'py-1.5 pl-4 pr-2 text-sm font-semibold text-zinc-700',
       className
     )}
     {...props}

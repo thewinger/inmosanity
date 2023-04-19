@@ -1,7 +1,7 @@
 'use client'
 
 import useEmblaCarousel from 'embla-carousel-react'
-import { IFeatured } from 'lib/interfaces'
+import { Featured } from 'lib/interfaces'
 import { urlForImage } from 'lib/sanity.image'
 import Shimmer from 'lib/Shimmer'
 import Image from 'next/image'
@@ -9,7 +9,7 @@ import Link from 'next/link'
 import Pill from './ui/Pill'
 
 type PropType = {
-  propiedades: IFeatured[]
+  propiedades: Featured[]
 }
 
 const FeaturedSlider = ({ propiedades }: PropType) => {

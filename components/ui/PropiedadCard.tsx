@@ -1,5 +1,5 @@
 import { formatEUR } from 'lib/helpers'
-import { IPropiedad } from 'lib/interfaces'
+import { Propiedad } from 'lib/interfaces'
 import { urlForImage } from 'lib/sanity.image'
 import Image from 'next/image'
 import {
@@ -13,7 +13,7 @@ import {
 import Pill from './Pill'
 
 type Props = {
-  propiedad: IPropiedad
+  propiedad: Propiedad
 }
 
 export default function PropiedadCard({ propiedad }: Props) {

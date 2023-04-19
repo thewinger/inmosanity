@@ -6,7 +6,6 @@ const config = {
   experimental: {
     appDir: true,
   },
-  reactStrictMode: true,
   images: {
     remotePatterns: [
       { hostname: 'cdn.sanity.io' },

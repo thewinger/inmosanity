@@ -20,6 +20,15 @@ module.exports = {
                 0px 3px 6px -3px rgb(0 0 0 / 0.15),
                 inset 0px 0px 0px 1px rgb(255 255 255)
               `,
+        button: `
+                0px 7px 6px -3px rgba(0, 0, 0, 0.05),
+                0px 6px 4px -2px rgba(0, 0, 0, 0.05),
+                0px 5px 1px -1px rgba(0, 0, 0, 0.05),
+                0px 5px 4px -1px rgba(0, 0, 0, 0.05),
+                0px 5px 2px -1px rgba(0, 0, 0, 0.05),
+                0px 5px 2px rgba(0, 0, 0, 0.05),
+                0px 3px 0px #15803D;
+              `,
       },
       keyframes: {
         'accordion-down': {
