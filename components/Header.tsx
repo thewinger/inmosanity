@@ -1,18 +1,12 @@
-import { getFiltersDropdownValues } from '@/lib/sanity.client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Suspense } from 'react'
-import Subheader from './Subheader'
-import SubheaderFallback from './SubheaderFallback'
 import { EnvelopeSimpleIcon, PhoneIcon } from './ui/icons'
 
 import logo from '/public/Logo_Inmogolf.png'
 
-const Header = async () => {
-  const filtersDD = await getFiltersDropdownValues()
-
+const Header = () => {
   return (
-    <header className='z-50 grid grid-flow-row auto-rows-auto divide-y divide-zinc-100'>
+    <header className='shadow-sm'>
       <div className='flex items-center justify-between  px-4 py-2 md:px-6'>
         <Link href={`/`}>
           <h1 className='sr-only'>Inmogolf Bonalba</h1>
@@ -29,9 +23,6 @@ const Header = async () => {
           </a>
         </div>
       </div>
-      <Suspense fallback={<SubheaderFallback />}>
-        <Subheader {...filtersDD} />
-      </Suspense>
     </header>
   )
 }

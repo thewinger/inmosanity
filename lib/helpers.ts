@@ -34,11 +34,25 @@ export function formatOperacionDD(arr: string[]) {
   return array
 }
 
-export function stringToArray(string: string): number[] {
-  let array: number[]
-  array = string.split('_').map(Number).slice(0, 2).sort()
+export function getAsAString(value: string | string[]): string {
+  if (Array.isArray(value)) {
+    return value[0]
+  }
 
-  return array
+  return value
+}
+
+export function stringToArray(
+  value: string | string[] | undefined
+): number[] | undefined {
+  if (value && Array.isArray(value)) {
+    return value[0].split('_').map(Number).slice(0, 2).sort()
+  }
+  if (value && value.includes('_')) {
+    return value.split('_').map(Number).slice(0, 2).sort()
+  }
+
+  return undefined
 }
 
 export function arrayToString(arr: number[]): string {

@@ -10,6 +10,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@asbjorn/eslint-plugin-groq": "^2.0.0",
     "@babel/runtime": "^7.21.0",
     "@codemirror/lint": "^6.2.0",
     "@codemirror/state": "^6.2.0",

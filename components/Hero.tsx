@@ -1,3 +1,5 @@
+'use client'
+
 import { FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -13,31 +15,22 @@ import {
   SelectValue,
 } from './ui/select'
 
-interface IFilters {
-  operacion?: string
+interface Filters {
+  operacion: string
   localizacion?: string
-  tipo?: string
+  tipo: string
 }
 
-type HeroProps = IFilters & URLSearchParams
-const Hero = ({
-  bathroomsDD,
-  bedroomsDD,
-  priceRentDD,
-  priceSaleDD,
-  localizacionDD,
-  operacionDD,
-  tipoDD,
-  total,
-}: FiltersDD) => {
+const Hero = (filtersInit: FiltersDD) => {
+  console.log('hero', filtersInit)
   const initialState = {
     operacion: 'en-venta',
     tipo: 'tipo-adosado',
   }
 
-  const [filters, setFilters] = useState<IFilters>(initialState)
+  const [filters, setFilters] = useState<Filters>(initialState)
   const router = useRouter()
-  const searchParams = useSearchParams()!
+  const searchParams = useSearchParams()
 
   const updateFilters = (key: string, value: string) => {
     setFilters((prevFilters) => ({
@@ -47,7 +40,7 @@ const Hero = ({
   }
 
   const createQueryString = useCallback(
-    (filters: IFilters) => {
+    (filters: Filters) => {
       const params = new URLSearchParams(searchParams)
       for (const [key, value] of Object.entries(filters)) {
         params.set(key, value)
@@ -64,7 +57,8 @@ const Hero = ({
 
   return (
     <div className='relative mb-52 h-56 w-full bg-heroImg bg-cover bg-center bg-no-repeat pt-40'>
-      <div className='xbg-green-600/90 xshadow-xl relative grid w-full auto-rows-auto grid-cols-1 gap-3 rounded-b-lg rounded-t-xl border-2 border-white/30 bg-zinc-50/90 p-4 pb-6 backdrop-blur'>
+      <div className='absolute inset-x-0 bottom-0 h-1/5 bg-gradient-to-b to-zinc-50' />
+      <div className='xbg-green-600/90 xshadow-xl relative grid w-full auto-rows-auto grid-cols-1 gap-3 rounded-b-none rounded-t-xl border-2 border-white/30 bg-zinc-200/90 p-4 pb-6 shadow-xl backdrop-blur'>
         <ToggleGroup.Root
           className='inline-flex gap-1 rounded-lg bg-zinc-700/10 p-1'
           type='single'
@@ -72,7 +66,7 @@ const Hero = ({
           onValueChange={(value) => updateFilters('operacion', value)}
           aria-label='Tipo de operación'
         >
-          {operacionDD.map((item) => (
+          {filtersInit.operacionDD.map((item) => (
             <ToggleGroup.Item
               key={item.value}
               className='xtext-white  h-10 w-full items-center justify-center rounded-md  font-medium capitalize text-zinc-700 hover:bg-input  hover:ring-1 hover:ring-zinc-200   focus:z-10 focus:outline-none  data-[state=on]:bg-input data-[state=on]:text-zinc-700 data-[state=on]:shadow-input '
@@ -96,7 +90,7 @@ const Hero = ({
             sideOffset={1}
             className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
           >
-            {tipoDD?.map((item) => (
+            {filtersInit.tipoDD?.map((item) => (
               <SelectItem key={item.value} value={item.value}>
                 {item.name}
               </SelectItem>
@@ -116,16 +110,18 @@ const Hero = ({
             sideOffset={1}
             className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
           >
-            {localizacionDD?.map((localizacion: ParentLocalizacion) => (
-              <SelectGroup key={localizacion.value}>
-                <SelectLabel>{localizacion.name}</SelectLabel>
-                {localizacion.children.map((child) => (
-                  <SelectItem key={child.value} value={child.value}>
-                    - {child.name}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            ))}
+            {filtersInit.localizacionDD?.map(
+              (localizacion: ParentLocalizacion) => (
+                <SelectGroup key={localizacion.value}>
+                  <SelectLabel>{localizacion.name}</SelectLabel>
+                  {localizacion.children.map((child) => (
+                    <SelectItem key={child.value} value={child.value}>
+                      - {child.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              )
+            )}
           </SelectContent>
         </Select>
         <button

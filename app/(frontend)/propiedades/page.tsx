@@ -1,15 +1,17 @@
-'use client'
+import FilterBar from '@/components/FilterBar'
+import { getFiltersDropdownValues } from '@/lib/sanity.client'
 
-import React from 'react'
-
-export default function PropiedadesPage({
+const PropiedadesPage = async ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
-}) {
+}) => {
+  const filtersDD = await getFiltersDropdownValues()
   return (
     <>
-      <p>Search: {Object.entries(searchParams)}</p>
+      <FilterBar filtersDD={filtersDD} searchParams={searchParams} />
+      <div>{JSON.stringify(searchParams)}</div>
     </>
   )
 }
+export default PropiedadesPage

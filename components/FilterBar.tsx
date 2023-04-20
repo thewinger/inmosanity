@@ -1,8 +1,10 @@
-import { arrayToString, stringToArray } from '@/lib/helpers'
+'use client'
+
+import { arrayToString, getAsAString, stringToArray } from '@/lib/helpers'
 import { FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
 import * as Slider from '@radix-ui/react-slider'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import {
   Collapsible,
@@ -30,27 +32,37 @@ interface Filters {
   precio: number[]
 }
 
-const FilterBar = ({
-  bathroomsDD,
-  bedroomsDD,
-  priceRentDD,
-  priceSaleDD,
-  localizacionDD,
-  operacionDD,
-  tipoDD,
-  total,
-}: FiltersDD) => {
+type FilterBarProps = {
+  filtersDD: FiltersDD
+  searchParams: { [key: string]: string | string[] }
+}
+
+const FilterBar = ({ filtersDD, searchParams }: FilterBarProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
-  const searchParams = useSearchParams()
+
+  const {
+    bathroomsDD,
+    bedroomsDD,
+    priceRentDD,
+    priceSaleDD,
+    operacionDD,
+    tipoDD,
+    localizacionDD,
+  } = filtersDD
+
   const initialState = {
-    operacion: 'en-venta',
-    tipo: 'tipo-adosado',
-    localizacion: undefined,
-    banos: bathroomsDD,
-    habitaciones: bedroomsDD,
-    precio: [0, priceSaleDD],
+    operacion: getAsAString(searchParams.operacion) || 'en-venta',
+    tipo: getAsAString(searchParams.tipo) || 'tipo-adosado',
+    localizacion: getAsAString(searchParams.localizacion) || undefined,
+    banos: Number(searchParams.banos) || bathroomsDD,
+    habitaciones: Number(searchParams.habitaciones) || bedroomsDD,
+    precio: stringToArray(getAsAString(searchParams.precio)) || [
+      0,
+      priceSaleDD,
+    ],
   }
+
   const [filters, setFilters] = useState<Filters>(initialState)
   const [priceLive, setPriceLive] = useState<number[]>([
     filters.precio[0],
@@ -67,7 +79,6 @@ const FilterBar = ({
         [key]: value,
       }))
       setPriceLive([0, priceRentDD])
-      console.log('operacion in if', filters.precio)
     } else if (key === 'operacion' && value !== 'en-alquiler') {
       setFilters((prevFilters) => ({
         ...prevFilters,
@@ -81,8 +92,6 @@ const FilterBar = ({
         [key]: value,
       }))
     }
-
-    console.log('operacion out if', filters.precio)
   }
 
   function createNumArray(maxNum: number) {
@@ -93,41 +102,27 @@ const FilterBar = ({
     return arr
   }
 
-  if (searchParams) {
-    for (let [key, value] of searchParams.entries()) {
-      let newValue: string | number | number[] = value
+  const createQueryString = useCallback((filters: Filters) => {
+    const params = new URLSearchParams()
+    for (const [key, value] of Object.entries(filters)) {
+      let newValue: string = value
       if (key === 'precio') {
-        let array = stringToArray(value)
-        newValue = array
-        setPriceLive([newValue[0], newValue[1]])
+        newValue = arrayToString(value)
       } else if (key === 'banos' || key === 'habitaciones') {
-        newValue = Number(value)
+        newValue = value.toString()
       }
-      updateFilters(key, newValue)
+      params.set(key, newValue)
     }
-  }
 
-  const createQueryString = useCallback(
-    (filters: Filters) => {
-      const params = new URLSearchParams(searchParams || '')
-      for (const [key, value] of Object.entries(filters)) {
-        let newValue: string = value
-        if (key === 'precio') {
-          newValue = arrayToString(value)
-        } else if (key === 'banos' || key === 'habitaciones') {
-          newValue = value.toString()
-        }
-        params.set(key, newValue)
-      }
-
-      return params.toString()
-    },
-    [searchParams]
-  )
+    return params.toString()
+  }, [])
 
   const handleFilters = async () => {
     router.push(`/propiedades?` + createQueryString(filters))
   }
+
+  console.log('search', searchParams)
+  console.log('initialState', initialState)
 
   return (
     <div className='relative'>
@@ -278,6 +273,7 @@ const FilterBar = ({
                 <Slider.Root
                   className='relative flex h-5 w-full touch-none select-none items-center'
                   defaultValue={[0, priceRentDD]}
+                  value={filters.precio}
                   onValueChange={(value) => setPriceLive(value)}
                   onValueCommit={(value) => updateFilters('precio', value)}
                   max={priceRentDD}
@@ -294,7 +290,7 @@ const FilterBar = ({
               ) : (
                 <Slider.Root
                   className='relative flex h-5 w-full touch-none select-none items-center'
-                  defaultValue={[0, priceSaleDD]}
+                  defaultValue={filters.precio}
                   onValueChange={(value) => setPriceLive(value)}
                   onValueCommit={(value) => updateFilters('precio', value)}
                   max={priceSaleDD}
