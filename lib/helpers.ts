@@ -42,17 +42,16 @@ export function getAsAString(value: string | string[]): string {
   return value
 }
 
-export function stringToArray(
-  value: string | string[] | undefined
-): number[] | undefined {
-  if (value && Array.isArray(value)) {
-    return value[0].split('_').map(Number).slice(0, 2).sort()
+export function stringToArray(value: string): number[] {
+  let newValue = [0, 1000000]
+  if (Array.isArray(value)) {
+    newValue = value[0].split('_').map(Number).slice(0, 2).sort()
   }
-  if (value && value.includes('_')) {
-    return value.split('_').map(Number).slice(0, 2).sort()
+  if (value.includes('_')) {
+    newValue = value.split('_').map(Number).slice(0, 2).sort()
   }
 
-  return undefined
+  return newValue
 }
 
 export function arrayToString(arr: number[]): string {

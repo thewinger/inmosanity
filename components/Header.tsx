@@ -6,7 +6,7 @@ import logo from '/public/Logo_Inmogolf.png'
 
 const Header = () => {
   return (
-    <header className='shadow-sm'>
+    <header className='relative z-10 bg-white shadow-sm '>
       <div className='flex items-center justify-between  px-4 py-2 md:px-6'>
         <Link href={`/`}>
           <h1 className='sr-only'>Inmogolf Bonalba</h1>

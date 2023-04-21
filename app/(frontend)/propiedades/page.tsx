@@ -1,16 +1,28 @@
 import FilterBar from '@/components/FilterBar'
+import { FadersIcon } from '@/components/ui/icons'
 import { getFiltersDropdownValues } from '@/lib/sanity.client'
+import { Suspense } from 'react'
 
-const PropiedadesPage = async ({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined }
-}) => {
+const FilterbarFallback = () => {
+  return (
+    <button
+      className={`relative flex h-10 w-full items-center justify-center gap-2 rounded-md px-3 py-2 text-sm text-zinc-800  shadow-sm shadow-black/5 outline-none ring-1 ring-zinc-200  transition hover:ring-zinc-300 `}
+    >
+      <FadersIcon weight='bold' size={16} />
+      <span>Filtros</span>
+    </button>
+  )
+}
+
+const PropiedadesPage = async () => {
   const filtersDD = await getFiltersDropdownValues()
+
   return (
     <>
-      <FilterBar filtersDD={filtersDD} searchParams={searchParams} />
-      <div>{JSON.stringify(searchParams)}</div>
+      <Suspense fallback={<FilterbarFallback />}>
+        <FilterBar {...filtersDD} />
+      </Suspense>
+      <div>{}</div>
     </>
   )
 }
