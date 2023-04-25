@@ -22,7 +22,6 @@ interface Filters {
 }
 
 const Hero = (filtersInit: FiltersDD) => {
-  console.log('hero', filtersInit)
   const initialState = {
     operacion: 'en-venta',
     tipo: 'tipo-adosado',
