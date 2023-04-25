@@ -32,23 +32,32 @@ export default function PropiedadPage(props: PropiedadPageProps) {
     notFound()
   }
   return (
-    <>
-      <div className='relative mx-auto mb-24 grid max-w-5xl auto-rows-auto grid-cols-1 gap-4 bg-white pb-12 pt-4 text-zinc-800 lg:grid-cols-2 lg:gap-y-10 lg:px-6 lg:shadow-md xl:shadow-md'>
-        <div className='lg:-col-end-1 relative flex flex-col md:flex-row md:items-start md:gap-2 lg:row-span-3'>
-          <Pill>{propiedad.operacion.replace('-', ' ').toUpperCase()}</Pill>
-          <div className='sliderContainer lg:px4 relative flex grow items-center justify-center overflow-x-hidden'>
-            {propiedad.images && (
+    <div className=' py-12 sm:py-24'>
+      <div className='relative mx-auto mb-24 grid max-w-5xl auto-rows-auto grid-cols-1 gap-4 bg-white pb-12 pt-4 text-zinc-800 shadow-md lg:grid-cols-2 lg:gap-y-10 lg:px-6'>
+        {propiedad.images && propiedad.images.length > 0 && (
+          <div className='lg:-col-end-1 relative flex flex-col md:flex-row md:items-start md:gap-2 lg:row-span-3'>
+            <Pill>{propiedad.operacion.replace('-', ' ').toUpperCase()}</Pill>
+            <div className='sliderContainer lg:px4 relative flex grow items-center justify-center overflow-x-hidden'>
               <ProductSlider key={propiedad.slug} slides={propiedad.images} />
-            )}
+            </div>
           </div>
-        </div>
+        )}
 
         <div className='flex basis-5/12 flex-col gap-4 px-4 '>
-          <div className='flex items-center gap-4 '>
+          <div
+            className={`${
+              propiedad.images ? 'pt-10' : ''
+            } flex items-center gap-4 `}
+          >
+            {propiedad.images && propiedad.images.length > 0 ? (
+              ''
+            ) : (
+              <Pill>{propiedad.operacion.replace('-', ' ').toUpperCase()}</Pill>
+            )}
             <h1 className='grow text-xl font-semibold tracking-wide'>
               {propiedad.title}
             </h1>
-            <button className=' hidden rounded-md bg-gradient-to-b from-green-600 to-green-700 px-4 py-2 text-white shadow-sm shadow-green-700/50 hover:from-green-600 sm:block'>
+            <button className='hidden h-10 items-center justify-center gap-1 rounded-md bg-gradient-to-b from-green-500 via-green-600  via-60% to-green-700 px-4 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 sm:inline-flex '>
               Contactar
             </button>
           </div>
@@ -164,10 +173,13 @@ export default function PropiedadPage(props: PropiedadPageProps) {
             )}
           </div>
         )}
-        <button className='grow rounded-md bg-gradient-to-b from-green-600 to-green-700 px-4 py-2 text-white shadow-sm shadow-green-700/50 hover:from-green-600'>
+        <button
+          className='h-10 grow items-center justify-center gap-1 rounded-md bg-gradient-to-b from-green-500 via-green-600  via-60% to-green-700 px-4 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 sm:inline-flex '
+          /* className='grow rounded-md bg-gradient-to-b from-green-600 to-green-700 px-4 py-2 text-white shadow-sm shadow-green-700/50 hover:from-green-600' */
+        >
           Contactar
         </button>
       </div>
-    </>
+    </div>
   )
 }

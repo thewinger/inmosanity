@@ -7,9 +7,8 @@ export default function IndexRoute({ children }: { children: ReactNode }) {
   /* const token = getPreviewToken() */
   return (
     <>
-      {/* @ts-expect-error Server Component */}
       <Header />
-      <main className=''>{children}</main>
+      <main className='relative bg-zinc-50'>{children}</main>
       <Footer />
       <TailwindIndicator />
     </>

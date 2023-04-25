@@ -60,7 +60,7 @@ export function arrayToString(arr: number[]): string {
 
 export function createNumArray(maxNum: number, step: number) {
   const arr: number[] = []
-  for (let i = 0; i <= maxNum; i + step) {
+  for (let i = 0; i <= maxNum; i += step) {
     arr.push(i)
   }
   return arr

@@ -82,10 +82,16 @@ export async function getSearchProperties({
   if (client) {
     let query = `*[_type == 'propiedad'`
     for (const [key, value] of Object.entries(searchParams)) {
-      if (key == 'priceMin') {
-        query += ` && ${key} >= ${Number(value)} `
-      } else if (key == 'priceMax') {
-        query += ` && ${key} <= ${Number(value)} `
+      if (key == 'precioMin') {
+        query += ` && price >= ${Number(value)} `
+      } else if (key == 'precioMax') {
+        query += ` && price <= ${Number(value)} `
+      } else if (key == 'tipo' || key == 'localizacion') {
+        query += ` && ${key}._ref == '${value}' `
+      } else if (key == 'banos') {
+        query += ` && bathrooms == ${value} `
+      } else if (key == 'habitaciones') {
+        query += ` && bedrooms == ${value} `
       } else {
         query += ` && ${key} == '${value}' `
       }
@@ -93,6 +99,7 @@ export async function getSearchProperties({
     query += `]{
         _id,
         title,
+        _createdAt,
         "slug": slug.current,
         bathrooms,
         bedrooms,
@@ -104,7 +111,7 @@ export async function getSearchProperties({
         size,
         year,
         "coverImage": images[0],
-    }`
+    } | order(_createdAt desc)[0...10]`
 
     console.log('query', query)
 

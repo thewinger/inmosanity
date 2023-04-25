@@ -20,17 +20,19 @@ export default function PropiedadCard({ propiedad }: Props) {
   return (
     <>
       {propiedad && (
-        <div className='relative flex flex-col gap-4 rounded-md bg-white pb-6 text-zinc-800 shadow-md'>
+        <div className='relative isolate flex flex-col gap-4 rounded-md bg-white pb-6 text-zinc-800 shadow-md'>
           <Pill>{propiedad.operacion.replace('-', ' ')}</Pill>
           <div className='relative aspect-[3/2] w-full overflow-hidden rounded-t-md '>
-            <Image
-              className='relative block h-auto w-full '
-              src={urlForImage(propiedad.coverImage).url()}
-              alt={propiedad.title}
-              sizes='(max-width: 768px) 100vw, 768px'
-              fill
-              priority
-            />
+            {propiedad.coverImage && (
+              <Image
+                className='relative block h-auto w-full '
+                src={urlForImage(propiedad.coverImage).url()}
+                alt={propiedad.title}
+                sizes='(max-width: 768px) 100vw, 768px'
+                fill
+                priority
+              />
+            )}
           </div>
 
           <div className='px-4'>

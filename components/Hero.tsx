@@ -55,7 +55,7 @@ const Hero = ({ operacionDD, localizacionDD, tipoDD }: FiltersDD) => {
   }
 
   return (
-    <div className='relative mb-52 h-56 w-full bg-heroImg bg-cover bg-center bg-no-repeat pt-40'>
+    <div className='relative mb-60 h-56 w-full bg-heroImg bg-cover bg-center bg-no-repeat pt-40'>
       <div className='absolute inset-x-0 bottom-0 h-1/5 bg-gradient-to-b to-zinc-50' />
       <div className='xbg-green-600/90 xshadow-xl relative grid w-full auto-rows-auto grid-cols-1 gap-3 rounded-b-none rounded-t-xl border-2 border-white/30 bg-zinc-200/90 p-4 pb-6 shadow-xl backdrop-blur'>
         <ToggleGroup.Root

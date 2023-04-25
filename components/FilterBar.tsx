@@ -1,11 +1,6 @@
 'use client'
 
-import {
-  arrayToString,
-  createNumArray,
-  getRoundedZeros,
-  stringToArray,
-} from '@/lib/helpers'
+import { createNumArray, getRoundedZeros } from '@/lib/helpers'
 import { FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { useRouter } from 'next/navigation'
@@ -28,12 +23,13 @@ import {
 } from './ui/select'
 
 interface Filters {
-  habitaciones: string
-  banos: string
+  habitaciones?: string
+  banos?: string
   operacion: string
   localizacion?: string
   tipo: string
-  precio: string
+  precioMin: string
+  precioMax: string
 }
 
 type FilterBarProps = {
@@ -55,12 +51,14 @@ const FilterBar = ({ filtersDD, searchParams }: FilterBarProps) => {
     priceRentDD,
   } = filtersDD
 
+  const precioSaleArrayDD = createNumArray(getRoundedZeros(priceSaleDD), 50000)
+  const precioRentArrayDD = createNumArray(getRoundedZeros(priceRentDD), 100)
+
   let initialState = {
     operacion: 'en-venta',
     tipo: 'tipo-adosado',
-    banos: bathroomsDD.toString(),
-    habitaciones: bedroomsDD.toString(),
-    precio: `0_${priceSaleDD}`,
+    precioMin: '0',
+    precioMax: precioSaleArrayDD.slice(-1).toString(),
   }
 
   for (const [key, value] of Object.entries(searchParams)) {
@@ -68,17 +66,14 @@ const FilterBar = ({ filtersDD, searchParams }: FilterBarProps) => {
   }
 
   const [filters, setFilters] = useState<Filters>(initialState)
-  const [priceLive, setPriceLive] = useState<number[]>([
-    stringToArray(filters.precio)[0],
-    stringToArray(filters.precio)[1],
-  ])
 
-  const precioSaleMaxDD = getRoundedZeros(priceSaleDD)
-  const precioSaleArrayDD = createNumArray(precioSaleMaxDD, 10000)
-  console.log('sale', precioSaleArrayDD)
-  const precioRentMaxDD = getRoundedZeros(priceRentDD)
-  const precioRentArrayDD = createNumArray(precioRentMaxDD, 100)
-  console.log('rent', precioRentArrayDD)
+  const bathroomsArrayDD = createNumArray(bathroomsDD, 1)
+  const bedroomsArrayDD = createNumArray(bedroomsDD, 1)
+
+  const formatter = new Intl.NumberFormat('es-ES', {
+    style: 'currency',
+    currency: 'EUR',
+  })
 
   function updateFilters(key: string, value: string) {
     setFilters((prevFilters) => ({
@@ -87,33 +82,28 @@ const FilterBar = ({ filtersDD, searchParams }: FilterBarProps) => {
     }))
   }
 
-  function setPrice(value: number[]) {
-    setPriceLive(value)
-    updateFilters('precio', arrayToString(value))
-  }
-
   const createQueryString = useCallback((filters: Filters) => {
     const params = new URLSearchParams()
     for (const [key, value] of Object.entries(filters)) {
-      params.set(key, value)
+      if (value !== '') {
+        params.set(key, value)
+      }
     }
 
     return params.toString()
   }, [])
 
   const handleFilters = async () => {
+    setIsOpen(false)
     router.push(`/propiedades?` + createQueryString(filters))
   }
 
-  console.log('initialState', initialState)
-  console.log('filters', filters)
-
   return (
-    <div className='relative'>
+    <div className='absolute inset-x-0 z-10 '>
       <Collapsible
         open={isOpen}
         onOpenChange={setIsOpen}
-        className='inset-0 w-full bg-white px-4 py-2 shadow-sm shadow-zinc-200 md:px-6 '
+        className='w-full bg-white px-4 py-2 shadow-sm shadow-zinc-200 md:px-6 '
       >
         <CollapsibleTrigger asChild>
           <button
@@ -213,7 +203,7 @@ const FilterBar = ({ filtersDD, searchParams }: FilterBarProps) => {
               onValueChange={(value) => updateFilters('banos', value)}
               aria-label='Baños'
             >
-              {createNumArray(Number(bathroomsDD), 1).map((i) => (
+              {bathroomsArrayDD.map((i) => (
                 <ToggleGroup.Item
                   key={i}
                   className='xtext-white  h-10 w-full items-center justify-center rounded-md  font-medium capitalize text-zinc-700 hover:bg-input  hover:ring-1 hover:ring-zinc-200   focus:z-10 focus:outline-none  data-[state=on]:bg-input data-[state=on]:text-zinc-700 data-[state=on]:shadow-input '
@@ -234,7 +224,7 @@ const FilterBar = ({ filtersDD, searchParams }: FilterBarProps) => {
               onValueChange={(value) => updateFilters('habitaciones', value)}
               aria-label='Habitaciones'
             >
-              {createNumArray(Number(bedroomsDD), 1).map((i) => (
+              {bedroomsArrayDD.map((i) => (
                 <ToggleGroup.Item
                   key={i}
                   className='xtext-white  h-10 w-full items-center justify-center rounded-md  font-medium capitalize text-zinc-700 hover:bg-input  hover:ring-1 hover:ring-zinc-200   focus:z-10 focus:outline-none  data-[state=on]:bg-input data-[state=on]:text-zinc-700 data-[state=on]:shadow-input '
@@ -247,15 +237,15 @@ const FilterBar = ({ filtersDD, searchParams }: FilterBarProps) => {
           </div>
 
           {/* TODO Update valor correcto */}
-          <div className='flex gap-4'>
-            <div className='grid w-full  items-center justify-stretch gap-1'>
+          <div className='inline-flex gap-4'>
+            <div className='grid w-full items-center justify-stretch gap-1'>
               <div className='flex justify-between'>
-                <Label>Precio (€)</Label>
+                <Label>Precio min.</Label>
               </div>
               <Select
                 name='precio'
-                defaultValue={filters.precio}
-                onValueChange={(value) => updateFilters('precio', value)}
+                defaultValue={filters.precioMin}
+                onValueChange={(value) => updateFilters('precioMin', value)}
               >
                 <SelectTrigger className='hover:shadow-inset'>
                   <SelectValue placeholder='Seleccione un rango de precios...' />
@@ -266,14 +256,46 @@ const FilterBar = ({ filtersDD, searchParams }: FilterBarProps) => {
                   className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
                 >
                   {filters.operacion === 'en-alquiler'
-                    ? precioRentDD?.map((item) => (
-                        <SelectItem key={item} value={item}>
-                          {item}
+                    ? precioRentArrayDD?.map((item) => (
+                        <SelectItem key={item} value={item.toString()}>
+                          {formatter.format(item)}
                         </SelectItem>
                       ))
-                    : precioSaleDD?.map((item) => (
-                        <SelectItem key={item} value={item}>
-                          {item}
+                    : precioSaleArrayDD?.map((item) => (
+                        <SelectItem key={item} value={item.toString()}>
+                          {formatter.format(item)}
+                        </SelectItem>
+                      ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className='grid w-full items-center justify-stretch gap-1'>
+              <div className='flex justify-between'>
+                <Label>Precio max.</Label>
+              </div>
+              <Select
+                name='precio'
+                defaultValue={precioSaleArrayDD.slice(-1).toString()}
+                onValueChange={(value) => updateFilters('precioMax', value)}
+              >
+                <SelectTrigger className='hover:shadow-inset'>
+                  <SelectValue placeholder='Seleccione un rango de precios...' />
+                </SelectTrigger>
+                <SelectContent
+                  position='popper'
+                  sideOffset={1}
+                  className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
+                >
+                  {filters.operacion === 'en-alquiler'
+                    ? precioRentArrayDD?.map((item) => (
+                        <SelectItem key={item} value={item.toString()}>
+                          {formatter.format(item)}
+                        </SelectItem>
+                      ))
+                    : precioSaleArrayDD?.map((item) => (
+                        <SelectItem key={item} value={item.toString()}>
+                          {formatter.format(item)}
                         </SelectItem>
                       ))}
                 </SelectContent>
@@ -282,7 +304,7 @@ const FilterBar = ({ filtersDD, searchParams }: FilterBarProps) => {
           </div>
 
           <button
-            onClick={() => handleFilters()}
+            onClick={handleFilters}
             className='inline-flex h-10 items-center justify-center gap-1 rounded-md bg-gradient-to-b  from-green-500 via-green-600 via-60% to-green-700 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 '
           >
             <MagnifyingGlassIcon weight='bold' className='h-5 w-5' />

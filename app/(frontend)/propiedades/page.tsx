@@ -1,12 +1,11 @@
 import FilterBar from '@/components/FilterBar'
-
 import SearchPage from '@/components/pages/SearchPage'
+
 import { FadersIcon } from '@/components/ui/icons'
 import {
   getFiltersDropdownValues,
   getSearchProperties,
 } from '@/lib/sanity.client'
-import { ChaoticOrbit } from '@uiball/loaders'
 import { Suspense } from 'react'
 
 const FilterBarFallBack = () => {
@@ -24,22 +23,22 @@ interface SearchParams {
   searchParams: { [key: string]: string | string[] }
 }
 
-const PropiedadesPage = async ({ searchParams }: SearchParams) => {
+export default async function PropiedadesPage({
+  searchParams,
+}: {
+  params: { slug: string }
+  searchParams: { [key: string]: string | string[] }
+}) {
   const filtersDD = await getFiltersDropdownValues()
-  console.log('searchParams', searchParams)
   const searchResults = await getSearchProperties({ searchParams })
 
-  console.log('resutls', searchResults)
-
+  console.log(searchResults)
   return (
     <>
-      <Suspense fallback={<div>Filter</div>}>
+      <Suspense fallback={<FilterBarFallBack />}>
         <FilterBar filtersDD={filtersDD} searchParams={searchParams} />
       </Suspense>
-      <Suspense fallback={<ChaoticOrbit size={48} speed={5} />}>
-        <SearchPage results={searchResults} />
-      </Suspense>
+      <SearchPage results={searchResults} />
     </>
   )
 }
-export default PropiedadesPage
