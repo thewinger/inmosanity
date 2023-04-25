@@ -74,6 +74,46 @@ export async function getFiltersDropdownValues(): Promise<FiltersDD> {
   return {} as any
 }
 
+export async function getSearchProperties({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] }
+}): Promise<Propiedad[]> {
+  if (client) {
+    let query = `*[_type == 'propiedad'`
+    for (const [key, value] of Object.entries(searchParams)) {
+      if (key == 'priceMin') {
+        query += ` && ${key} >= ${Number(value)} `
+      } else if (key == 'priceMax') {
+        query += ` && ${key} <= ${Number(value)} `
+      } else {
+        query += ` && ${key} == '${value}' `
+      }
+    }
+    query += `]{
+        _id,
+        title,
+        "slug": slug.current,
+        bathrooms,
+        bedrooms,
+        operacion,
+        "localizacion": localizacion->title,
+        "localizacionPadre": localizacion->{parent->{title}},
+        "tipo": tipo->title,
+        price,
+        size,
+        year,
+        "coverImage": images[0],
+    }`
+
+    console.log('query', query)
+
+    return await client.fetch(query)
+  }
+
+  return {} as any
+}
+
 export async function getAllPropiedadesSlug(): Promise<
   Pick<Propiedad, 'slug'>[]
 > {

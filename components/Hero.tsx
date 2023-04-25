@@ -21,7 +21,7 @@ interface Filters {
   tipo: string
 }
 
-const Hero = (filtersInit: FiltersDD) => {
+const Hero = ({ operacionDD, localizacionDD, tipoDD }: FiltersDD) => {
   const initialState = {
     operacion: 'en-venta',
     tipo: 'tipo-adosado',
@@ -65,7 +65,7 @@ const Hero = (filtersInit: FiltersDD) => {
           onValueChange={(value) => updateFilters('operacion', value)}
           aria-label='Tipo de operación'
         >
-          {filtersInit.operacionDD.map((item) => (
+          {operacionDD.map((item) => (
             <ToggleGroup.Item
               key={item.value}
               className='xtext-white  h-10 w-full items-center justify-center rounded-md  font-medium capitalize text-zinc-700 hover:bg-input  hover:ring-1 hover:ring-zinc-200   focus:z-10 focus:outline-none  data-[state=on]:bg-input data-[state=on]:text-zinc-700 data-[state=on]:shadow-input '
@@ -89,7 +89,7 @@ const Hero = (filtersInit: FiltersDD) => {
             sideOffset={1}
             className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
           >
-            {filtersInit.tipoDD?.map((item) => (
+            {tipoDD?.map((item) => (
               <SelectItem key={item.value} value={item.value}>
                 {item.name}
               </SelectItem>
@@ -109,18 +109,16 @@ const Hero = (filtersInit: FiltersDD) => {
             sideOffset={1}
             className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
           >
-            {filtersInit.localizacionDD?.map(
-              (localizacion: ParentLocalizacion) => (
-                <SelectGroup key={localizacion.value}>
-                  <SelectLabel>{localizacion.name}</SelectLabel>
-                  {localizacion.children.map((child) => (
-                    <SelectItem key={child.value} value={child.value}>
-                      - {child.name}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              )
-            )}
+            {localizacionDD?.map((localizacion: ParentLocalizacion) => (
+              <SelectGroup key={localizacion.value}>
+                <SelectLabel>{localizacion.name}</SelectLabel>
+                {localizacion.children.map((child) => (
+                  <SelectItem key={child.value} value={child.value}>
+                    - {child.name}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            ))}
           </SelectContent>
         </Select>
         <button

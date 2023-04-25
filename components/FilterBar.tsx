@@ -1,10 +1,14 @@
 'use client'
 
-import { arrayToString, stringToArray } from '@/lib/helpers'
+import {
+  arrayToString,
+  createNumArray,
+  getRoundedZeros,
+  stringToArray,
+} from '@/lib/helpers'
 import { FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
-import * as Slider from '@radix-ui/react-slider'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import {
   Collapsible,
@@ -27,34 +31,39 @@ interface Filters {
   habitaciones: string
   banos: string
   operacion: string
-  localizacion: string | undefined
+  localizacion?: string
   tipo: string
   precio: string
 }
 
-const FilterBar = ({
-  bathroomsDD,
-  bedroomsDD,
-  priceRentDD,
-  priceSaleDD,
-  operacionDD,
-  tipoDD,
-  localizacionDD,
-}: FiltersDD) => {
+type FilterBarProps = {
+  filtersDD: FiltersDD
+  searchParams: { [key: string]: string | string[] }
+}
+
+const FilterBar = ({ filtersDD, searchParams }: FilterBarProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
-  const searchParams = useSearchParams()
+
+  const {
+    bathroomsDD,
+    bedroomsDD,
+    operacionDD,
+    localizacionDD,
+    tipoDD,
+    priceSaleDD,
+    priceRentDD,
+  } = filtersDD
 
   let initialState = {
     operacion: 'en-venta',
     tipo: 'tipo-adosado',
-    localizacion: undefined,
     banos: bathroomsDD.toString(),
     habitaciones: bedroomsDD.toString(),
     precio: `0_${priceSaleDD}`,
   }
 
-  for (const [key, value] of searchParams.entries()) {
+  for (const [key, value] of Object.entries(searchParams)) {
     initialState[key] = value
   }
 
@@ -63,8 +72,13 @@ const FilterBar = ({
     stringToArray(filters.precio)[0],
     stringToArray(filters.precio)[1],
   ])
-  const precioStepsRent = 100
-  const precioStepsSale = 25000
+
+  const precioSaleMaxDD = getRoundedZeros(priceSaleDD)
+  const precioSaleArrayDD = createNumArray(precioSaleMaxDD, 10000)
+  console.log('sale', precioSaleArrayDD)
+  const precioRentMaxDD = getRoundedZeros(priceRentDD)
+  const precioRentArrayDD = createNumArray(precioRentMaxDD, 100)
+  console.log('rent', precioRentArrayDD)
 
   function updateFilters(key: string, value: string) {
     setFilters((prevFilters) => ({
@@ -76,14 +90,6 @@ const FilterBar = ({
   function setPrice(value: number[]) {
     setPriceLive(value)
     updateFilters('precio', arrayToString(value))
-  }
-
-  function createNumArray(maxNum: number) {
-    const arr: number[] = []
-    for (let i = 0; i <= maxNum; i++) {
-      arr.push(i)
-    }
-    return arr
   }
 
   const createQueryString = useCallback((filters: Filters) => {
@@ -171,6 +177,7 @@ const FilterBar = ({
             </SelectContent>
           </Select>
 
+          {/* TODO Update valor correcto y no undefined */}
           <Select
             name='localizacion'
             defaultValue={filters.localizacion}
@@ -206,7 +213,7 @@ const FilterBar = ({
               onValueChange={(value) => updateFilters('banos', value)}
               aria-label='Baños'
             >
-              {createNumArray(Number(bathroomsDD)).map((i) => (
+              {createNumArray(Number(bathroomsDD), 1).map((i) => (
                 <ToggleGroup.Item
                   key={i}
                   className='xtext-white  h-10 w-full items-center justify-center rounded-md  font-medium capitalize text-zinc-700 hover:bg-input  hover:ring-1 hover:ring-zinc-200   focus:z-10 focus:outline-none  data-[state=on]:bg-input data-[state=on]:text-zinc-700 data-[state=on]:shadow-input '
@@ -227,7 +234,7 @@ const FilterBar = ({
               onValueChange={(value) => updateFilters('habitaciones', value)}
               aria-label='Habitaciones'
             >
-              {createNumArray(bedroomsDD).map((i) => (
+              {createNumArray(Number(bedroomsDD), 1).map((i) => (
                 <ToggleGroup.Item
                   key={i}
                   className='xtext-white  h-10 w-full items-center justify-center rounded-md  font-medium capitalize text-zinc-700 hover:bg-input  hover:ring-1 hover:ring-zinc-200   focus:z-10 focus:outline-none  data-[state=on]:bg-input data-[state=on]:text-zinc-700 data-[state=on]:shadow-input '
@@ -239,54 +246,38 @@ const FilterBar = ({
             </ToggleGroup.Root>
           </div>
 
+          {/* TODO Update valor correcto */}
           <div className='flex gap-4'>
             <div className='grid w-full  items-center justify-stretch gap-1'>
               <div className='flex justify-between'>
-                <Label>Precio</Label>
-                <div>
-                  Desde {priceLive[0]} hasta {priceLive[1]}{' '}
-                </div>
+                <Label>Precio (€)</Label>
               </div>
-              {filters.operacion === 'en-alquiler' ? (
-                <Slider.Root
-                  className='relative flex h-5 w-full touch-none select-none items-center'
-                  defaultValue={[0, priceRentDD]}
-                  value={stringToArray(filters.precio)}
-                  onValueChange={(value) => setPrice(value)}
-                  /* onValueCommit={(value) =>
-                    updateFilters('precio', arrayToString(value))
-                  } */
-                  max={priceRentDD}
-                  step={precioStepsRent}
-                  minStepsBetweenThumbs={1}
-                  aria-label='precio'
+              <Select
+                name='precio'
+                defaultValue={filters.precio}
+                onValueChange={(value) => updateFilters('precio', value)}
+              >
+                <SelectTrigger className='hover:shadow-inset'>
+                  <SelectValue placeholder='Seleccione un rango de precios...' />
+                </SelectTrigger>
+                <SelectContent
+                  position='popper'
+                  sideOffset={1}
+                  className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
                 >
-                  <Slider.Track className='relative h-2 grow rounded-full bg-zinc-200'>
-                    <Slider.Range className='absolute h-full rounded-full bg-green-600' />
-                  </Slider.Track>
-                  <Slider.Thumb className='block h-5 w-5 rounded-full border-2 border-green-600 bg-white shadow-sm shadow-zinc-200 ' />
-                  <Slider.Thumb className='block h-5 w-5  rounded-full border-2 border-green-600 bg-white shadow-sm shadow-zinc-200 ' />
-                </Slider.Root>
-              ) : (
-                <Slider.Root
-                  className='relative flex h-5 w-full touch-none select-none items-center'
-                  value={stringToArray(filters.precio)}
-                  onValueChange={(value) => setPrice(value)}
-                  /* onValueCommit={(value) =>
-                    updateFilters('precio', arrayToString(value))
-                  } */
-                  max={priceSaleDD}
-                  step={precioStepsSale}
-                  minStepsBetweenThumbs={1}
-                  aria-label='precio'
-                >
-                  <Slider.Track className='relative h-2 grow rounded-full bg-zinc-200'>
-                    <Slider.Range className='absolute h-full rounded-full bg-green-600' />
-                  </Slider.Track>
-                  <Slider.Thumb className='block h-5 w-5 rounded-full border-2 border-green-600 bg-white shadow-sm shadow-zinc-200 ' />
-                  <Slider.Thumb className='block h-5 w-5  rounded-full border-2 border-green-600 bg-white shadow-sm shadow-zinc-200 ' />
-                </Slider.Root>
-              )}
+                  {filters.operacion === 'en-alquiler'
+                    ? precioRentDD?.map((item) => (
+                        <SelectItem key={item} value={item}>
+                          {item}
+                        </SelectItem>
+                      ))
+                    : precioSaleDD?.map((item) => (
+                        <SelectItem key={item} value={item}>
+                          {item}
+                        </SelectItem>
+                      ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
