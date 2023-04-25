@@ -10,7 +10,12 @@ const Header = () => {
       <div className='flex items-center justify-between  px-4 py-2 md:px-6'>
         <Link href={`/`}>
           <h1 className='sr-only'>Inmogolf Bonalba</h1>
-          <Image src={logo} alt='Inmogolf Bonalba' className='h-12 w-auto' />
+          <Image
+            src={logo}
+            alt='Inmogolf Bonalba'
+            priority
+            className='h-12 w-auto'
+          />
         </Link>
 
         <div className='flex justify-between gap-4 text-green-600'>

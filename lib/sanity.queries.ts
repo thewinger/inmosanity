@@ -1,6 +1,6 @@
 import { groq } from 'next-sanity'
 
-const propiedadFields = groq`
+const PROPIEDAD_FIELDS = `
   _id,
   title,
   "slug": slug.current,
@@ -25,10 +25,17 @@ export const frontPageQuery = groq`
     operacion,
   },
   "latest": *[_type == "propiedad"] | order(_createdAt desc) [0...12] {
-    ${propiedadFields}
+    ${PROPIEDAD_FIELDS}
     "coverImage": images[0],
   },
 }`
+
+export const searchPropiedades = groq`
+*[_type == 'propiedad' && operacion == $operacion  && tipo._ref == $tipo && localizacion._ref == $localizacion && bathrooms == $bathrooms && bedrooms == $bedrooms && price >= $priceMin && price <= $priceMax]{
+  ${PROPIEDAD_FIELDS}
+  "coverImage": images[0],
+}
+`
 
 export const propiedadSlugsQuery = groq`
   *[_type == "propiedad" && defined(slug.current)][].slug.current
@@ -36,7 +43,7 @@ export const propiedadSlugsQuery = groq`
 
 export const propiedadBySlugQuery = groq`
   *[_type == "propiedad" && slug.current == $slug][0] {
-    ${propiedadFields}
+    ${PROPIEDAD_FIELDS}
     "caracteristicas": caracteristicas[]->title,
     "images": images[],
     description,

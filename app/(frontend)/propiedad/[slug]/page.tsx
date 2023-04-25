@@ -2,15 +2,13 @@ import PropiedadPage from '@/components/pages/PropiedadPage'
 import { getAllPropiedadesSlug, getPropiedadBySlug } from 'lib/sanity.client'
 import type { Metadata } from 'next'
 
-interface IParams {
+interface Params {
   params: {
     slug: string
   }
 }
 
-export default async function PropiedadSlugRoute({
-  params: { slug },
-}: IParams) {
+export default async function PropiedadSlugRoute({ params: { slug } }: Params) {
   const propiedadData = getPropiedadBySlug({ slug })
   const propiedad = await propiedadData
 
@@ -19,7 +17,7 @@ export default async function PropiedadSlugRoute({
 
 export async function generateMetadata({
   params: { slug },
-}: IParams): Promise<Metadata> {
+}: Params): Promise<Metadata> {
   const propiedadData = getPropiedadBySlug({ slug })
   const propiedad = await propiedadData
 
