@@ -9,7 +9,11 @@ module.exports = {
       },
       backgroundImage: {
         heroImg: 'url("../public/hero-golf.jpg")',
+        footerBorder: 'url("../public/footer_border.svg")',
         input: 'linear-gradient(to bottom, #fff, #f4f4f5)',
+      },
+      gridTemplateColumns: {
+        cards: 'repeat(auto-fill, minmax(min(18rem, 100%),  1fr))',
       },
       boxShadow: {
         input: `

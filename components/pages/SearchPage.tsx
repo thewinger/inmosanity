@@ -1,4 +1,5 @@
 import { Propiedad } from '@/lib/interfaces'
+import clsx from 'clsx'
 import Link from 'next/link'
 import PropiedadCard from '../ui/PropiedadCard'
 
@@ -8,13 +9,18 @@ type SearchPage = {
 
 const SearchPage = ({ results }: SearchPage) => {
   return (
-    <div className='py-24'>
-      <h2 className='xtext-lg p-2 px-4 text-sm font-semibold uppercase  tracking-wide text-zinc-800 lg:px-0'>
+    <div className='mx-auto max-w-5xl py-24 lg:px-6 lg:py-24'>
+      <h2 className='py-2 text-sm font-semibold uppercase  tracking-wide text-zinc-800 lg:px-0'>
         {results.length > 1
           ? `${results.length} Resultados`
           : `${results.length} Resultado`}
       </h2>
-      <div className='grid grid-cols-1 gap-6'>
+      <div
+        className={clsx(
+          'grid  grid-cols-cards gap-4',
+          results.length > 1 ? 'justify-center' : ''
+        )}
+      >
         {results.map((propiedad) => (
           <Link key={propiedad.slug} href={`/propiedad/${propiedad.slug}`}>
             <PropiedadCard propiedad={propiedad} />

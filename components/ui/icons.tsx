@@ -6,12 +6,15 @@ import {
   Buildings,
   CalendarBlank,
   CaretDown,
+  CaretRight,
   CaretUp,
   CaretUpDown,
   Check,
   EnvelopeSimple,
+  FacebookLogo,
   Faders,
   IconProps,
+  InstagramLogo,
   MagnifyingGlass,
   MapPin,
   Phone,
@@ -65,6 +68,10 @@ export const CaretDownIcon = (props: IconProps) => {
   return <CaretDown {...props} />
 }
 
+export const CaretRightIcon = (props: IconProps) => {
+  return <CaretRight {...props} />
+}
+
 export const CaretUpIcon = (props: IconProps) => {
   return <CaretUp {...props} />
 }
@@ -75,4 +82,12 @@ export const CaretUpDownIcon = (props: IconProps) => {
 
 export const CheckIcon = (props: IconProps) => {
   return <Check {...props} />
+}
+
+export const FacebookIcon = (props: IconProps) => {
+  return <FacebookLogo {...props} />
+}
+
+export const InstagramIcon = (props: IconProps) => {
+  return <InstagramLogo {...props} />
 }

@@ -55,11 +55,10 @@ const Hero = ({ operacionDD, localizacionDD, tipoDD }: FiltersDD) => {
   }
 
   return (
-    <div className='relative mb-60 h-56 w-full bg-heroImg bg-cover bg-center bg-no-repeat pt-40'>
-      <div className='absolute inset-x-0 bottom-0 h-1/5 bg-gradient-to-b to-zinc-50' />
-      <div className='xbg-green-600/90 xshadow-xl relative grid w-full auto-rows-auto grid-cols-1 gap-3 rounded-b-none rounded-t-xl border-2 border-white/30 bg-zinc-200/90 p-4 pb-6 shadow-xl backdrop-blur'>
+    <div className='relative mb-60 h-56 w-full bg-heroImg bg-cover bg-center bg-no-repeat pt-40 md:mb-44 lg:mb-24 lg:h-[480px]'>
+      <div className='absolute left-1/2 grid w-full max-w-5xl -translate-x-1/2 auto-rows-auto grid-cols-1 gap-3 rounded-xl border-2 border-white/20 bg-zinc-200/90 p-4 pb-6 shadow-xl backdrop-blur md:grid-cols-2 md:grid-rows-3 lg:-bottom-16 lg:grid-cols-4 lg:grid-rows-2 lg:gap-4 lg:pb-4'>
         <ToggleGroup.Root
-          className='inline-flex gap-1 rounded-lg bg-zinc-700/10 p-1'
+          className='inline-flex gap-1 rounded-lg bg-zinc-700/10 p-0.5 md:col-span-2 lg:col-span-2 lg:col-start-2'
           type='single'
           defaultValue={initialState.operacion}
           onValueChange={(value) => updateFilters('operacion', value)}
@@ -68,7 +67,7 @@ const Hero = ({ operacionDD, localizacionDD, tipoDD }: FiltersDD) => {
           {operacionDD.map((item) => (
             <ToggleGroup.Item
               key={item.value}
-              className='xtext-white  h-10 w-full items-center justify-center rounded-md  font-medium capitalize text-zinc-700 hover:bg-input  hover:ring-1 hover:ring-zinc-200   focus:z-10 focus:outline-none  data-[state=on]:bg-input data-[state=on]:text-zinc-700 data-[state=on]:shadow-input '
+              className='xtext-white  h-9 w-full items-center justify-center rounded-md  font-medium capitalize text-zinc-700 hover:bg-input  hover:ring-1 hover:ring-zinc-200   focus:z-10 focus:outline-none  data-[state=on]:bg-input data-[state=on]:text-zinc-700 data-[state=on]:shadow-input '
               value={item.value}
             >
               {item.name}
@@ -81,7 +80,7 @@ const Hero = ({ operacionDD, localizacionDD, tipoDD }: FiltersDD) => {
           defaultValue={initialState.tipo}
           onValueChange={(value) => updateFilters('tipo', value)}
         >
-          <SelectTrigger className='hover:shadow-inset'>
+          <SelectTrigger className='hover:shadow-inset md:col-span-1 md:row-start-2 lg:col-span-2 lg:row-start-2'>
             <SelectValue placeholder='Seleccione un tipo de propiedad...' />
           </SelectTrigger>
           <SelectContent
@@ -101,7 +100,7 @@ const Hero = ({ operacionDD, localizacionDD, tipoDD }: FiltersDD) => {
           name='localizacion'
           onValueChange={(value) => updateFilters('localizacion', value)}
         >
-          <SelectTrigger>
+          <SelectTrigger className='md:col-span-1 md:col-start-2 md:row-start-2 lg:col-span-2'>
             <SelectValue placeholder='Selecciona una localización...' />
           </SelectTrigger>
           <SelectContent
@@ -123,7 +122,7 @@ const Hero = ({ operacionDD, localizacionDD, tipoDD }: FiltersDD) => {
         </Select>
         <button
           onClick={() => handleFilters()}
-          className='inline-flex h-10 items-center justify-center gap-1 rounded-md bg-gradient-to-b  from-green-500 via-green-600 via-60% to-green-700 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 '
+          className='inline-flex h-9 items-center justify-center gap-1 rounded-md bg-gradient-to-b from-green-500 via-green-600 via-60%  to-green-700 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 md:col-span-2 md:row-start-3 lg:col-span-4'
         >
           <MagnifyingGlassIcon weight='bold' className='h-5 w-5' />
           Buscar

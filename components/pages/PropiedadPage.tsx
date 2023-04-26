@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { formatEUR } from 'lib/helpers'
 import { Propiedad } from 'lib/interfaces'
 import { notFound } from 'next/navigation'
@@ -38,16 +39,21 @@ export default function PropiedadPage(props: PropiedadPageProps) {
           <div className='lg:-col-end-1 relative flex flex-col md:flex-row md:items-start md:gap-2 lg:row-span-3'>
             <Pill>{propiedad.operacion.replace('-', ' ').toUpperCase()}</Pill>
             <div className='sliderContainer lg:px4 relative flex grow items-center justify-center overflow-x-hidden'>
-              <ProductSlider key={propiedad.slug} slides={propiedad.images} />
+              <ProductSlider
+                vertical
+                key={propiedad.slug}
+                slides={propiedad.images}
+              />
             </div>
           </div>
         )}
 
         <div className='flex basis-5/12 flex-col gap-4 px-4 '>
           <div
-            className={`${
-              propiedad.images ? 'pt-10' : ''
-            } flex items-center gap-4 `}
+            className={clsx(
+              'flex items-center gap-4',
+              !(propiedad.images && propiedad.images.length > 0) && 'pt-10'
+            )}
           >
             {propiedad.images && propiedad.images.length > 0 ? (
               ''

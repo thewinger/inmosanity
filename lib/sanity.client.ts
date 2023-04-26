@@ -111,7 +111,7 @@ export async function getSearchProperties({
         size,
         year,
         "coverImage": images[0],
-    } | order(_createdAt desc)[0...10]`
+    } | order(_createdAt desc)[0...50]`
 
     console.log('query', query)
 

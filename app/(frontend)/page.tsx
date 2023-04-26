@@ -1,10 +1,12 @@
 import FeaturedSlider from '@/components/FeaturedSlider'
 import Hero from '@/components/Hero'
+import ProductSlider from '@/components/ProductSlider'
 import PropiedadCard from '@/components/ui/PropiedadCard'
 import { getFiltersDropdownValues, getFrontPage } from '@/lib/sanity.client'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
+import { Image } from 'sanity'
 
 function HeroFallBack() {
   return <>placeholder</>
@@ -20,22 +22,33 @@ export default async function FrontPage(searchParams: {
     notFound()
   }
 
+  let slides: Image[] = []
+
+  featured.map((item) => {
+    slides.push(item.coverImage)
+  })
+
   return (
     <>
       <Suspense fallback={<HeroFallBack />}>
         <Hero {...filters} />
       </Suspense>
-      <section className='relative pb-6'>
-        <h2 className='xtext-lg p-2 px-4 text-sm font-semibold uppercase  tracking-wide text-zinc-800 lg:px-0'>
+      <section className='relative mx-auto max-w-5xl py-4 lg:px-4'>
+        <h2 className='p-2 px-4 text-sm font-semibold  uppercase tracking-wide text-zinc-800 lg:px-0'>
           Destacados
         </h2>
-        <FeaturedSlider propiedades={featured} />
+        <div className='lg:hidden'>
+          <FeaturedSlider propiedades={featured} />
+        </div>
+        <div className='hidden lg:block'>
+          <ProductSlider slides={slides} />
+        </div>
       </section>
-      <section className='relative p-4'>
+      <section className='relative mx-auto max-w-5xl p-4 py-16 '>
         <h2 className='py-2 text-sm font-semibold uppercase  tracking-wide text-zinc-800 lg:px-0'>
           Ultimos añadidos{' '}
         </h2>
-        <div className='grid grid-cols-1 gap-6'>
+        <div className='grid grid-cols-cards gap-6'>
           {latest.map((propiedad) => (
             <Link key={propiedad.slug} href={`/propiedad/${propiedad.slug}`}>
               <PropiedadCard propiedad={propiedad} />
@@ -45,5 +58,4 @@ export default async function FrontPage(searchParams: {
       </section>
     </>
   )
-  /* <FrontPage filters={filters} featured={featured} latest={latest} /> */
 }

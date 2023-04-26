@@ -8,7 +8,7 @@ export default function IndexRoute({ children }: { children: ReactNode }) {
   return (
     <>
       <Header />
-      <main className='relative bg-zinc-50'>{children}</main>
+      <main className='relative bg-zinc-50 '>{children}</main>
       <Footer />
       <TailwindIndicator />
     </>

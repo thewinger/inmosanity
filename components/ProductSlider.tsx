@@ -1,23 +1,25 @@
 'use client'
 
-import { Thumb } from './ProductSliderThumb'
-import Shimmer from './Shimmer'
 import { urlForImage } from '@/lib/sanity.image'
+import clsx from 'clsx'
 import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Image as SanityImage } from 'sanity'
+import Shimmer from './Shimmer'
 
 type PropType = {
   slides: SanityImage[]
+  vertical?: boolean
 }
 
-const ProductSlider = ({ slides }: PropType) => {
+const ProductSlider = ({ slides, vertical }: PropType) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [mainViewportRef, embla] = useEmblaCarousel({ skipSnaps: false })
   const [thumbViewportRef, emblaThumbs] = useEmblaCarousel({
     containScroll: 'keepSnaps',
     dragFree: true,
+    axis: vertical ? 'x' : 'y',
   })
 
   const onThumbClick = useCallback(
@@ -48,13 +50,18 @@ const ProductSlider = ({ slides }: PropType) => {
   })
 
   return (
-    <div className='flex w-full flex-col'>
-      <div className='embla relative m-0 mb-4 block w-full overflow-hidden rounded p-0'>
+    <div className={clsx('flex w-full gap-4', vertical && 'flex-col')}>
+      <div
+        className={clsx(
+          'embla relative m-0 block w-full overflow-hidden rounded p-0',
+          !vertical && 'order-2 '
+        )}
+      >
         <div className='embla__viewport w-full' ref={mainViewportRef}>
           <div className='embla__container xoverflow-x-hidden flex h-full gap-2'>
             {formattedSlides.map((slide, index) => (
               <div className='embla__slide min-w-full' key={index}>
-                <div className='embla__slide__inner relative aspect-[3/2] overflow-hidden rounded'>
+                <div className='embla__slide__inner relative aspect-[3/2] h-full overflow-hidden rounded'>
                   <Image
                     className='embla__slide__img relative block rounded object-cover'
                     src={slide.sourceUrl}
@@ -72,17 +79,49 @@ const ProductSlider = ({ slides }: PropType) => {
         </div>
       </div>
 
-      <div className='embla embla--thumb relative m-0  block w-full overflow-hidden p-0'>
-        <div className='embla__viewport w-full ' ref={thumbViewportRef}>
-          <div className='embla__container embla__container--thumb xoverflow-x-hidden flex h-full gap-1'>
+      <div
+        className={clsx(
+          'embla embla--thumb relative m-0 block overflow-hidden p-0',
+          vertical && 'w-full',
+          !vertical && 'order-1 w-40'
+        )}
+      >
+        <div
+          className={clsx('embla__viewport w-full', !vertical && 'h-full')}
+          ref={thumbViewportRef}
+        >
+          <div
+            className={clsx(
+              'embla__container embla__container--thumb xh-full flex gap-1',
+              !vertical && 'flex-col gap-1'
+            )}
+          >
             {formattedSlides.map((slide, index) => (
-              <Thumb
-                onClick={() => onThumbClick(index)}
-                selected={index === selectedIndex}
-                imgSrc={slide.sourceUrl}
-                imgTitle={slide.title ? slide.title : ''}
+              <div
                 key={index}
-              />
+                className={clsx(
+                  'embla__slide embla__slide--thumb aspect-[3/2] w-1/5 shrink-0 rounded transition-opacity',
+                  index == selectedIndex &&
+                    'is-selected border-2 border-green-500 opacity-100',
+                  !(index == selectedIndex) && 'opacity-75',
+                  !vertical && 'w-full'
+                )}
+              >
+                <button
+                  onClick={() => onThumbClick(index)}
+                  className='embla__slide__inner embla__slide__inner--thumb relative aspect-[3/2] w-full'
+                  type='button'
+                >
+                  <Image
+                    className='embla__slide__thumbnail  relative block rounded object-cover'
+                    src={slide.sourceUrl}
+                    alt={slide.title ? slide.title : ''}
+                    sizes='(max-width: 420px) 100vw, 420px'
+                    fill
+                    priority
+                  />
+                </button>
+              </div>
             ))}
           </div>
         </div>
