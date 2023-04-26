@@ -100,6 +100,209 @@ const FilterBar = ({ filtersDD, searchParams }: FilterBarProps) => {
 
   return (
     <div className='absolute inset-x-0 z-10 '>
+      {/* <Dialog>
+        <DialogTrigger asChild>
+          <button
+            className={`relative flex h-10 w-full items-center justify-center gap-2 rounded-md px-3 py-2 text-sm text-zinc-800  shadow-sm shadow-black/5 outline-none ring-1 ring-zinc-200  transition hover:ring-zinc-300 `}
+          >
+            <FadersIcon weight='bold' size={16} />
+            <span>Filtros</span>
+          </button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Filtros</DialogTitle>
+          </DialogHeader>
+
+          <ToggleGroup.Root
+            className='inline-flex gap-1 rounded-lg bg-zinc-700/10 p-1'
+            type='single'
+            defaultValue={filters.operacion}
+            value={filters.operacion}
+            onValueChange={(value) => {
+              if (value) {
+                updateFilters('operacion', value)
+              }
+            }}
+            aria-label='Tipo de operación'
+          >
+            {operacionDD.map((item) => (
+              <ToggleGroup.Item
+                key={item.value}
+                className='xtext-white  h-10 w-full items-center justify-center rounded-md  font-medium capitalize text-zinc-700 hover:bg-input  hover:ring-1 hover:ring-zinc-200   focus:z-10 focus:outline-none  data-[state=on]:bg-input data-[state=on]:text-zinc-700 data-[state=on]:shadow-input '
+                value={item.value}
+              >
+                {item.name}
+              </ToggleGroup.Item>
+            ))}
+          </ToggleGroup.Root>
+
+          <Select
+            name='tipo'
+            defaultValue={filters.tipo}
+            onValueChange={(value) => updateFilters('tipo', value)}
+          >
+            <SelectTrigger className='hover:shadow-inset'>
+              <SelectValue placeholder='Seleccione un tipo de propiedad...' />
+            </SelectTrigger>
+            <SelectContent
+              position='popper'
+              sideOffset={1}
+              className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
+            >
+              {tipoDD?.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select
+            name='localizacion'
+            defaultValue={filters.localizacion}
+            onValueChange={(value) => updateFilters('localizacion', value)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder='Selecciona una localización...' />
+            </SelectTrigger>
+            <SelectContent
+              position='popper'
+              sideOffset={1}
+              className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
+            >
+              {localizacionDD?.map((localizacion: ParentLocalizacion) => (
+                <SelectGroup key={localizacion.value}>
+                  <SelectLabel>{localizacion.name}</SelectLabel>
+                  {localizacion.children.map((child) => (
+                    <SelectItem key={child.value} value={child.value}>
+                      {child.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <div className='grid w-full  items-center justify-stretch gap-1'>
+            <Label>Baños</Label>
+            <ToggleGroup.Root
+              className='inline-flex gap-1 rounded-lg bg-zinc-700/10 p-1'
+              type='single'
+              defaultValue={filters.banos}
+              onValueChange={(value) => updateFilters('banos', value)}
+              aria-label='Baños'
+            >
+              {bathroomsArrayDD.map((i) => (
+                <ToggleGroup.Item
+                  key={i}
+                  className='xtext-white  h-10 w-full items-center justify-center rounded-md  font-medium capitalize text-zinc-700 hover:bg-input  hover:ring-1 hover:ring-zinc-200   focus:z-10 focus:outline-none  data-[state=on]:bg-input data-[state=on]:text-zinc-700 data-[state=on]:shadow-input '
+                  value={i.toString()}
+                >
+                  {i}
+                </ToggleGroup.Item>
+              ))}
+            </ToggleGroup.Root>
+          </div>
+
+          <div className='grid w-full  items-center justify-stretch gap-1'>
+            <Label>Habitaciones</Label>
+            <ToggleGroup.Root
+              className='inline-flex gap-1 rounded-lg bg-zinc-700/10 p-1'
+              type='single'
+              defaultValue={filters.habitaciones}
+              onValueChange={(value) => updateFilters('habitaciones', value)}
+              aria-label='Habitaciones'
+            >
+              {bedroomsArrayDD.map((i) => (
+                <ToggleGroup.Item
+                  key={i}
+                  className='xtext-white  h-10 w-full items-center justify-center rounded-md  font-medium capitalize text-zinc-700 hover:bg-input  hover:ring-1 hover:ring-zinc-200   focus:z-10 focus:outline-none  data-[state=on]:bg-input data-[state=on]:text-zinc-700 data-[state=on]:shadow-input '
+                  value={i.toString()}
+                >
+                  {i}
+                </ToggleGroup.Item>
+              ))}
+            </ToggleGroup.Root>
+          </div>
+
+          <div className='inline-flex gap-4'>
+            <div className='grid w-full items-center justify-stretch gap-1'>
+              <div className='flex justify-between'>
+                <Label>Precio min.</Label>
+              </div>
+              <Select
+                name='precio'
+                defaultValue={filters.precioMin}
+                onValueChange={(value) => updateFilters('precioMin', value)}
+              >
+                <SelectTrigger className='hover:shadow-inset'>
+                  <SelectValue placeholder='Seleccione un rango de precios...' />
+                </SelectTrigger>
+                <SelectContent
+                  position='popper'
+                  sideOffset={1}
+                  className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
+                >
+                  {filters.operacion === 'en-alquiler'
+                    ? precioRentArrayDD?.map((item) => (
+                        <SelectItem key={item} value={item.toString()}>
+                          {formatter.format(item)}
+                        </SelectItem>
+                      ))
+                    : precioSaleArrayDD?.map((item) => (
+                        <SelectItem key={item} value={item.toString()}>
+                          {formatter.format(item)}
+                        </SelectItem>
+                      ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className='grid w-full items-center justify-stretch gap-1'>
+              <div className='flex justify-between'>
+                <Label>Precio max.</Label>
+              </div>
+              <Select
+                name='precio'
+                defaultValue={precioSaleArrayDD.slice(-1).toString()}
+                onValueChange={(value) => updateFilters('precioMax', value)}
+              >
+                <SelectTrigger className='hover:shadow-inset'>
+                  <SelectValue placeholder='Seleccione un rango de precios...' />
+                </SelectTrigger>
+                <SelectContent
+                  position='popper'
+                  sideOffset={1}
+                  className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
+                >
+                  {filters.operacion === 'en-alquiler'
+                    ? precioRentArrayDD?.map((item) => (
+                        <SelectItem key={item} value={item.toString()}>
+                          {formatter.format(item)}
+                        </SelectItem>
+                      ))
+                    : precioSaleArrayDD?.map((item) => (
+                        <SelectItem key={item} value={item.toString()}>
+                          {formatter.format(item)}
+                        </SelectItem>
+                      ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <button
+              onClick={handleFilters}
+              className='inline-flex h-10 items-center justify-center gap-1 rounded-md bg-gradient-to-b  from-green-500 via-green-600 via-60% to-green-700 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 '
+            >
+              <MagnifyingGlassIcon weight='bold' className='h-5 w-5' />
+              Buscar
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog> */}
       <Collapsible
         open={isOpen}
         onOpenChange={setIsOpen}
