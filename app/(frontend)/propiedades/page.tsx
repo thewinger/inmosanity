@@ -6,6 +6,7 @@ import {
   getFiltersDropdownValues,
   getSearchProperties,
 } from '@/lib/sanity.client'
+import { ChaoticOrbit } from '@uiball/loaders'
 import { Suspense } from 'react'
 
 const FilterBarFallBack = () => {
@@ -16,6 +17,14 @@ const FilterBarFallBack = () => {
       <FadersIcon weight='bold' size={16} />
       <span>Filtros</span>
     </button>
+  )
+}
+
+const SearchPageFallBack = () => {
+  return (
+    <div className='grid place-content-center bg-zinc-50 py-60'>
+      <ChaoticOrbit size={48} speed={5} color='#16a34a' />
+    </div>
   )
 }
 
@@ -32,7 +41,6 @@ export default async function PropiedadesPage({
   const filtersDD = await getFiltersDropdownValues()
   const searchResults = await getSearchProperties({ searchParams })
 
-  console.log(searchResults)
   return (
     <>
       <Suspense fallback={<FilterBarFallBack />}>

@@ -1,6 +1,6 @@
-import { formatEUR } from 'lib/helpers'
 import { Propiedad } from 'lib/interfaces'
 import { urlForImage } from 'lib/sanity.image'
+import { formatEUR } from 'lib/utils'
 import Image from 'next/image'
 import {
   BathtubIcon,

@@ -58,16 +58,21 @@ const Hero = ({ operacionDD, localizacionDD, tipoDD }: FiltersDD) => {
     <div className='relative mb-60 h-56 w-full bg-heroImg bg-cover bg-center bg-no-repeat pt-40 md:mb-44 lg:mb-24 lg:h-[480px]'>
       <div className='absolute left-1/2 grid w-full max-w-5xl -translate-x-1/2 auto-rows-auto grid-cols-1 gap-3 rounded-xl border-2 border-white/20 bg-zinc-200/90 p-4 pb-6 shadow-xl backdrop-blur md:grid-cols-2 md:grid-rows-3 lg:-bottom-16 lg:grid-cols-4 lg:grid-rows-2 lg:gap-4 lg:pb-4'>
         <ToggleGroup.Root
-          className='inline-flex gap-1 rounded-lg bg-zinc-700/10 p-0.5 md:col-span-2 lg:col-span-2 lg:col-start-2'
+          className='inline-flex gap-1 rounded-lg bg-zinc-700/10 p-1'
           type='single'
-          defaultValue={initialState.operacion}
-          onValueChange={(value) => updateFilters('operacion', value)}
+          defaultValue={filters.operacion}
+          value={filters.operacion}
+          onValueChange={(value) => {
+            if (value) {
+              updateFilters('operacion', value)
+            }
+          }}
           aria-label='Tipo de operación'
         >
           {operacionDD.map((item) => (
             <ToggleGroup.Item
               key={item.value}
-              className='xtext-white  h-9 w-full items-center justify-center rounded-md  font-medium capitalize text-zinc-700 hover:bg-input  hover:ring-1 hover:ring-zinc-200   focus:z-10 focus:outline-none  data-[state=on]:bg-input data-[state=on]:text-zinc-700 data-[state=on]:shadow-input '
+              className='xtext-white  h-10 w-full items-center justify-center rounded-md  font-medium capitalize text-zinc-700 hover:bg-input  hover:ring-1 hover:ring-zinc-200   focus:z-10 focus:outline-none  data-[state=on]:bg-input data-[state=on]:text-zinc-700 data-[state=on]:shadow-input '
               value={item.value}
             >
               {item.name}

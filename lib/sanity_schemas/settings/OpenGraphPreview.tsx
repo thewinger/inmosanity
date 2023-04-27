@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Card } from '@sanity/ui'
 import { height, OpenGraphImage, width } from 'components/OpenGraphImagen'
 import { createIntlSegmenterPolyfill } from 'intl-segmenter-polyfill'

@@ -12,9 +12,7 @@ function HeroFallBack() {
   return <>placeholder</>
 }
 
-export default async function FrontPage(searchParams: {
-  [key: string]: string | string[] | undefined
-}) {
+export default async function FrontPage() {
   const { featured, latest } = await getFrontPage()
   const filters = await getFiltersDropdownValues()
 

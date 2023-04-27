@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/lib/helpers'
+import { cn } from '@/lib/utils'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import * as React from 'react'
 import { CaretDownIcon, CaretUpDownIcon, CaretUpIcon, CheckIcon } from './icons'

@@ -1,6 +1,5 @@
 import { createClient } from 'next-sanity'
 import { apiVersion, dataset, projectId, useCdn } from './env'
-import { formatOperacionDD } from './helpers'
 import { FiltersDD, FrontPage, Propiedad } from './interfaces'
 import {
   bathroomsDD,
@@ -15,6 +14,7 @@ import {
   tipoDD,
   total,
 } from './sanity.queries'
+import { formatOperacionDD } from './utils'
 
 export const client = projectId
   ? createClient({ apiVersion, dataset, projectId, useCdn })
@@ -112,8 +112,6 @@ export async function getSearchProperties({
         year,
         "coverImage": images[0],
     } | order(_createdAt desc)[0...50]`
-
-    console.log('query', query)
 
     return await client.fetch(query)
   }

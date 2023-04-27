@@ -1,6 +1,6 @@
 'use client'
 
-import { createNumArray, getRoundedZeros } from '@/lib/helpers'
+import { createNumArray, getRoundedZeros } from '@/lib/utils'
 import { FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { useRouter } from 'next/navigation'

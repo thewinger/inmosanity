@@ -9,9 +9,9 @@ type SearchPage = {
 
 const SearchPage = ({ results }: SearchPage) => {
   return (
-    <div className='mx-auto max-w-5xl py-24 lg:px-6 lg:py-24'>
-      <h2 className='py-2 text-sm font-semibold uppercase  tracking-wide text-zinc-800 lg:px-0'>
-        {results.length > 1
+    <div className='mx-auto max-w-5xl px-4 py-24 lg:px-6 lg:py-24'>
+      <h2 className=' py-2 text-sm font-semibold uppercase  tracking-wide text-zinc-800 lg:px-0'>
+        {results.length > 1 || results.length == 0
           ? `${results.length} Resultados`
           : `${results.length} Resultado`}
       </h2>

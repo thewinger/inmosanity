@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import { formatEUR } from 'lib/helpers'
 import { Propiedad } from 'lib/interfaces'
+import { formatEUR } from 'lib/utils'
 import { notFound } from 'next/navigation'
 import ProductSlider from '../ProductSlider'
 import {
