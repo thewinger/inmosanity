@@ -29,7 +29,7 @@ const Hero = ({ operacionDD, localizacionDD, tipoDD }: FiltersDD) => {
 
   const [filters, setFilters] = useState<Filters>(initialState)
   const router = useRouter()
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams()! as unknown as URLSearchParams
 
   const updateFilters = (key: string, value: string) => {
     setFilters((prevFilters) => ({
