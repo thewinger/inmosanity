@@ -1,17 +1,6 @@
 @tailwind base;
 
 @layer base {
-}
-@tailwind components;
-
-@layer components {
-  [data-ui='Button'] {
-    background-color: var(--card-bg-color) !important;
-  }
-}
-@tailwind utilities;
-
-@layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 47.4% 11.2%;
@@ -87,4 +76,18 @@
     @apply bg-background text-foreground;
     font-feature-settings: 'rlig' 1, 'calt' 1;
   }
+  @supports (scrollbar-gutter: stable) {
+    html body {
+      margin-right: 0 !important;
+    }
+  }
 }
+
+@tailwind components;
+
+@layer components {
+  [data-ui='Button'] {
+    background-color: var(--card-bg-color) !important;
+  }
+}
+@tailwind utilities;
