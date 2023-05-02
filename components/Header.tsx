@@ -33,12 +33,22 @@ const Header = () => {
             <DropdownMenuTrigger>
               <PhoneIcon size={32} />
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>
-                <Link href='tel:965959663'>965959663</Link>
+            <DropdownMenuContent className='w-fit'>
+              <DropdownMenuItem className='h-10'>
+                <Link
+                  href='tel:965959663'
+                  className='w-full text-center leading-10'
+                >
+                  965959663
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href='tel:655849409'>655849409</Link>
+              <DropdownMenuItem className='h-10'>
+                <Link
+                  href='tel:655849409'
+                  className=' w-full text-center leading-10'
+                >
+                  655849409
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

@@ -11,6 +11,8 @@ export function formatEUR(amount: string) {
   const currencyFormatter = new Intl.NumberFormat(undefined, {
     style: 'currency',
     currency: 'EUR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
   })
 
   return currencyFormatter.format(amountInt)

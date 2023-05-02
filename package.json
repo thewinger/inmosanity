@@ -32,6 +32,7 @@
     "@sanity/color": "^2.2.5",
     "@sanity/demo": "^1.0.1",
     "@sanity/vision": "^3.1.4",
+    "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.8",
     "@uiball/loaders": "^1.2.6",
     "class-variance-authority": "^0.4.0",

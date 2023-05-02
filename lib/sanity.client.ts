@@ -113,7 +113,7 @@ export async function getSearchProperties({
         "coverImage": images[0],
     } | order(_createdAt desc)[0...50]`
 
-    return await client.fetch(query)
+    return await client.fetch(query, { cache: 'no-store' })
   }
 
   return {} as any
