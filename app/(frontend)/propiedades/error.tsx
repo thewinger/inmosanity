@@ -1,7 +1,20 @@
-import { FadersIcon } from '@/components/ui/icons'
-import { ChaoticOrbit } from '@uiball/loaders'
+'use client' // Error components must be Client components
 
-export default function LoadingPropiedades() {
+import { FadersIcon } from '@/components/ui/icons'
+import { useEffect } from 'react'
+
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error
+  reset: () => void
+}) {
+  useEffect(() => {
+    // Log the error to an error reporting service
+    console.error(error)
+  }, [error])
+
   return (
     <>
       <div className='absolute inset-x-0 z-10 block lg:hidden '>
@@ -15,8 +28,15 @@ export default function LoadingPropiedades() {
       <div className=' mx-auto flex max-w-5xl flex-col gap-6 px-4 py-24 lg:flex-row lg:px-6 lg:py-12'>
         <div className='relative isolate hidden w-[18.5rem] flex-col lg:flex'>
           <div className='grid place-content-center bg-zinc-50 py-60'>
-            LOADING!!!!!
-            <ChaoticOrbit size={48} speed={5} color='#16a34a' />
+            <h2>Something went wrong!</h2>
+            <button
+              onClick={
+                // Attempt to recover by trying to re-render the segment
+                () => reset()
+              }
+            >
+              Probar otra vez
+            </button>
           </div>
         </div>
       </div>

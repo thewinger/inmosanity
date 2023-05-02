@@ -5,7 +5,7 @@ import { CaretRightIcon, FacebookIcon, InstagramIcon } from './ui/icons'
 const Footer = () => {
   return (
     <footer className='bg-zinc-50'>
-      <div className=' h-[220px] bg-footerBorder bg-cover bg-right'></div>
+      <div className=' h-[320px] bg-footerBorder bg-cover bg-[80%] lg:bg-right'></div>
       <div className='grid grid-cols-1 gap-10 bg-green-700 px-4 py-8 text-green-50 lg:grid-cols-2 lg:gap-12 lg:px-12'>
         <div className='columna flex flex-col gap-2'>
           <h3 className='py-2 text-sm font-semibold uppercase  tracking-wide lg:px-0'>
@@ -26,7 +26,7 @@ const Footer = () => {
             </p>
             <Link
               href='/aviso-legal'
-              className='slef-start mt-4 flex w-fit items-center rounded-md bg-green-950/30 px-4 py-1 lg:justify-start lg:gap-2'
+              className='mt-4 flex w-fit items-center gap-2 rounded-md bg-green-950/30 px-4 py-1 hover:bg-green-900 lg:justify-start'
             >
               <span className='nderline py-2 text-sm '>Aviso legal</span>
               <CaretRightIcon size={16} weight='bold' />

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { previewSecretDocumentId, readToken } from 'lib/env'
 import { client } from 'lib/sanity.client'
 import { getPreviewSecret } from 'lib/sanity.previewSecret'

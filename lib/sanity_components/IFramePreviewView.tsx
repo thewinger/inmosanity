@@ -1,4 +1,4 @@
-import { apiVersion, previewSecretDocumentId } from '../env'
+// @ts-nocheck
 import { Box, Text } from '@sanity/ui'
 import { getPreviewSecret } from 'lib/sanity.previewSecret'
 import { ComponentProps, Suspense } from 'react'
@@ -6,6 +6,7 @@ import { isRecord, isString, useClient } from 'sanity'
 import { UserViewComponent } from 'sanity/desk'
 import styled from 'styled-components'
 import { suspend } from 'suspend-react'
+import { apiVersion, previewSecretDocumentId } from '../env'
 
 const FETCH_SECRET = Symbol(previewSecretDocumentId)
 

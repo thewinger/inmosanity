@@ -100,9 +100,9 @@ export default function page() {
         efectuarse mediantecomunicación escrita dirigida a Inmogolf Bonalba S.L.
         (C/ Vespre, centro comercial Bonalba local 11 – 03110 – Mutxamel) o a la
         dirección de correo electrónico de contacto (info@inmogolfbonalba.com )
-        indicando en cualquiera de los casos, como referencia "DATOS PERSONALES"
-        y el referido derecho que pretendan accionar, adjuntando copia de su
-        Documento Nacional de Identidad.
+        indicando en cualquiera de los casos, como referencia &ldquot;DATOS
+        PERSONALES&rdquot; y el referido derecho que pretendan accionar,
+        adjuntando copia de su Documento Nacional de Identidad.
       </p>
       <h3 className='py-1 text-sm font-semibold uppercase'>
         Disponibilidad y actualizaciones:

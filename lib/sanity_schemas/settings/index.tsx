@@ -1,6 +1,7 @@
+// @ts-nocheck
+import { HiCog } from 'react-icons/hi2'
 import { RuleType } from '../schemaTypes'
 import OpenGraphInput from './OpenGraphInput'
-import { HiCog } from 'react-icons/hi2'
 
 const settings = {
   name: 'ajustes',

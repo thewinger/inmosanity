@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import { formatEUR } from 'lib/helpers'
 import { Propiedad } from 'lib/interfaces'
+import { formatEUR } from 'lib/utils'
 import { notFound } from 'next/navigation'
 import ProductSlider from '../ProductSlider'
 import {
@@ -33,8 +33,13 @@ export default function PropiedadPage(props: PropiedadPageProps) {
     notFound()
   }
   return (
-    <div className=' py-12 sm:py-24'>
-      <div className='relative mx-auto mb-24 grid max-w-5xl auto-rows-auto grid-cols-1 gap-4 bg-white pb-12 pt-4 text-zinc-800 shadow-md lg:grid-cols-2 lg:gap-y-10 lg:px-6'>
+    <div className=' py-12 sm:py-12'>
+      <div
+        className={clsx(
+          'relative mx-auto mb-24 grid max-w-5xl auto-rows-auto grid-cols-1 gap-4 bg-white pb-12 text-zinc-800 shadow-md lg:grid-cols-2 lg:gap-y-10 lg:px-6 lg:pt-4',
+          propiedad.images && propiedad.images.length == 0 && 'pt-4'
+        )}
+      >
         {propiedad.images && propiedad.images.length > 0 && (
           <div className='lg:-col-end-1 relative flex flex-col md:flex-row md:items-start md:gap-2 lg:row-span-3'>
             <Pill>{propiedad.operacion.replace('-', ' ').toUpperCase()}</Pill>

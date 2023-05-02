@@ -1,5 +1,5 @@
 // components/RangeSlider.tsx
-import { cn } from '@/lib/helpers'
+import { cn } from '@/lib/utils'
 import ReactSlider, { ReactSliderProps } from 'react-slider'
 
 const RangeSlider = <T extends number | readonly number[]>(

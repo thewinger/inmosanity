@@ -10,6 +10,7 @@ import {
   CaretUp,
   CaretUpDown,
   Check,
+  Circle,
   EnvelopeSimple,
   FacebookLogo,
   Faders,
@@ -24,6 +25,10 @@ import {
 
 export const PhoneIcon = (props: IconProps) => {
   return <Phone {...props} />
+}
+
+export const CircleIcon = (props: IconProps) => {
+  return <Circle {...props} />
 }
 
 export const EnvelopeSimpleIcon = (props: IconProps) => {

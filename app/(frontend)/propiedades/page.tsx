@@ -1,44 +1,53 @@
 import FilterBar from '@/components/FilterBar'
-import SearchPage from '@/components/pages/SearchPage'
+import Filters from '@/components/ui/filters'
 
-import { FadersIcon } from '@/components/ui/icons'
+import PropiedadCard from '@/components/ui/PropiedadCard'
 import {
   getFiltersDropdownValues,
   getSearchProperties,
 } from '@/lib/sanity.client'
-import { Suspense } from 'react'
-
-const FilterBarFallBack = () => {
-  return (
-    <button
-      className={`relative flex h-10 w-full items-center justify-center gap-2 rounded-md px-3 py-2 text-sm text-zinc-800  shadow-sm shadow-black/5 outline-none ring-1 ring-zinc-200  transition hover:ring-zinc-300 `}
-    >
-      <FadersIcon weight='bold' size={16} />
-      <span>Filtros</span>
-    </button>
-  )
-}
-
-interface SearchParams {
-  searchParams: { [key: string]: string | string[] }
-}
+import clsx from 'clsx'
+import Link from 'next/link'
 
 export default async function PropiedadesPage({
   searchParams,
 }: {
-  params: { slug: string }
   searchParams: { [key: string]: string | string[] }
 }) {
   const filtersDD = await getFiltersDropdownValues()
-  const searchResults = await getSearchProperties({ searchParams })
+  const results = await getSearchProperties({ searchParams })
 
-  console.log(searchResults)
   return (
     <>
-      <Suspense fallback={<FilterBarFallBack />}>
-        <FilterBar filtersDD={filtersDD} searchParams={searchParams} />
-      </Suspense>
-      <SearchPage results={searchResults} />
+      <FilterBar filtersDD={filtersDD} searchParams={searchParams} />
+      <div className=' mx-auto flex max-w-5xl flex-col gap-6 px-4 py-24 lg:flex-row lg:px-6 lg:py-12'>
+        <div className='relative isolate hidden w-[18.5rem] flex-col lg:flex'>
+          <h2 className='py-2 text-sm font-semibold uppercase  tracking-wide text-zinc-800 lg:px-0'>
+            Filtros
+          </h2>
+          <Filters filtersDD={filtersDD} searchParams={searchParams} />
+        </div>
+
+        <div className='grow'>
+          <h2 className=' py-2 text-sm font-semibold uppercase  tracking-wide text-zinc-800 lg:px-0'>
+            {results.length > 1 || results.length == 0
+              ? `${results.length} Resultados`
+              : `${results.length} Resultado`}
+          </h2>
+          <div
+            className={clsx(
+              'grid  grid-cols-cards gap-4',
+              results.length > 1 ? 'justify-center' : ''
+            )}
+          >
+            {results.map((propiedad) => (
+              <Link key={propiedad.slug} href={`/propiedad/${propiedad.slug}`}>
+                <PropiedadCard propiedad={propiedad} />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
     </>
   )
 }
