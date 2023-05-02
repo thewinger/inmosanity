@@ -46,8 +46,24 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
     priceRentDD,
   } = filtersDD
 
-  const precioSaleArrayDD = createNumArray(getRoundedZeros(priceSaleDD), 50000)
-  const precioRentArrayDD = createNumArray(getRoundedZeros(priceRentDD), 100)
+  let precioSaleArrayDD = createNumArray(getRoundedZeros(priceSaleDD), 50000)
+  let precioRentArrayDD = createNumArray(getRoundedZeros(priceRentDD), 100)
+  let precioMinRentArrayDD = precioRentArrayDD.slice(
+    0,
+    precioRentArrayDD.length - 1
+  )
+  let precioMaxRentArrayDD = precioRentArrayDD.slice(
+    1,
+    precioRentArrayDD.length
+  )
+  let precioMinSaleArrayDD = precioSaleArrayDD.slice(
+    0,
+    precioSaleArrayDD.length - 1
+  )
+  let precioMaxSaleArrayDD = precioSaleArrayDD.slice(
+    1,
+    precioSaleArrayDD.length
+  )
 
   let initialState = {
     operacion: 'en-venta',
@@ -73,27 +89,54 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
     currency: 'EUR',
   })
 
-  function updateFilters(key: string, value: string) {
-    if (key === 'operacion' && value === 'en-alquiler') {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        [key]: value,
-        precioMax: precioRentArrayDD.slice(-1).toString(),
-      }))
-    } else if (key == 'operacion' && value !== 'en-alquiler') {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        [key]: value,
-        precioMax: precioSaleArrayDD.slice(-1).toString(),
-      }))
-    } else {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        [key]: value,
-      }))
-    }
+  function handleOperacion(value: string) {
+    value == 'en-alquiler'
+      ? setFilters((prevFilters) => ({
+          ...prevFilters,
+          operacion: value,
+          precioMin: precioMinRentArrayDD[0].toString(),
+          precioMax: precioMaxRentArrayDD.slice(-1).toString(),
+        }))
+      : setFilters((prevFilters) => ({
+          ...prevFilters,
+          operacion: value,
+          precioMin: precioMinSaleArrayDD[0].toString(),
+          precioMax: precioMaxSaleArrayDD.slice(-1).toString(),
+        }))
+  }
 
-    console.log('rent', precioRentArrayDD.slice(-1).toString())
+  function handlePrecioMin(value: string) {
+    filters.operacion == 'en-alquiler'
+      ? (precioMaxRentArrayDD = precioMaxRentArrayDD.filter(
+          (f) => f > Number(value)
+        ))
+      : (precioMaxSaleArrayDD = precioMaxSaleArrayDD.filter(
+          (f) => f > Number(value)
+        ))
+
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      precioMin: value,
+    }))
+    console.log('minrent', precioMaxRentArrayDD)
+    console.log('minsale', precioMaxSaleArrayDD)
+  }
+
+  function handlePrecioMax(value: string) {
+    filters.operacion == 'en-alquiler'
+      ? (precioMinRentArrayDD = precioMinRentArrayDD.filter(
+          (f) => f < Number(value)
+        ))
+      : (precioMinSaleArrayDD = precioMinSaleArrayDD.filter(
+          (f) => f < Number(value)
+        ))
+
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      precioMax: value,
+    }))
+    console.log('maxsale', precioMinSaleArrayDD)
+    console.log('maxrent', precioMinRentArrayDD)
   }
 
   const createQueryString = useCallback((filters: Filters) => {
@@ -120,7 +163,7 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
         value={filters.operacion}
         onValueChange={(value) => {
           if (value) {
-            updateFilters('operacion', value)
+            handleOperacion(value)
           }
         }}
         aria-label='Tipo de operación'
@@ -135,7 +178,12 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
       <Select
         name='tipo'
         defaultValue={filters.tipo}
-        onValueChange={(value) => updateFilters('tipo', value)}
+        onValueChange={(value) =>
+          setFilters((prevFilters) => ({
+            ...prevFilters,
+            tipo: value,
+          }))
+        }
       >
         <SelectTrigger className='hover:shadow-inset'>
           <SelectValue placeholder='Seleccione un tipo de propiedad...' />
@@ -153,11 +201,15 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
         </SelectContent>
       </Select>
 
-      {/* TODO Update valor correcto y no undefined */}
       <Select
         name='localizacion'
         defaultValue={filters.localizacion}
-        onValueChange={(value) => updateFilters('localizacion', value)}
+        onValueChange={(value) =>
+          setFilters((prevFilters) => ({
+            ...prevFilters,
+            localizacion: value,
+          }))
+        }
       >
         <SelectTrigger>
           <SelectValue placeholder='Selecciona una localización...' />
@@ -186,7 +238,12 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
           className='bg-zinc-700/10'
           type='single'
           defaultValue={filters.banos}
-          onValueChange={(value) => updateFilters('banos', value)}
+          onValueChange={(value) =>
+            setFilters((prevFilters) => ({
+              ...prevFilters,
+              banos: value,
+            }))
+          }
           aria-label='Baños'
         >
           {bathroomsArrayDD.map((i) => (
@@ -203,7 +260,12 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
           className='inline-flex gap-1 rounded-lg bg-zinc-700/10 p-1'
           type='single'
           defaultValue={filters.habitaciones}
-          onValueChange={(value) => updateFilters('habitaciones', value)}
+          onValueChange={(value) =>
+            setFilters((prevFilters) => ({
+              ...prevFilters,
+              habitaciones: value,
+            }))
+          }
           aria-label='Habitaciones'
         >
           {bedroomsArrayDD.map((i) => (
@@ -220,7 +282,8 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
           <Select
             name='precio'
             defaultValue={filters.precioMin}
-            onValueChange={(value) => updateFilters('precioMin', value)}
+            value={filters.precioMin}
+            onValueChange={(value) => handlePrecioMin(value)}
           >
             <SelectTrigger className='hover:shadow-inset'>
               <SelectValue placeholder='Seleccione un rango de precios...' />
@@ -231,12 +294,12 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
               className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
             >
               {filters.operacion === 'en-alquiler'
-                ? precioRentArrayDD?.map((item) => (
+                ? precioMinRentArrayDD.map((item) => (
                     <SelectItem key={item} value={item.toString()}>
                       {formatter.format(item)}
                     </SelectItem>
                   ))
-                : precioSaleArrayDD?.map((item) => (
+                : precioMinSaleArrayDD.map((item) => (
                     <SelectItem key={item} value={item.toString()}>
                       {formatter.format(item)}
                     </SelectItem>
@@ -250,7 +313,8 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
           <Select
             name='precio'
             defaultValue={filters.precioMax}
-            onValueChange={(value) => updateFilters('precioMax', value)}
+            value={filters.precioMax}
+            onValueChange={(value) => handlePrecioMax(value)}
           >
             <SelectTrigger className='hover:shadow-inset'>
               <SelectValue placeholder='Seleccione un rango de precios...' />
@@ -261,12 +325,12 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
               className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
             >
               {filters.operacion === 'en-alquiler'
-                ? precioRentArrayDD?.map((item) => (
+                ? precioMaxRentArrayDD.map((item) => (
                     <SelectItem key={item} value={item.toString()}>
                       {formatter.format(item)}
                     </SelectItem>
                   ))
-                : precioSaleArrayDD?.map((item) => (
+                : precioMaxSaleArrayDD.map((item) => (
                     <SelectItem key={item} value={item.toString()}>
                       {formatter.format(item)}
                     </SelectItem>
@@ -275,6 +339,7 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
           </Select>
         </div>
       </div>
+
       <button
         onClick={handleFilters}
         className='inline-flex h-10 w-full items-center justify-center gap-1 rounded-md bg-gradient-to-b  from-green-500 via-green-600 via-60% to-green-700 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 '
