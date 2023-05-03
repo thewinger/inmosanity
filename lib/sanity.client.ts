@@ -22,7 +22,7 @@ export const client = projectId
 
 export async function getFrontPage(): Promise<FrontPage> {
   if (client) {
-    return (await client?.fetch(frontPageQuery)) || ({} as any)
+    return (await client?.fetch(frontPageQuery, 'es')) || ({} as any)
   }
 
   return {} as any

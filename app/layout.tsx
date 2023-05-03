@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ReactNode } from 'react'
 import 'styles/global.css'
+import { i18n } from '../i18n-config'
 
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({
@@ -16,13 +17,18 @@ export const metadata: Metadata = {
   description: 'Inmobiliaria en el campo de golf Bonalba',
 }
 
-type Props = {
-  children?: ReactNode
+export async function generateStaticParams() {
+  return i18n.locales.map((locale) => ({ lang: locale }))
 }
 
-export default function RootLayout({ children }: Props) {
+type Props = {
+  children?: ReactNode
+  params: { lang: string }
+}
+
+export default function RootLayout({ children, params }: Props) {
   return (
-    <html lang='es' className={inter.variable}>
+    <html lang={params.lang} className={inter.variable}>
       <body>{children}</body>
     </html>
   )

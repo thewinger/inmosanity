@@ -6,6 +6,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+export const dictionaries = {
+  en: () => import('../dictionaries/en.json').then((module) => module.default),
+  es: () => import('../dictionaries/es.json').then((module) => module.default),
+}
+
 export function formatEUR(amount: number) {
   const currencyFormatter = new Intl.NumberFormat('es-ES', {
     style: 'currency',

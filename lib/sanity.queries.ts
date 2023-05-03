@@ -9,7 +9,7 @@ const PROPIEDAD_FIELDS = `
   operacion,
   "localizacion": localizacion->title,
   "localizacionPadre": localizacion->{parent->{title}},
-  "tipo": tipo->title,
+  "tipo": tipo->title['es'],
   price,
   size,
   year,
@@ -21,7 +21,7 @@ export const frontPageQuery = groq`
     title,
     "slug": slug.current,
     "coverImage": images[0],
-    "tipo": tipo->title,
+    "tipo": tipo->title['es'],
     operacion,
   },
   "latest": *[_type == "propiedad"] | order(_createdAt desc) [0...12] {
@@ -44,7 +44,7 @@ export const propiedadSlugsQuery = groq`
 export const propiedadBySlugQuery = groq`
   *[_type == "propiedad" && slug.current == $slug][0] {
     ${PROPIEDAD_FIELDS}
-    "caracteristicas": caracteristicas[]->title,
+    "caracteristicas": caracteristicas[]->title['es'],
     "images": images[],
     description,
   }
@@ -56,7 +56,7 @@ export const operacionDD = groq`
 
 export const tipoDD = groq`
   array::unique(*[_type =="tipo"  && count(*[ _type == 'propiedad' && references(^._id)]) > 0]{
-    "name": title,
+    "name": title['es'],
     "value":_id
   })
 `

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import LocaleSwitcher from './locale-switcher'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +26,7 @@ const Header = () => {
         </Link>
 
         <div className='flex justify-between gap-4 text-green-600'>
+          <LocaleSwitcher />
           <a href='mailto:info@inmogolfbonalba.com'>
             <EnvelopeSimpleIcon size={32} />
           </a>
