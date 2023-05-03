@@ -126,7 +126,7 @@ const propiedad = {
   preview: {
     select: {
       title: 'title',
-      subtitle: 'tipo.title',
+      subtitle: 'tipo.title.es',
       media: 'images.0.asset',
     },
     prepare: ({ title, subtitle, media }) => ({

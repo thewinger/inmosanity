@@ -1,9 +1,9 @@
 'use client'
 
 import { FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
-import { createNumArray, getRoundedZeros } from '@/lib/utils'
+import { createNumArray, formatEUR, getRoundedZeros } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { MagnifyingGlassIcon } from '../ui/icons'
 import { Label } from '../ui/label'
@@ -48,22 +48,40 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
 
   let precioSaleArrayDD = createNumArray(getRoundedZeros(priceSaleDD), 50000)
   let precioRentArrayDD = createNumArray(getRoundedZeros(priceRentDD), 100)
-  let precioMinRentArrayDD = precioRentArrayDD.slice(
-    0,
-    precioRentArrayDD.length - 1
-  )
-  let precioMaxRentArrayDD = precioRentArrayDD.slice(
-    1,
-    precioRentArrayDD.length
-  )
-  let precioMinSaleArrayDD = precioSaleArrayDD.slice(
-    0,
-    precioSaleArrayDD.length - 1
-  )
-  let precioMaxSaleArrayDD = precioSaleArrayDD.slice(
-    1,
-    precioSaleArrayDD.length
-  )
+  const [precioMinRentArrayDD, setPrecioMinRentArrayDD] = useState<number[]>([
+    0, 100, 200, 300, 400, 500,
+  ])
+  const [precioMaxRentArrayDD, setPrecioMaxRentArrayDD] = useState<number[]>([
+    100, 200, 300, 400, 500, 600,
+  ])
+  const [precioMinSaleArrayDD, setPrecioMinSaleArrayDD] = useState<number[]>([
+    0, 50000, 100000, 150000, 200000, 250000,
+  ])
+  const [precioMaxSaleArrayDD, setPrecioMaxSaleArrayDD] = useState<number[]>([
+    50000, 100000, 150000, 200000, 250000, 300000,
+  ])
+
+  useEffect(() => {
+    setPrecioMinRentArrayDD(
+      precioRentArrayDD.slice(0, precioRentArrayDD.length - 1)
+    )
+    setPrecioMaxRentArrayDD(
+      precioRentArrayDD.slice(1, precioRentArrayDD.length)
+    )
+    setPrecioMinSaleArrayDD(
+      precioSaleArrayDD.slice(0, precioSaleArrayDD.length - 1)
+    )
+    setPrecioMaxSaleArrayDD(
+      precioSaleArrayDD.slice(1, precioSaleArrayDD.length)
+    )
+  }, [])
+
+  const [filters, setFilters] = useState<Filters>({
+    operacion: 'en-venta',
+    tipo: 'tipo-adosado',
+    precioMin: '0',
+    precioMax: precioSaleArrayDD.slice(-1).toString(),
+  })
 
   let initialState = {
     operacion: 'en-venta',
@@ -79,15 +97,8 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
     initialState[key] = value
   }
 
-  const [filters, setFilters] = useState<Filters>(initialState)
-
   const bathroomsArrayDD = createNumArray(bathroomsDD, 1)
   const bedroomsArrayDD = createNumArray(bedroomsDD, 1)
-
-  const formatter = new Intl.NumberFormat('es-ES', {
-    style: 'currency',
-    currency: 'EUR',
-  })
 
   function handleOperacion(value: string) {
     value == 'en-alquiler'
@@ -107,36 +118,32 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
 
   function handlePrecioMin(value: string) {
     filters.operacion == 'en-alquiler'
-      ? (precioMaxRentArrayDD = precioMaxRentArrayDD.filter(
-          (f) => f > Number(value)
-        ))
-      : (precioMaxSaleArrayDD = precioMaxSaleArrayDD.filter(
-          (f) => f > Number(value)
-        ))
+      ? setPrecioMaxRentArrayDD(
+          precioMaxRentArrayDD.filter((f) => f > Number(value))
+        )
+      : setPrecioMaxSaleArrayDD(
+          precioMaxSaleArrayDD.filter((f) => f > Number(value))
+        )
 
     setFilters((prevFilters) => ({
       ...prevFilters,
       precioMin: value,
     }))
-    console.log('minrent', precioMaxRentArrayDD)
-    console.log('minsale', precioMaxSaleArrayDD)
   }
 
   function handlePrecioMax(value: string) {
     filters.operacion == 'en-alquiler'
-      ? (precioMinRentArrayDD = precioMinRentArrayDD.filter(
-          (f) => f < Number(value)
-        ))
-      : (precioMinSaleArrayDD = precioMinSaleArrayDD.filter(
-          (f) => f < Number(value)
-        ))
+      ? setPrecioMinRentArrayDD(
+          precioMinRentArrayDD.filter((f) => f < Number(value))
+        )
+      : setPrecioMinSaleArrayDD(
+          precioMinSaleArrayDD.filter((f) => f < Number(value))
+        )
 
     setFilters((prevFilters) => ({
       ...prevFilters,
       precioMax: value,
     }))
-    console.log('maxsale', precioMinSaleArrayDD)
-    console.log('maxrent', precioMinRentArrayDD)
   }
 
   const createQueryString = useCallback((filters: Filters) => {
@@ -296,12 +303,12 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
               {filters.operacion === 'en-alquiler'
                 ? precioMinRentArrayDD.map((item) => (
                     <SelectItem key={item} value={item.toString()}>
-                      {formatter.format(item)}
+                      {formatEUR(item)}
                     </SelectItem>
                   ))
                 : precioMinSaleArrayDD.map((item) => (
                     <SelectItem key={item} value={item.toString()}>
-                      {formatter.format(item)}
+                      {formatEUR(item)}
                     </SelectItem>
                   ))}
             </SelectContent>
@@ -327,12 +334,12 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
               {filters.operacion === 'en-alquiler'
                 ? precioMaxRentArrayDD.map((item) => (
                     <SelectItem key={item} value={item.toString()}>
-                      {formatter.format(item)}
+                      {formatEUR(item)}
                     </SelectItem>
                   ))
                 : precioMaxSaleArrayDD.map((item) => (
                     <SelectItem key={item} value={item.toString()}>
-                      {formatter.format(item)}
+                      {formatEUR(item)}
                     </SelectItem>
                   ))}
             </SelectContent>

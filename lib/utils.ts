@@ -6,16 +6,15 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function formatEUR(amount: string) {
-  const amountInt = Number(amount)
-  const currencyFormatter = new Intl.NumberFormat(undefined, {
+export function formatEUR(amount: number) {
+  const currencyFormatter = new Intl.NumberFormat('es-ES', {
     style: 'currency',
     currency: 'EUR',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   })
 
-  return currencyFormatter.format(amountInt)
+  return currencyFormatter.format(amount)
 }
 
 export function formatOperacionDD(arr: string[]) {
