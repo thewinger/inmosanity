@@ -58,17 +58,9 @@ const propiedad = {
     {
       name: 'operacion',
       title: 'Operacion',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'En venta', value: 'en-venta' },
-          { title: 'En alquiler', value: 'en-alquiler' },
-          { title: 'Obra nueva', value: 'obra-nueva' },
-        ],
-        layout: 'radio',
-        direction: 'horizontal',
-      },
-      validation: (Rule: RuleType) => Rule.required(),
+      type: 'reference',
+      to: [{ type: 'operacion' }],
+      options: { disableNew: true },
     },
     {
       name: 'tipo',

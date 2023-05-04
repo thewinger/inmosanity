@@ -9,7 +9,7 @@ const PROPIEDAD_FIELDS = `
   operacion,
   "localizacion": localizacion->title,
   "localizacionPadre": localizacion->{parent->{title}},
-  "tipo": tipo->title['es'],
+  "tipo": tipo->title[$lang],
   price,
   size,
   year,
@@ -21,7 +21,7 @@ export const frontPageQuery = groq`
     title,
     "slug": slug.current,
     "coverImage": images[0],
-    "tipo": tipo->title['es'],
+    "tipo": tipo->title[$lang],
     operacion,
   },
   "latest": *[_type == "propiedad"] | order(_createdAt desc) [0...12] {

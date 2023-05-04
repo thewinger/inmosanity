@@ -21,7 +21,7 @@ export default async function FrontPage({
 }) {
   console.log(lang)
   const dict = await getDictionary(lang)
-  const { featured, latest } = await getFrontPage()
+  const { featured, latest } = await getFrontPage({ lang })
   const filters = await getFiltersDropdownValues()
 
   if (!featured || !latest) {
