@@ -1,15 +1,18 @@
 import { groq } from 'next-sanity'
 
-const PROPIEDAD_FIELDS = `
+export const PROPIEDAD_FIELDS = `
   _id,
   title,
   "slug": slug.current,
   bathrooms,
   bedrooms,
-  operacion,
+  "operacion": {
+      "name": select(operacion->title[$lang] != "" => operacion->title[$lang], operacion->title['es']),
+      "value": operacion._id
+  },
   "localizacion": localizacion->title,
   "localizacionPadre": localizacion->{parent->{title}},
-  "tipo": tipo->title[$lang],
+  "tipo": select(tipo->title[$lang] != "" => tipo->title[$lang], tipo->title['es']),
   price,
   size,
   year,
@@ -21,8 +24,8 @@ export const frontPageQuery = groq`
     title,
     "slug": slug.current,
     "coverImage": images[0],
-    "tipo": tipo->title[$lang],
-    operacion,
+    "tipo": select(tipo->title[$lang] != "" => tipo->title[$lang], tipo->title['es']),
+    "operacion": select(operacion->title[$lang] != "" => operacion->title[$lang], operacion->title['es']),
   },
   "latest": *[_type == "propiedad"] | order(_createdAt desc) [0...12] {
     ${PROPIEDAD_FIELDS}
@@ -31,7 +34,7 @@ export const frontPageQuery = groq`
 }`
 
 export const searchPropiedades = groq`
-*[_type == 'propiedad' && operacion == $operacion  && tipo._ref == $tipo && localizacion._ref == $localizacion && bathrooms == $bathrooms && bedrooms == $bedrooms && price >= $priceMin && price <= $priceMax]{
+*[_type == 'propiedad' && operacion._ref == $operacion  && tipo._ref == $tipo && localizacion._ref == $localizacion && bathrooms == $bathrooms && bedrooms == $bedrooms && price >= $priceMin && price <= $priceMax]{
   ${PROPIEDAD_FIELDS}
   "coverImage": images[0],
 }
@@ -44,19 +47,25 @@ export const propiedadSlugsQuery = groq`
 export const propiedadBySlugQuery = groq`
   *[_type == "propiedad" && slug.current == $slug][0] {
     ${PROPIEDAD_FIELDS}
-    "caracteristicas": caracteristicas[]->title['es'],
-    "images": images[],
+    "caracteristicas": caracteristicas[]{
+    "title": select(
+      @->title[$lang] != "" => @->title[$lang],
+      @->title['es']),
+  },    "images": images[],
     description,
   }
 `
 
 export const operacionDD = groq`
-  array::unique(*[_type == "propiedad" ].operacion)
+  array::unique(*[_type == "operacion" ]{
+  "name": title[$lang],
+  "value": _id
+  })
 `
 
 export const tipoDD = groq`
   array::unique(*[_type =="tipo"  && count(*[ _type == 'propiedad' && references(^._id)]) > 0]{
-    "name": title['es'],
+    "name": title[$lang],
     "value":_id
   })
 `
@@ -96,11 +105,11 @@ export const localizacionDD = groq`
 `
 
 export const maxPriceSaleDD = groq`
-  math::max(*[_type == 'propiedad' && operacion != 'en-alquiler'].price)
+  math::max(*[_type == 'propiedad' && operacion._ref != 'operacion-en-alquiler'].price)
 `
 
 export const maxPriceRentDD = groq`
-  math::max(*[_type == 'propiedad' && operacion == 'en-alquiler'].price)
+  math::max(*[_type == 'propiedad' && operacion._ref == 'operacion-en-alquiler'].price)
 `
 
 export const bathroomsDD = groq`

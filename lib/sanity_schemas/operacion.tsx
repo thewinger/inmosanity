@@ -27,6 +27,17 @@ const operacion = {
       ],
     },
   ],
+  // Customise the preview so parents are visualised in the studio
+  preview: {
+    select: {
+      title: 'title.es',
+      subtitle: 'title.en',
+    },
+    prepare: ({ title, subtitle }) => ({
+      title,
+      subtitle,
+    }),
+  },
 }
 
 export default operacion

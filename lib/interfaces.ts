@@ -31,10 +31,10 @@ export interface Propiedad {
   localizacionPadre?: Parent
   tipo: string
   price: string
-  operacion: string
+  operacion: FilterString
   coverImage: Image
   images?: Image[]
-  caracteristicas?: string[]
+  caracteristicas?: { title: string }[]
   description?: string
   size?: number
   year?: number

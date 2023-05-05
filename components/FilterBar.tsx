@@ -36,7 +36,11 @@ const FilterBar = ({ filtersDD, searchParams }: FilterBarProps) => {
           <DialogHeader>
             <DialogTitle>Filtros</DialogTitle>
           </DialogHeader>
-          <Filters filtersDD={filtersDD} searchParams={searchParams} />
+          <Filters
+            filtersDD={filtersDD}
+            searchParams={searchParams}
+            dict={dict.filters}
+          />
         </DialogContent>
       </Dialog>
     </div>

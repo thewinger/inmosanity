@@ -31,9 +31,17 @@ interface Filters {
 type FilterBarProps = {
   filtersDD: FiltersDD
   searchParams: { [key: string]: string | string[] }
+  dict: {
+    search_button: string
+    localizacion_placeholder: string
+    precioMin_label: string
+    precioMax_label: string
+    banos_label: string
+    habitaciones_label: string
+  }
 }
 
-const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
+function Filters({ dict, filtersDD, searchParams }: FilterBarProps) {
   const router = useRouter()
 
   const {
@@ -77,21 +85,21 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
   }, [])
 
   const [filters, setFilters] = useState<Filters>({
-    operacion: 'en-venta',
+    operacion: 'operacion-en-venta',
     tipo: 'tipo-adosado',
     precioMin: '0',
     precioMax: precioSaleArrayDD.slice(-1).toString(),
   })
 
   let initialState = {
-    operacion: 'en-venta',
+    operacion: 'operacion-en-venta',
     tipo: 'tipo-adosado',
     precioMin: '0',
     precioMax: precioSaleArrayDD.slice(-1).toString(),
   }
 
   for (const [key, value] of Object.entries(searchParams)) {
-    if (key == 'operacion' && value == 'en-alquiler') {
+    if (key == 'operacion' && value == 'operacion-en-alquiler') {
       initialState.precioMax = precioRentArrayDD.slice(-1).toString()
     }
     initialState[key] = value
@@ -101,7 +109,7 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
   const bedroomsArrayDD = createNumArray(bedroomsDD, 1)
 
   function handleOperacion(value: string) {
-    value == 'en-alquiler'
+    value == 'operacion-en-alquiler'
       ? setFilters((prevFilters) => ({
           ...prevFilters,
           operacion: value,
@@ -117,7 +125,7 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
   }
 
   function handlePrecioMin(value: string) {
-    filters.operacion == 'en-alquiler'
+    filters.operacion == 'operacion-en-alquiler'
       ? setPrecioMaxRentArrayDD(
           precioMaxRentArrayDD.filter((f) => f > Number(value))
         )
@@ -132,7 +140,7 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
   }
 
   function handlePrecioMax(value: string) {
-    filters.operacion == 'en-alquiler'
+    filters.operacion == 'operacion-en-alquiler'
       ? setPrecioMinRentArrayDD(
           precioMinRentArrayDD.filter((f) => f < Number(value))
         )
@@ -162,7 +170,7 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
   }
 
   return (
-    <div className='grid w-full auto-rows-auto grid-cols-1 gap-4 @container'>
+    <div className='FILTERS grid w-full auto-rows-auto grid-cols-1 gap-4 @container'>
       <ToggleGroup
         className='bg-zinc-700/10'
         type='single'
@@ -193,14 +201,14 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
         }
       >
         <SelectTrigger className='hover:shadow-inset'>
-          <SelectValue placeholder='Seleccione un tipo de propiedad...' />
+          <SelectValue />
         </SelectTrigger>
         <SelectContent
           position='popper'
           sideOffset={1}
           className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
         >
-          {tipoDD?.map((item) => (
+          {tipoDD.map((item) => (
             <SelectItem key={item.value} value={item.value}>
               {item.name}
             </SelectItem>
@@ -219,28 +227,29 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
         }
       >
         <SelectTrigger>
-          <SelectValue placeholder='Selecciona una localización...' />
+          <SelectValue placeholder={dict.localizacion_placeholder} />
         </SelectTrigger>
         <SelectContent
           position='popper'
           sideOffset={1}
           className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
         >
-          {localizacionDD?.map((localizacion: ParentLocalizacion) => (
+          {localizacionDD.map((localizacion: ParentLocalizacion) => (
             <SelectGroup key={localizacion.value}>
               <SelectLabel>{localizacion.name}</SelectLabel>
-              {localizacion.children.map((child) => (
-                <SelectItem key={child.value} value={child.value}>
-                  {child.name}
-                </SelectItem>
-              ))}
+              {localizacion.children &&
+                localizacion.children.map((child) => (
+                  <SelectItem key={child.value} value={child.value}>
+                    {child.name}
+                  </SelectItem>
+                ))}
             </SelectGroup>
           ))}
         </SelectContent>
       </Select>
 
       <div className='grid w-full  items-center justify-stretch gap-1'>
-        <Label>Baños</Label>
+        <Label>{dict.banos_label}</Label>
         <ToggleGroup
           className='bg-zinc-700/10'
           type='single'
@@ -262,7 +271,7 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
       </div>
 
       <div className='grid w-full  items-center justify-stretch gap-1'>
-        <Label>Habitaciones</Label>
+        <Label>{dict.habitaciones_label}</Label>
         <ToggleGroup
           className='inline-flex gap-1 rounded-lg bg-zinc-700/10 p-1'
           type='single'
@@ -285,7 +294,7 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
 
       <div className='flex gap-4 @[17.5rem]:flex @[17.5rem]:flex-col'>
         <div className='grid w-full items-center justify-stretch gap-1'>
-          <Label>Precio min.</Label>
+          <Label>{dict.precioMin_label}</Label>
           <Select
             name='precio'
             defaultValue={filters.precioMin}
@@ -300,7 +309,7 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
               sideOffset={1}
               className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
             >
-              {filters.operacion === 'en-alquiler'
+              {filters.operacion === 'operacion-en-alquiler'
                 ? precioMinRentArrayDD.map((item) => (
                     <SelectItem key={item} value={item.toString()}>
                       {formatEUR(item)}
@@ -316,7 +325,7 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
         </div>
 
         <div className='grid w-full items-center justify-stretch gap-1'>
-          <Label>Precio max.</Label>
+          <Label>{dict.precioMax_label}</Label>
           <Select
             name='precio'
             defaultValue={filters.precioMax}
@@ -331,7 +340,7 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
               sideOffset={1}
               className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
             >
-              {filters.operacion === 'en-alquiler'
+              {filters.operacion === 'operacion-en-alquiler'
                 ? precioMaxRentArrayDD.map((item) => (
                     <SelectItem key={item} value={item.toString()}>
                       {formatEUR(item)}
@@ -352,7 +361,7 @@ const Filters = ({ filtersDD, searchParams }: FilterBarProps) => {
         className='inline-flex h-10 w-full items-center justify-center gap-1 rounded-md bg-gradient-to-b  from-green-500 via-green-600 via-60% to-green-700 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 '
       >
         <MagnifyingGlassIcon weight='bold' className='h-5 w-5' />
-        Buscar
+        {dict.search_button}
       </button>
     </div>
   )

@@ -28,9 +28,7 @@ const FeaturedSlider = ({ propiedades }: PropType) => {
               href={`/propiedad/${propiedad.slug}`}
               className='embla__slide xmax-h-[420px] relative aspect-[3/2] min-w-0 shrink-0 grow-0 basis-4/5 '
             >
-              <Pill>
-                {`${propiedad.tipo} - ${propiedad.operacion.replace('-', ' ')}`}
-              </Pill>
+              <Pill>{`${propiedad.tipo} - ${propiedad.operacion}`}</Pill>
               {propiedad && propiedad.coverImage && (
                 <Image
                   className='block  aspect-[3/2]  w-full rounded-md object-cover '

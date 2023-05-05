@@ -1,7 +1,16 @@
 {
-  "search_button": "Search",
   "destacados": "Highlights",
   "ultimos_anadidos": "Latest",
   "quienes_somos_label": "Who we are",
-  "contacto_label": "Contact"
+  "contacto_label": "Contact",
+  "aviso_legal_label": "Legal notice",
+  "contactar_button": "Get in touch",
+  "filters": {
+    "search_button": "Search",
+    "localizacion_placeholder": "Select a location...",
+    "precioMin_label": "Price min.",
+    "precioMax_label": "Price max.",
+    "banos_label": "Bathrooms",
+    "habitaciones_label": "Bedrooms"
+  }
 }

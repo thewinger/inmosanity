@@ -104,7 +104,19 @@ const propiedad = {
     {
       name: 'description',
       title: 'Descripción',
-      type: 'text',
+      type: 'object',
+      fields: [
+        {
+          name: 'es',
+          title: 'Español',
+          type: 'text',
+        },
+        {
+          name: 'en',
+          title: 'Inglés',
+          type: 'text',
+        },
+      ],
     },
     {
       name: 'caracteristicas',

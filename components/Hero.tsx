@@ -21,9 +21,19 @@ interface Filters {
   tipo: string
 }
 
-const Hero = ({ operacionDD, localizacionDD, tipoDD }: FiltersDD) => {
+type Props = {
+  dict: {
+    search_button: string
+    localizacion_placeholder: string
+  }
+  filtersDD: FiltersDD
+}
+
+export default function Hero({ dict, filtersDD }: Props) {
+  const { operacionDD, localizacionDD, tipoDD } = filtersDD
+
   const initialState = {
-    operacion: 'en-venta',
+    operacion: 'operacion-en-venta',
     tipo: 'tipo-adosado',
   }
 
@@ -81,15 +91,18 @@ const Hero = ({ operacionDD, localizacionDD, tipoDD }: FiltersDD) => {
           defaultValue={initialState.tipo}
           onValueChange={(value) => updateFilters('tipo', value)}
         >
-          <SelectTrigger className='hover:shadow-inset md:col-span-1 md:row-start-2 lg:col-span-2 lg:row-start-2'>
-            <SelectValue placeholder='Seleccione un tipo de propiedad...' />
+          <SelectTrigger className='hover:shadow-inset col-span-2 md:col-span-1 md:row-start-2 lg:col-span-2 lg:row-start-2'>
+            <SelectValue
+              className='truncate'
+              placeholder='Seleccione un tipo de propiedad...'
+            />
           </SelectTrigger>
           <SelectContent
             position='popper'
             sideOffset={1}
             className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
           >
-            {tipoDD?.map((item) => (
+            {tipoDD.map((item) => (
               <SelectItem key={item.value} value={item.value}>
                 {item.name}
               </SelectItem>
@@ -101,36 +114,36 @@ const Hero = ({ operacionDD, localizacionDD, tipoDD }: FiltersDD) => {
           name='localizacion'
           onValueChange={(value) => updateFilters('localizacion', value)}
         >
-          <SelectTrigger className='md:col-span-1 md:col-start-2 md:row-start-2 lg:col-span-2'>
-            <SelectValue placeholder='Selecciona una localización...' />
+          <SelectTrigger className='col-span-2 md:col-span-1 md:col-start-2 md:row-start-2 lg:col-span-2'>
+            <SelectValue placeholder={dict.localizacion_placeholder} />
           </SelectTrigger>
           <SelectContent
             position='popper'
             sideOffset={1}
             className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
           >
-            {localizacionDD?.map((localizacion: ParentLocalizacion) => (
-              <SelectGroup key={localizacion.value}>
-                <SelectLabel>{localizacion.name}</SelectLabel>
-                {localizacion.children.map((child) => (
-                  <SelectItem key={child.value} value={child.value}>
-                    {child.name}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            ))}
+            {localizacionDD &&
+              localizacionDD.map((localizacion: ParentLocalizacion) => (
+                <SelectGroup key={localizacion.value}>
+                  <SelectLabel>{localizacion.name}</SelectLabel>
+                  {localizacion.children &&
+                    localizacion.children.map((child) => (
+                      <SelectItem key={child.value} value={child.value}>
+                        {child.name}
+                      </SelectItem>
+                    ))}
+                </SelectGroup>
+              ))}
           </SelectContent>
         </Select>
         <button
           onClick={() => handleFilters()}
-          className='inline-flex h-9 items-center justify-center gap-1 rounded-md bg-gradient-to-b from-green-500 via-green-600 via-60%  to-green-700 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 md:col-span-2 md:row-start-3 lg:col-span-4'
+          className='col-span-2 inline-flex h-9 items-center justify-center gap-1 rounded-md bg-gradient-to-b from-green-500 via-green-600 via-60%  to-green-700 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 md:col-span-2 md:row-start-3 lg:col-span-4'
         >
           <MagnifyingGlassIcon weight='bold' className='h-5 w-5' />
-          Buscar
+          {dict.search_button}
         </button>
       </div>
     </div>
   )
 }
-
-export default Hero
