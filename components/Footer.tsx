@@ -1,34 +1,47 @@
 import Link from 'next/link'
 
+import { Locale } from '@/i18n-config'
 import { CaretRightIcon, FacebookIcon, InstagramIcon } from './ui/icons'
 
-const Footer = () => {
+type Props = {
+  params: { lang: Locale }
+  dict: {
+    footer: {
+      quienes_somos: {
+        quienes_somos_label: string
+        quienes_somos_text: string
+        aviso_legal_label: string
+      }
+      contacto: {
+        contacto_label: string
+        horario: string
+      }
+    }
+  }
+}
+
+export function Footer({ dict, params }: Props) {
   return (
     <footer className='bg-zinc-50'>
-      <div className=' h-[320px] bg-footerBorder bg-cover bg-[80%] lg:bg-right'></div>
+      <div className=' h-[400px] bg-footerBorder bg-cover bg-[80%] lg:bg-right'></div>
       <div className='grid grid-cols-1 gap-10 bg-green-700 px-4 py-8 text-green-50 lg:grid-cols-2 lg:gap-12 lg:px-12'>
         <div className='columna flex flex-col gap-2'>
           <h3 className='py-2 text-sm font-semibold uppercase  tracking-wide lg:px-0'>
-            Quienes somos
+            {dict.footer.quienes_somos.quienes_somos_label}
           </h3>
           <div className='flex flex-col gap-2 '>
-            <p>
-              Agencia inmobiliaria ubicada en el Centro Comercial dentro del
-              Residencial Bonalba especializada en la compraventa y el alquiler
-              de viviendas, plazas de parking y locales comerciales en la zona.
-              Más de 15 años en Bonalba nos avalan para dar el mejor servicio y
-              atención a nuestros clientes.
-            </p>
-            <p>
-              Tambien ofrecemos servicio postventa y servicios integrales con el
-              fin de facilitar a nuestros clientes su bien estar en Bonalba,
-              bien sea para su vivienda de vacaciones, habitual o en alquiler.
-            </p>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: dict.footer.quienes_somos.quienes_somos_text,
+              }}
+            />
             <Link
-              href='/aviso-legal'
+              href={`${params.lang}/aviso-legal`}
               className='mt-4 flex w-fit items-center gap-2 rounded-md bg-green-950/30 px-4 py-1 hover:bg-green-900 lg:justify-start'
             >
-              <span className='nderline py-2 text-sm '>Aviso legal</span>
+              <span className='nderline py-2 text-sm '>
+                {dict.footer.quienes_somos.aviso_legal_label}
+              </span>
               <CaretRightIcon size={16} weight='bold' />
             </Link>
           </div>
@@ -36,7 +49,7 @@ const Footer = () => {
 
         <div className='columna  flex flex-col gap-2 lg:col-start-2'>
           <h3 className='py-2  text-sm font-semibold uppercase  tracking-wide lg:px-0'>
-            Contacto
+            {dict.footer.contacto.contacto_label}
           </h3>
           <div className='flex flex-col gap-4 sm:flex-row'>
             <div className='flex basis-1/2 flex-col gap-4'>
@@ -54,11 +67,12 @@ const Footer = () => {
                   <InstagramIcon size={44} weight='regular' />
                 </Link>
               </div>
-              <p className='xpb-2'>
-                Entre Semana: 10:00 - 19:30 <br />
-                Sábados hasta las 14:00
-              </p>
-              <p className='xpb-2'>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: dict.footer.contacto.horario,
+                }}
+              />
+              <p>
                 <Link className='underline' href='tel:965959663'>
                   965959663
                 </Link>{' '}

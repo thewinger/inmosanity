@@ -40,6 +40,10 @@ export interface Propiedad {
   year?: number
 }
 
+export interface Page {
+  slug: string
+}
+
 interface Parent {
   parent: parentTitle
 }

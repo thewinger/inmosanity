@@ -25,7 +25,7 @@ const ProductSlider = ({ slides, vertical }: PropType) => {
   const onThumbClick = useCallback(
     (index: number) => {
       if (!embla || !emblaThumbs) return
-      if (emblaThumbs.clickAllowed()) embla.scrollTo(index)
+      embla.scrollTo(index)
     },
     [embla, emblaThumbs]
   )

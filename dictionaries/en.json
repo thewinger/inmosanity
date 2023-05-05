@@ -1,10 +1,19 @@
 {
+  "slogan": "Discover the perfect home near the greens with us!",
   "destacados": "Highlights",
   "ultimos_anadidos": "Latest",
-  "quienes_somos_label": "Who we are",
-  "contacto_label": "Contact",
-  "aviso_legal_label": "Legal notice",
   "contactar_button": "Get in touch",
+  "footer": {
+    "quienes_somos": {
+      "quienes_somos_label": "Who we are",
+      "quienes_somos_text": "<p class='py-2'>Real estate agency located in the Commercial Center within the Bonalba Residential, specialized in buying, selling, and renting homes, parking spaces, and commercial premises in the area. More than 15 years in Bonalba endorse us to provide the best service and attention to our clients.</p><p>We also offer after-sales service and comprehensive services in order to facilitate our clients' well-being in Bonalba, whether it is for their vacation home, primary residence or rental property.</p>",
+      "aviso_legal_label": "Legal notice"
+    },
+    "contacto": {
+      "contacto_label": "Contact",
+      "horario": "<p>Weekdays: 10:00 - 19:30<br>Saturdays until 14:00</p>"
+    }
+  },
   "filters": {
     "search_button": "Search",
     "localizacion_placeholder": "Select a location...",

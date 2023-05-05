@@ -35,7 +35,7 @@ export default async function FrontPage({
   return (
     <>
       <Suspense fallback={<HeroFallBack />}>
-        <Hero dict={dict.filters} filtersDD={filtersDD} />
+        <Hero dict={dict} filtersDD={filtersDD} />
       </Suspense>
       <section className='relative mx-auto max-w-5xl py-4 lg:px-4'>
         <h2 className='p-2 px-4 text-sm font-semibold  uppercase tracking-wide text-zinc-800 lg:px-0'>

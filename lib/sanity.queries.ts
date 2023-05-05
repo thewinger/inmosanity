@@ -52,7 +52,14 @@ export const propiedadBySlugQuery = groq`
       @->title[$lang] != "" => @->title[$lang],
       @->title['es']),
   },    "images": images[],
-    description,
+    "description": description[$lang],
+  }
+`
+
+export const pageBySlugQuery = groq`
+  *[_type == "paginas" && slug.current == $slug][0] {
+    "slug": slug.current,
+    "content": content[$lang],
   }
 `
 

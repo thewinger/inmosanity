@@ -25,7 +25,7 @@ const Header = () => {
           />
         </Link>
 
-        <div className='flex justify-between gap-4 text-green-600'>
+        <div className='flex justify-between gap-6 text-green-600'>
           <LocaleSwitcher />
           <a href='mailto:info@inmogolfbonalba.com'>
             <EnvelopeSimpleIcon size={32} />
