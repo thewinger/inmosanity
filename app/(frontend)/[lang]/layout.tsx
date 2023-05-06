@@ -21,3 +21,7 @@ export default async function IndexRoute({ children, params }: Props) {
     </div>
   )
 }
+
+export async function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }]
+}
