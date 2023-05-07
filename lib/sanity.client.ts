@@ -12,6 +12,7 @@ import {
   maxPriceSaleDD,
   operacionDD,
   pageBySlugQuery,
+  pageSlugsQuery,
   propiedadBySlugQuery,
   propiedadSlugsQuery,
   PROPIEDAD_FIELDS,
@@ -136,7 +137,14 @@ export async function getPropiedadBySlug(
   return {} as any
 }
 
-export async function getPageBySlug(slug: string, lang: Locale): Promise<any> {
+export async function getAllPagesSlug() {
+  if (client) {
+    const slugs: string[] = await clientFetch(pageSlugsQuery)
+    console.log(slugs)
+    return slugs?.map((slug) => ({ slug }))
+  }
+}
+export async function getPageBySlug(slug: string, lang: Locale) {
   if (client) {
     return (await clientFetch(pageBySlugQuery, { slug, lang })) || ({} as any)
   }

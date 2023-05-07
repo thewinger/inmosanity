@@ -4,13 +4,13 @@ import { PortableText } from '@portabletext/react'
 
 type Props = {
   params: {
-    pagina: string
+    slug: string
     lang: Locale
   }
 }
 
-export default async function Page({ params: { pagina, lang } }: Props) {
-  const pageData = getPageBySlug(pagina, lang)
+export default async function Page({ params: { slug, lang } }: Props) {
+  const pageData = getPageBySlug(slug, lang)
   const page = await pageData
 
   return (
@@ -19,3 +19,9 @@ export default async function Page({ params: { pagina, lang } }: Props) {
     </article>
   )
 }
+
+/* export async function generateStaticParams() {
+  const slugs = await getAllPagesSlug()
+
+  return { slugs }
+} */

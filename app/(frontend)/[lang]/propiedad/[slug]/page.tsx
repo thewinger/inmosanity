@@ -191,9 +191,9 @@ export default async function Propiedad({ params: { slug, lang } }: Props) {
     </div>
   )
 }
-/**/
-/* export async function generateStaticParams() { */
-/*   const slugs = await getAllPropiedadesSlug() */
-/**/
-/*   return { slugs } */
-/* } */
+
+/* export async function generateStaticParams() {
+  const slugs = await getAllPropiedadesSlug()
+
+  return { slugs }
+} */

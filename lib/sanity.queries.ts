@@ -56,6 +56,10 @@ export const propiedadBySlugQuery = groq`
   }
 `
 
+export const pageSlugsQuery = groq`
+  *[_type == "paginas" && defined(slug.current)][].slug.current
+`
+
 export const pageBySlugQuery = groq`
   *[_type == "paginas" && slug.current == $slug][0] {
     "slug": slug.current,

@@ -30,7 +30,10 @@ export default function LocaleSwitcher() {
         {i18n.locales.map((locale) => {
           return (
             <DropdownMenuItem key={locale}>
-              <Link href={redirectedPathName(locale)} className='uppercase'>
+              <Link
+                href={redirectedPathName(locale)}
+                className='w-full uppercase'
+              >
                 {locale}
               </Link>
             </DropdownMenuItem>

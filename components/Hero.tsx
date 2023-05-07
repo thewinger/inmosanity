@@ -68,9 +68,9 @@ export default function Hero({ dict, filtersDD }: Props) {
   }
 
   return (
-    <div className='relative mb-64 h-56 w-full bg-heroImg bg-cover bg-center bg-no-repeat pt-40 md:mb-48 lg:mb-24 lg:h-[480px]'>
+    <div className='relative mb-72 h-56 w-full bg-heroImg bg-cover bg-center bg-no-repeat pt-40 md:mb-48 lg:mb-24 lg:h-[480px]'>
       <div className='absolute grid w-full max-w-5xl auto-rows-auto grid-cols-1 gap-3 rounded-xl  bg-gray-200/80 p-4 pb-6 shadow-xl backdrop-blur md:auto-rows-min md:grid-cols-2 lg:-bottom-16 lg:grid-cols-4 lg:grid-rows-2 lg:gap-4 lg:pb-4 xl:left-1/2 xl:-translate-x-1/2 '>
-        <h2 className='scroll-m-20 pb-2 text-center text-3xl font-semibold tracking-tight text-green-950 transition-colors first:mt-0 md:col-span-2'>
+        <h2 className='scroll-m-20 pb-2 text-center text-2xl font-semibold tracking-tight text-green-950 transition-colors first:mt-0 md:col-span-2'>
           {dict.slogan}
         </h2>
 
