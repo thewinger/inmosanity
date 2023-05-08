@@ -2,7 +2,7 @@
 
 import { FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
 import { createNumArray, formatEUR, getRoundedZeros } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 
 import { MagnifyingGlassIcon } from '../ui/icons'
@@ -42,7 +42,14 @@ type FilterBarProps = {
 }
 
 function Filters({ dict, filtersDD, searchParams }: FilterBarProps) {
+  const pathName = usePathname()
   const router = useRouter()
+
+  const getLocale = () => {
+    if (!pathName) return '/'
+    const segments = pathName.split('/')
+    return segments[1]
+  }
 
   const {
     bathroomsDD,
@@ -166,7 +173,7 @@ function Filters({ dict, filtersDD, searchParams }: FilterBarProps) {
   }, [])
 
   const handleFilters = async () => {
-    router.push(`/propiedades?` + createQueryString(filters))
+    router.push(`/${getLocale()}/propiedades?` + createQueryString(filters))
   }
 
   return (

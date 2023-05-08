@@ -14,13 +14,15 @@ function HeroFallBack() {
 }
 
 export default async function FrontPage({
-  params: { lang },
+  params,
 }: {
   params: { lang: Locale }
 }) {
-  const dict = await getDictionary(lang)
-  const { featured, latest } = await getFrontPage(lang)
-  const filtersDD = await getFiltersDropdownValues(lang)
+  const dict = await getDictionary(params.lang)
+  const { featured, latest } = await getFrontPage(params.lang)
+  const filtersDD = await getFiltersDropdownValues(params.lang)
+
+  console.log('front', params.lang)
 
   if (!featured || !latest) {
     notFound()
@@ -35,7 +37,7 @@ export default async function FrontPage({
   return (
     <>
       <Suspense fallback={<HeroFallBack />}>
-        <Hero dict={dict} filtersDD={filtersDD} />
+        <Hero params={params} dict={dict} filtersDD={filtersDD} />
       </Suspense>
       <section className='relative mx-auto max-w-5xl py-4 lg:px-4'>
         <h2 className='p-2 px-4 text-sm font-semibold  uppercase tracking-wide text-zinc-800 lg:px-0'>
@@ -56,7 +58,7 @@ export default async function FrontPage({
           {latest.map((propiedad) => (
             <Link
               key={propiedad.slug}
-              href={`${lang}/propiedad/${propiedad.slug}`}
+              href={`${params.lang}/propiedad/${propiedad.slug}`}
             >
               <PropiedadCard propiedad={propiedad} />
             </Link>

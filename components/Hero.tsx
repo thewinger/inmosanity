@@ -1,7 +1,8 @@
 'use client'
 
+import { Locale } from '@/i18n-config'
 import { FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import { MagnifyingGlassIcon } from './ui/icons'
 import {
@@ -22,6 +23,7 @@ interface Filters {
 }
 
 type Props = {
+  params: { lang: Locale }
   dict: {
     filters: {
       search_button: string
@@ -32,7 +34,7 @@ type Props = {
   filtersDD: FiltersDD
 }
 
-export default function Hero({ dict, filtersDD }: Props) {
+export default function Hero({ params, dict, filtersDD }: Props) {
   const { operacionDD, localizacionDD, tipoDD } = filtersDD
 
   const initialState = {
@@ -42,7 +44,6 @@ export default function Hero({ dict, filtersDD }: Props) {
 
   const [filters, setFilters] = useState<Filters>(initialState)
   const router = useRouter()
-  const searchParams = useSearchParams()! as unknown as URLSearchParams
 
   const updateFilters = (key: string, value: string) => {
     setFilters((prevFilters) => ({
@@ -51,20 +52,18 @@ export default function Hero({ dict, filtersDD }: Props) {
     }))
   }
 
-  const createQueryString = useCallback(
-    (filters: Filters) => {
-      const params = new URLSearchParams(searchParams)
-      for (const [key, value] of Object.entries(filters)) {
-        params.set(key, value)
-      }
+  const createQueryString = useCallback((filters: Filters) => {
+    const searchParams = new URLSearchParams()
+    for (const [key, value] of Object.entries(filters)) {
+      searchParams.set(key, value)
+    }
 
-      return params.toString()
-    },
-    [searchParams]
-  )
+    return searchParams.toString()
+  }, [])
 
   const handleFilters = async () => {
-    router.push(`/propiedades?` + createQueryString(filters))
+    /* router.push(`/${params.lang}/propiedades?` + createQueryString(filters)) */
+    console.log(`/${params.lang}/propiedades?` + createQueryString(filters))
   }
 
   return (

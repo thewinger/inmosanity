@@ -8,7 +8,6 @@ import {
 } from '@/lib/sanity.client'
 import clsx from 'clsx'
 import Link from 'next/link'
-export const dynamic = 'force-dynamic'
 
 export default async function PropiedadesPage({
   searchParams,
