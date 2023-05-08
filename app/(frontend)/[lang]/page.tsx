@@ -22,8 +22,6 @@ export default async function FrontPage({
   const { featured, latest } = await getFrontPage(params.lang)
   const filtersDD = await getFiltersDropdownValues(params.lang)
 
-  console.log('front', params.lang)
-
   if (!featured || !latest) {
     notFound()
   }

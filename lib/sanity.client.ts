@@ -1,9 +1,10 @@
 import { Locale } from '@/i18n-config'
 import { createClient } from 'next-sanity'
-import { cache } from 'react'
+import { ReadonlyURLSearchParams } from 'next/navigation'
 import { apiVersion, dataset, projectId, useCdn } from './env'
 import { FiltersDD, FrontPage, Propiedad } from './interfaces'
 import {
+  PROPIEDAD_FIELDS,
   bathroomsDD,
   bedroomsDD,
   frontPageQuery,
@@ -15,18 +16,15 @@ import {
   pageSlugsQuery,
   propiedadBySlugQuery,
   propiedadSlugsQuery,
-  PROPIEDAD_FIELDS,
   tipoDD,
   total,
 } from './sanity.queries'
 
 export const client = createClient({ apiVersion, dataset, projectId, useCdn })
 
-const clientFetch = cache(client.fetch.bind(client))
-
 export async function getFrontPage(lang: Locale): Promise<FrontPage> {
   if (client) {
-    return (await clientFetch(frontPageQuery, { lang })) || ({} as any)
+    return (await client.fetch(frontPageQuery, { lang })) || ({} as any)
   }
 
   return {} as any
@@ -36,14 +34,14 @@ export async function getFiltersDropdownValues(
   lang: Locale
 ): Promise<FiltersDD> {
   if (client) {
-    const bathroomsData = clientFetch(bathroomsDD)
-    const bedroomsData = clientFetch(bedroomsDD)
-    const priceRentData = clientFetch(maxPriceRentDD)
-    const priceSaleData = clientFetch(maxPriceSaleDD)
-    const localizacionData = clientFetch(localizacionDD)
-    const tipoData = clientFetch(tipoDD, { lang })
-    const operacionData = clientFetch(operacionDD, { lang })
-    const totalData = clientFetch(total)
+    const bathroomsData = client.fetch(bathroomsDD)
+    const bedroomsData = client.fetch(bedroomsDD)
+    const priceRentData = client.fetch(maxPriceRentDD)
+    const priceSaleData = client.fetch(maxPriceSaleDD)
+    const localizacionData = client.fetch(localizacionDD)
+    const tipoData = client.fetch(tipoDD, { lang })
+    const operacionData = client.fetch(operacionDD, { lang })
+    const totalData = client.fetch(total)
 
     const [
       bathroomsValues,
@@ -81,25 +79,24 @@ export async function getFiltersDropdownValues(
   return {} as any
 }
 
-export async function getSearchProperties(
-  searchParams: { [key: string]: string | string[] },
+export function getSearchProperties(
+  /* searchParams: { [key: string]: string | string[] | undefined }, */
+  searchParams: ReadonlyURLSearchParams,
   lang: Locale
-): Promise<Propiedad[]> {
+): Propiedad[] {
   if (client) {
     let query = `*[_type == 'propiedad'`
-    for (const [key, value] of Object.entries(searchParams)) {
+    for (const [key, value] of searchParams.entries()) {
       if (key == 'precioMin') {
         query += ` && price >= ${Number(value)} `
       } else if (key == 'precioMax') {
         query += ` && price <= ${Number(value)} `
-      } else if (key == 'tipo' || key == 'localizacion') {
-        query += ` && ${key}._ref == '${value}' `
       } else if (key == 'banos') {
         query += ` && bathrooms == ${value} `
       } else if (key == 'habitaciones') {
         query += ` && bedrooms == ${value} `
       } else {
-        query += ` && ${key} == '${value}' `
+        query += ` && ${key}._ref == '${value}' `
       }
     }
     query += `]{
@@ -108,7 +105,7 @@ export async function getSearchProperties(
         _createdAt,
     } | order(_createdAt desc)[0...50]`
 
-    return await clientFetch(query, { lang })
+    return client.fetch(query, { lang })
   }
 
   return {} as any
@@ -118,7 +115,7 @@ export async function getAllPropiedadesSlug(): Promise<
   Pick<Propiedad, 'slug'>[]
 > {
   if (client) {
-    const slugs: string[] = await clientFetch(propiedadSlugsQuery)
+    const slugs: string[] = await client.fetch(propiedadSlugsQuery)
     return slugs?.map((slug) => ({ slug }))
   }
   return []
@@ -130,7 +127,7 @@ export async function getPropiedadBySlug(
 ): Promise<Propiedad> {
   if (client) {
     return (
-      (await clientFetch(propiedadBySlugQuery, { slug, lang })) || ({} as any)
+      (await client.fetch(propiedadBySlugQuery, { slug, lang })) || ({} as any)
     )
   }
 
@@ -139,14 +136,14 @@ export async function getPropiedadBySlug(
 
 export async function getAllPagesSlug() {
   if (client) {
-    const slugs: string[] = await clientFetch(pageSlugsQuery)
+    const slugs: string[] = await client.fetch(pageSlugsQuery)
     console.log(slugs)
     return slugs?.map((slug) => ({ slug }))
   }
 }
 export async function getPageBySlug(slug: string, lang: Locale) {
   if (client) {
-    return (await clientFetch(pageBySlugQuery, { slug, lang })) || ({} as any)
+    return (await client.fetch(pageBySlugQuery, { slug, lang })) || ({} as any)
   }
 
   return {} as any

@@ -62,8 +62,8 @@ export default function Hero({ params, dict, filtersDD }: Props) {
   }, [])
 
   const handleFilters = async () => {
-    /* router.push(`/${params.lang}/propiedades?` + createQueryString(filters)) */
-    console.log(`/${params.lang}/propiedades?` + createQueryString(filters))
+    router.push(`/${params.lang}/propiedades?` + createQueryString(filters))
+    /* console.log(`/${params.lang}/propiedades?` + createQueryString(filters)) */
   }
 
   return (

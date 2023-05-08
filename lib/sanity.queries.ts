@@ -8,7 +8,7 @@ export const PROPIEDAD_FIELDS = `
   bedrooms,
   "operacion": {
       "name": select(operacion->title[$lang] != "" => operacion->title[$lang], operacion->title['es']),
-      "value": operacion._id
+      "value": operacion._ref
   },
   "localizacion": localizacion->title,
   "localizacionPadre": localizacion->{parent->{title}},

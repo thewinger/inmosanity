@@ -22,7 +22,7 @@ type Props = {
 
 export function Footer({ dict, params }: Props) {
   return (
-    <footer className='bg-zinc-50'>
+    <footer className='mt-64 bg-zinc-50'>
       <div className=' h-[400px] bg-footerBorder bg-cover bg-[80%] lg:bg-right'></div>
       <div className='grid grid-cols-1 gap-10 bg-green-700 px-4 py-8 text-green-50 lg:grid-cols-2 lg:gap-12 lg:px-12'>
         <div className='columna flex flex-col gap-2'>

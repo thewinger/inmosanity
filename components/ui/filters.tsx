@@ -2,7 +2,7 @@
 
 import { FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
 import { createNumArray, formatEUR, getRoundedZeros } from '@/lib/utils'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 
 import { MagnifyingGlassIcon } from '../ui/icons'
@@ -30,7 +30,6 @@ interface Filters {
 
 type FilterBarProps = {
   filtersDD: FiltersDD
-  searchParams: { [key: string]: string | string[] }
   dict: {
     search_button: string
     localizacion_placeholder: string
@@ -41,9 +40,10 @@ type FilterBarProps = {
   }
 }
 
-function Filters({ dict, filtersDD, searchParams }: FilterBarProps) {
+function Filters({ dict, filtersDD }: FilterBarProps) {
   const pathName = usePathname()
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   const getLocale = () => {
     if (!pathName) return '/'
