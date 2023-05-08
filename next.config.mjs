@@ -5,7 +5,6 @@ const config = {
   swcMinify: false,
   experimental: {
     appDir: true,
-    styledComponents: true,
   },
   images: {
     remotePatterns: [
