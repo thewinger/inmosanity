@@ -3,6 +3,7 @@
   "destacados": "Highlights",
   "ultimos_anadidos": "Latest",
   "contactar_button": "Get in touch",
+  "alquiler_tag": "month",
   "footer": {
     "quienes_somos": {
       "quienes_somos_label": "Who we are",
@@ -15,6 +16,7 @@
     }
   },
   "filters": {
+    "filtros_title": "Filters",
     "search_button": "Search",
     "localizacion_placeholder": "Select a location...",
     "precioMin_label": "Price min.",

@@ -1,8 +1,17 @@
 'use client'
 
 import { i18n } from '@/i18n-config'
+import spainFlag from '@/public/es.svg'
+import ukFlag from '@/public/uk.svg'
+import Image from 'next/image'
 import Link from 'next/link'
-import { useParams, usePathname } from 'next/navigation'
+import {
+  ReadonlyURLSearchParams,
+  useParams,
+  usePathname,
+  useSearchParams,
+} from 'next/navigation'
+import { useCallback } from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,21 +19,53 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 
+interface Filters {
+  habitaciones?: string
+  banos?: string
+  operacion: string
+  localizacion?: string
+  tipo?: string
+  precioMin?: string
+  precioMax?: string
+}
+
 export default function LocaleSwitcher() {
   const pathName = usePathname()
   const params = useParams()
+  const searchParams = useSearchParams()
 
   const redirectedPathName = (locale: string) => {
     if (!pathName) return '/'
     const segments = pathName.split('/')
     segments[1] = locale
-    return segments.join('/')
+    const newPathName = searchParams
+      ? `${segments.join('/')}?${createQueryString(searchParams)}`
+      : segments.join('/')
+    return newPathName
   }
+
+  const createQueryString = useCallback(
+    (searchParams: ReadonlyURLSearchParams) => {
+      const params = new URLSearchParams()
+      for (const [key, value] of searchParams.entries()) {
+        if (value !== '') {
+          params.set(key, value)
+        }
+      }
+
+      return params.toString()
+    },
+    []
+  )
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='uppercase'>
-        {params?.lang}
+        {params.lang == 'es' ? (
+          <Image src={spainFlag} width={24} height={24} alt='Idioma Español' />
+        ) : (
+          <Image src={ukFlag} width={24} height={24} alt='English language' />
+        )}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {i18n.locales.map((locale) => {
@@ -32,9 +73,29 @@ export default function LocaleSwitcher() {
             <DropdownMenuItem key={locale}>
               <Link
                 href={redirectedPathName(locale)}
-                className='w-full uppercase'
+                className='flex w-full items-center gap-2'
               >
-                {locale}
+                {locale == 'es' ? (
+                  <>
+                    <Image
+                      src={spainFlag}
+                      width={16}
+                      height={16}
+                      alt='Idioma Español'
+                    />
+                    <span>Español</span>
+                  </>
+                ) : (
+                  <>
+                    <Image
+                      src={ukFlag}
+                      width={16}
+                      height={16}
+                      alt='English language'
+                    />
+                    <span>English</span>
+                  </>
+                )}
               </Link>
             </DropdownMenuItem>
           )

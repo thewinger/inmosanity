@@ -81,3 +81,31 @@ export interface FiltersDD {
   tipoDD: FilterString[]
   total: number
 }
+
+export interface Dict {
+  slogan: string
+  destacados: string
+  ultimos_anadidos: string
+  contactar_button: string
+  alquiler_tag: string
+  footer: {
+    quienes_somos: {
+      quienes_somos_label: string
+      quienes_somos_text: string
+      aviso_legal_label: string
+    }
+    contacto: {
+      contacto_label: string
+      horario: string
+    }
+  }
+  filters: {
+    filtros_title: string
+    search_button: string
+    localizacion_placeholder: string
+    precioMin_label: string
+    precioMax_label: string
+    banos_label: string
+    habitaciones_label: string
+  }
+}

@@ -20,9 +20,22 @@ function getLocale(request: NextRequest): string | undefined {
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
+  const searchParams = request.nextUrl.searchParams
+  const newSearchParams = new URLSearchParams()
+
+  const createQueryString = (searchParams: object) => {
+    for (const [key, value] of Object.entries(searchParams)) {
+      if (value !== '') {
+        newSearchParams.set(key, value)
+      }
+    }
+
+    return newSearchParams.toString()
+  }
 
   // // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
   // // If you have one
+
   if (
     [
       '/manifest.json',
@@ -31,6 +44,7 @@ export function middleware(request: NextRequest) {
       '/break_iterator.wasm',
       '/footer_border.svg',
       '/hero-golf.jpg',
+      '/hero-golfball.jpg',
       '/Inter-Bold.woff',
       '/Logo_Inmogolf.png',
       '/Logo_Inmogolf.pds',
@@ -50,7 +64,16 @@ export function middleware(request: NextRequest) {
 
     // e.g. incoming request is /products
     // The new URL is now /en-US/products
-    return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url))
+    const newUrl = searchParams
+      ? NextResponse.redirect(
+          new URL(
+            `/${locale}/${pathname}?${createQueryString(searchParams)}`,
+            request.url
+          )
+        )
+      : NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url))
+
+    return newUrl
   }
 }
 

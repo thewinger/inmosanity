@@ -1,6 +1,5 @@
 import { Locale } from '@/i18n-config'
 import { createClient } from 'next-sanity'
-import { ReadonlyURLSearchParams } from 'next/navigation'
 import { apiVersion, dataset, projectId, useCdn } from './env'
 import { FiltersDD, FrontPage, Propiedad } from './interfaces'
 import {
@@ -80,13 +79,12 @@ export async function getFiltersDropdownValues(
 }
 
 export function getSearchProperties(
-  /* searchParams: { [key: string]: string | string[] | undefined }, */
-  searchParams: ReadonlyURLSearchParams,
+  searchParams: { [key: string]: string | string[] | undefined },
   lang: Locale
-): Propiedad[] {
+): Promise<Propiedad[]> {
   if (client) {
     let query = `*[_type == 'propiedad'`
-    for (const [key, value] of searchParams.entries()) {
+    for (const [key, value] of Object.entries(searchParams)) {
       if (key == 'precioMin') {
         query += ` && price >= ${Number(value)} `
       } else if (key == 'precioMax') {
@@ -116,7 +114,7 @@ export async function getAllPropiedadesSlug(): Promise<
 > {
   if (client) {
     const slugs: string[] = await client.fetch(propiedadSlugsQuery)
-    return slugs?.map((slug) => ({ slug }))
+    return slugs.map((slug) => ({ slug }))
   }
   return []
 }
@@ -137,8 +135,7 @@ export async function getPropiedadBySlug(
 export async function getAllPagesSlug() {
   if (client) {
     const slugs: string[] = await client.fetch(pageSlugsQuery)
-    console.log(slugs)
-    return slugs?.map((slug) => ({ slug }))
+    return slugs
   }
 }
 export async function getPageBySlug(slug: string, lang: Locale) {

@@ -9,11 +9,10 @@ import {
 } from '@/components/ui/icons'
 import Pill from '@/components/ui/Pill'
 import { getDictionary } from '@/get-dictionary'
-import { Locale } from '@/i18n-config'
+import { i18n, Locale } from '@/i18n-config'
 import { formatEUR } from '@/lib/utils'
 import clsx from 'clsx'
-import { getPropiedadBySlug } from 'lib/sanity.client'
-import { notFound } from 'next/navigation'
+import { getAllPropiedadesSlug, getPropiedadBySlug } from 'lib/sanity.client'
 
 type Props = {
   params: {
@@ -27,10 +26,6 @@ export default async function Propiedad({ params: { slug, lang } }: Props) {
   const propiedadData = getPropiedadBySlug(slug, lang)
   const propiedad = await propiedadData
 
-  console.log(propiedad)
-  if (!slug) {
-    notFound()
-  }
   return (
     <div className=' py-12 sm:py-12'>
       <div
@@ -191,9 +186,17 @@ export default async function Propiedad({ params: { slug, lang } }: Props) {
     </div>
   )
 }
-
-/* export async function generateStaticParams() {
+export async function generateStaticParams() {
   const slugs = await getAllPropiedadesSlug()
+  const locales = i18n.locales
 
-  return { slugs }
-} */
+  const params = locales!.flatMap((locale) => {
+    return slugs!.map((slug) => {
+      return { lang: locale, slug: slug.slug }
+    })
+  })
+
+  console.log(`propiedad params`, params)
+
+  return params
+}

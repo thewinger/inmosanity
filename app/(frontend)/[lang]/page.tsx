@@ -5,7 +5,6 @@ import { getDictionary } from '@/get-dictionary'
 import { Locale } from '@/i18n-config'
 import { getFiltersDropdownValues, getFrontPage } from '@/lib/sanity.client'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import { Image } from 'sanity'
 
@@ -21,10 +20,6 @@ export default async function FrontPage({
   const dict = await getDictionary(params.lang)
   const { featured, latest } = await getFrontPage(params.lang)
   const filtersDD = await getFiltersDropdownValues(params.lang)
-
-  if (!featured || !latest) {
-    notFound()
-  }
 
   let slides: Image[] = []
 
@@ -58,7 +53,7 @@ export default async function FrontPage({
               key={propiedad.slug}
               href={`${params.lang}/propiedad/${propiedad.slug}`}
             >
-              <PropiedadCard propiedad={propiedad} />
+              <PropiedadCard dict={dict} propiedad={propiedad} />
             </Link>
           ))}
         </div>

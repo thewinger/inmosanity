@@ -1,8 +1,14 @@
-import SearchResults from '@/components/SearchResults'
+import FilterBar from '@/components/FilterBar'
+import PropiedadCard from '@/components/ui/PropiedadCard'
+import Filters from '@/components/ui/filters'
 import { getDictionary } from '@/get-dictionary'
 import { Locale } from '@/i18n-config'
-import { getFiltersDropdownValues } from '@/lib/sanity.client'
-import { Suspense } from 'react'
+import {
+  getFiltersDropdownValues,
+  getSearchProperties,
+} from '@/lib/sanity.client'
+import clsx from 'clsx'
+import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,42 +16,50 @@ type Props = {
   params: {
     lang: Locale
   }
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: { [key: string]: string | string[] }
 }
 
-export default async function PropiedadesPage({
-  params,
-  searchParams,
-}: {
-  params: { lang: Locale }
-  searchParams: { [key: string]: string | string[] }
-}) {
+export default async function PropiedadesPage({ params, searchParams }: Props) {
   const dict = await getDictionary(params.lang)
   const filtersDD = await getFiltersDropdownValues(params.lang)
-
-  console.log('propiedades params', params)
-  console.log('propiedades searchparams', searchParams)
-
+  const propiedades = await getSearchProperties(
+    searchParams,
+    params.lang as Locale
+  )
   return (
     <>
-      {/* <div className=' mx-auto flex max-w-5xl flex-col gap-6 px-4 py-24 lg:flex-row lg:px-6 lg:py-12'>
+      <FilterBar dict={dict} filtersDD={filtersDD} />
+      <div className=' mx-auto max-w-5xl flex-col gap-6 px-4 py-20 lg:flex lg:flex-row lg:px-6 lg:py-12'>
         <div className='relative isolate hidden w-[18.5rem] flex-col lg:flex'>
           <h2 className='py-2 text-sm font-semibold uppercase  tracking-wide text-zinc-800 lg:px-0'>
-            Filtros
+            {dict.filters.localizacion_placeholder}
           </h2>
-          <Filters dict={dict.filters} filtersDD={filtersDD} />
+          <Filters dict={dict} filtersDD={filtersDD} />
         </div>
-      </div> */}
 
-      <div className='grow'>
-        <Suspense fallback={<ResultsFallBack />}>
-          <SearchResults />
-        </Suspense>
+        <div className='grow'>
+          <h2 className=' py-2 text-sm font-semibold uppercase  tracking-wide text-zinc-800 lg:px-0'>
+            {propiedades.length > 1 || propiedades.length == 0
+              ? `${propiedades.length} Resultados`
+              : `${propiedades.length} Resultado`}
+          </h2>
+          <div
+            className={clsx(
+              'grid  grid-cols-cards gap-4',
+              propiedades.length > 1 ? 'justify-center' : ''
+            )}
+          >
+            {propiedades.map((propiedad) => (
+              <Link
+                key={propiedad.slug}
+                href={`/${params.lang}/propiedad/${propiedad.slug}`}
+              >
+                <PropiedadCard dict={dict} propiedad={propiedad} />
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   )
-}
-
-function ResultsFallBack() {
-  return <>Loading Results…</>
 }

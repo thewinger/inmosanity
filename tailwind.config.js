@@ -55,7 +55,8 @@ module.exports = {
         sm: 'calc(var(--radius) - 4px)',
       },
       backgroundImage: {
-        heroImg: 'url("../public/hero-golf.jpg")',
+        /* heroImg: 'url("../public/hero-golf.jpg")', */
+        heroImg: 'url("../public/hero-golfball.jpeg")',
         footerBorder: 'url("../public/footer_border.svg")',
         input: 'linear-gradient(to bottom, #fff, #f4f4f5)',
       },

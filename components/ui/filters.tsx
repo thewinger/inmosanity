@@ -1,8 +1,8 @@
 'use client'
 
-import { FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
+import { Dict, FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
 import { createNumArray, formatEUR, getRoundedZeros } from '@/lib/utils'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 
 import { MagnifyingGlassIcon } from '../ui/icons'
@@ -30,26 +30,14 @@ interface Filters {
 
 type FilterBarProps = {
   filtersDD: FiltersDD
-  dict: {
-    search_button: string
-    localizacion_placeholder: string
-    precioMin_label: string
-    precioMax_label: string
-    banos_label: string
-    habitaciones_label: string
-  }
+  dict: Dict
+  handleClose?: () => void
 }
 
-function Filters({ dict, filtersDD }: FilterBarProps) {
-  const pathName = usePathname()
+function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
+  const params = useParams()
   const router = useRouter()
   const searchParams = useSearchParams()
-
-  const getLocale = () => {
-    if (!pathName) return '/'
-    const segments = pathName.split('/')
-    return segments[1]
-  }
 
   const {
     bathroomsDD,
@@ -98,19 +86,21 @@ function Filters({ dict, filtersDD }: FilterBarProps) {
     precioMax: precioSaleArrayDD.slice(-1).toString(),
   })
 
-  let initialState = {
-    operacion: 'operacion-en-venta',
-    tipo: 'tipo-adosado',
-    precioMin: '0',
-    precioMax: precioSaleArrayDD.slice(-1).toString(),
-  }
-
-  for (const [key, value] of Object.entries(searchParams)) {
-    if (key == 'operacion' && value == 'operacion-en-alquiler') {
-      initialState.precioMax = precioRentArrayDD.slice(-1).toString()
+  useEffect(() => {
+    for (const [key, value] of searchParams.entries()) {
+      if (key == 'operacion' && value == 'operacion-en-alquiler') {
+        setFilters((prevFilters) => ({
+          ...prevFilters,
+          operacion: value,
+          precioMax: precioMaxRentArrayDD.slice(-1).toString(),
+        }))
+      }
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [key]: value,
+      }))
     }
-    initialState[key] = value
-  }
+  }, [])
 
   const bathroomsArrayDD = createNumArray(bathroomsDD, 1)
   const bedroomsArrayDD = createNumArray(bedroomsDD, 1)
@@ -172,8 +162,9 @@ function Filters({ dict, filtersDD }: FilterBarProps) {
     return params.toString()
   }, [])
 
-  const handleFilters = async () => {
-    router.push(`/${getLocale()}/propiedades?` + createQueryString(filters))
+  function handleFilters() {
+    handleClose && handleClose()
+    router.push(`/${params.lang}/propiedades?` + createQueryString(filters))
   }
 
   return (
@@ -200,6 +191,7 @@ function Filters({ dict, filtersDD }: FilterBarProps) {
       <Select
         name='tipo'
         defaultValue={filters.tipo}
+        value={filters.tipo}
         onValueChange={(value) =>
           setFilters((prevFilters) => ({
             ...prevFilters,
@@ -234,7 +226,7 @@ function Filters({ dict, filtersDD }: FilterBarProps) {
         }
       >
         <SelectTrigger>
-          <SelectValue placeholder={dict.localizacion_placeholder} />
+          <SelectValue placeholder={dict.filters.localizacion_placeholder} />
         </SelectTrigger>
         <SelectContent
           position='popper'
@@ -256,7 +248,7 @@ function Filters({ dict, filtersDD }: FilterBarProps) {
       </Select>
 
       <div className='grid w-full  items-center justify-stretch gap-1'>
-        <Label>{dict.banos_label}</Label>
+        <Label>{dict.filters.banos_label}</Label>
         <ToggleGroup
           className='bg-zinc-700/10'
           type='single'
@@ -278,7 +270,7 @@ function Filters({ dict, filtersDD }: FilterBarProps) {
       </div>
 
       <div className='grid w-full  items-center justify-stretch gap-1'>
-        <Label>{dict.habitaciones_label}</Label>
+        <Label>{dict.filters.habitaciones_label}</Label>
         <ToggleGroup
           className='inline-flex gap-1 rounded-lg bg-zinc-700/10 p-1'
           type='single'
@@ -301,7 +293,7 @@ function Filters({ dict, filtersDD }: FilterBarProps) {
 
       <div className='flex gap-4 @[17.5rem]:flex @[17.5rem]:flex-col'>
         <div className='grid w-full items-center justify-stretch gap-1'>
-          <Label>{dict.precioMin_label}</Label>
+          <Label>{dict.filters.precioMin_label}</Label>
           <Select
             name='precio'
             defaultValue={filters.precioMin}
@@ -332,7 +324,7 @@ function Filters({ dict, filtersDD }: FilterBarProps) {
         </div>
 
         <div className='grid w-full items-center justify-stretch gap-1'>
-          <Label>{dict.precioMax_label}</Label>
+          <Label>{dict.filters.precioMax_label}</Label>
           <Select
             name='precio'
             defaultValue={filters.precioMax}
@@ -364,11 +356,11 @@ function Filters({ dict, filtersDD }: FilterBarProps) {
       </div>
 
       <button
-        onClick={handleFilters}
+        onClick={() => handleFilters()}
         className='inline-flex h-10 w-full items-center justify-center gap-1 rounded-md bg-gradient-to-b  from-green-500 via-green-600 via-60% to-green-700 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 '
       >
         <MagnifyingGlassIcon weight='bold' className='h-5 w-5' />
-        {dict.search_button}
+        {dict.filters.search_button}
       </button>
     </div>
   )

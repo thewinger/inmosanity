@@ -1,7 +1,8 @@
 import { urlForImage } from '@/lib/sanity.image'
 import { formatEUR } from '@/lib/utils'
-import { Propiedad } from 'lib/interfaces'
+import { Dict, Propiedad } from 'lib/interfaces'
 import Image from 'next/image'
+import Pill from './Pill'
 import {
   BathtubIcon,
   BedIcon,
@@ -10,13 +11,13 @@ import {
   MapPinIcon,
   RulerIcon,
 } from './icons'
-import Pill from './Pill'
 
 type Props = {
   propiedad: Propiedad
+  dict: Dict
 }
 
-export default function PropiedadCard({ propiedad }: Props) {
+export default function PropiedadCard({ dict, propiedad }: Props) {
   return (
     <>
       <div className='relative isolate  flex flex-col gap-4 rounded-md bg-white pb-6 text-slate-800 shadow-md'>
@@ -43,7 +44,9 @@ export default function PropiedadCard({ propiedad }: Props) {
                     {formatEUR(Number(propiedad.price))}
                   </span>
                   {propiedad.operacion.value === 'operacion-en-alquiler' && (
-                    <span className='text-xs font-medium '>/mes</span>
+                    <span className='text-xs font-medium '>
+                      /{dict.alquiler_tag}
+                    </span>
                   )}
                 </div>
               </h3>

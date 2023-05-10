@@ -1,5 +1,5 @@
-import { Locale } from '@/i18n-config'
-import { getPageBySlug } from '@/lib/sanity.client'
+import { Locale, i18n } from '@/i18n-config'
+import { getAllPagesSlug, getPageBySlug } from '@/lib/sanity.client'
 import { PortableText } from '@portabletext/react'
 
 type Props = {
@@ -20,8 +20,17 @@ export default async function Page({ params: { slug, lang } }: Props) {
   )
 }
 
-/* export async function generateStaticParams() {
+export async function generateStaticParams() {
   const slugs = await getAllPagesSlug()
+  const locales = i18n.locales
+  console.log(`slugs`, slugs)
+  console.log(`locales`, locales)
 
-  return { slugs }
-} */
+  const params = locales!.flatMap((locale) => {
+    return slugs!.map((slug) => {
+      return { lang: locale, slug: slug }
+    })
+  })
+
+  return params
+}
