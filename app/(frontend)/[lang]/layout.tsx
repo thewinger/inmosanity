@@ -2,7 +2,7 @@ import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { getDictionary } from '@/get-dictionary'
-import { i18n, Locale } from '@/i18n-config'
+import { Locale } from '@/i18n-config'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ReactNode } from 'react'
@@ -19,10 +19,6 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Inmogolf Bonalba',
   description: 'Inmobiliaria en el campo de golf Bonalba',
-}
-
-export async function generateStaticParams() {
-  return i18n.locales.map((locale) => ({ lang: locale }))
 }
 
 type Props = {

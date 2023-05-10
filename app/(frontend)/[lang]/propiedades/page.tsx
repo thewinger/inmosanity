@@ -10,8 +10,6 @@ import {
 import clsx from 'clsx'
 import Link from 'next/link'
 
-export const dynamic = 'force-dynamic'
-
 type Props = {
   params: {
     lang: Locale
@@ -32,16 +30,16 @@ export default async function PropiedadesPage({ params, searchParams }: Props) {
       <div className=' mx-auto max-w-5xl flex-col gap-6 px-4 py-20 lg:flex lg:flex-row lg:px-6 lg:py-12'>
         <div className='relative isolate hidden w-[18.5rem] flex-col lg:flex'>
           <h2 className='py-2 text-sm font-semibold uppercase  tracking-wide text-zinc-800 lg:px-0'>
-            {dict.filters.localizacion_placeholder}
+            {dict.filters.filtros_title}
           </h2>
           <Filters dict={dict} filtersDD={filtersDD} />
         </div>
 
         <div className='grow'>
           <h2 className=' py-2 text-sm font-semibold uppercase  tracking-wide text-zinc-800 lg:px-0'>
-            {propiedades.length > 1 || propiedades.length == 0
-              ? `${propiedades.length} Resultados`
-              : `${propiedades.length} Resultado`}
+            {propiedades.length == 1
+              ? `${propiedades.length} ${dict.resultado}`
+              : `${propiedades.length} ${dict.resultados}`}
           </h2>
           <div
             className={clsx(
