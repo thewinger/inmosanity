@@ -120,8 +120,8 @@ export async function getAllPropiedadesSlug(): Promise<
 }
 
 export async function getPropiedadBySlug(
-  slug: string,
-  lang: Locale
+  lang: Locale,
+  slug: string
 ): Promise<Propiedad> {
   if (client) {
     return (

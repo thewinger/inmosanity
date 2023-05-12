@@ -3,7 +3,7 @@
 import { Dict, FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
 import { createNumArray, formatEUR, getRoundedZeros } from '@/lib/utils'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { MagnifyingGlassIcon } from '../ui/icons'
 import { Label } from '../ui/label'
@@ -19,13 +19,13 @@ import {
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'
 
 interface Filters {
+  operacion: string
+  tipo: string
+  precioMin?: string
+  precioMax?: string
   habitaciones?: string
   banos?: string
-  operacion: string
   localizacion?: string
-  tipo: string
-  precioMin: string
-  precioMax: string
 }
 
 type FilterBarProps = {
@@ -51,62 +51,56 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
 
   let precioSaleArrayDD = createNumArray(getRoundedZeros(priceSaleDD), 50000)
   let precioRentArrayDD = createNumArray(getRoundedZeros(priceRentDD), 100)
-  const [precioMinRentArrayDD, setPrecioMinRentArrayDD] = useState<number[]>([
-    0, 100, 200, 300, 400, 500,
-  ])
-  const [precioMaxRentArrayDD, setPrecioMaxRentArrayDD] = useState<number[]>([
-    100, 200, 300, 400, 500, 600,
-  ])
-  const [precioMinSaleArrayDD, setPrecioMinSaleArrayDD] = useState<number[]>([
-    0, 50000, 100000, 150000, 200000, 250000,
-  ])
-  const [precioMaxSaleArrayDD, setPrecioMaxSaleArrayDD] = useState<number[]>([
-    50000, 100000, 150000, 200000, 250000, 300000,
-  ])
-
-  useEffect(() => {
-    setPrecioMinRentArrayDD(
-      precioRentArrayDD.slice(0, precioRentArrayDD.length - 1)
-    )
-    setPrecioMaxRentArrayDD(
-      precioRentArrayDD.slice(1, precioRentArrayDD.length)
-    )
-    setPrecioMinSaleArrayDD(
-      precioSaleArrayDD.slice(0, precioSaleArrayDD.length - 1)
-    )
-    setPrecioMaxSaleArrayDD(
-      precioSaleArrayDD.slice(1, precioSaleArrayDD.length)
-    )
-  }, [])
+  const [precioMinRentArrayDD, setPrecioMinRentArrayDD] = useState<number[]>(
+    precioRentArrayDD
+      ? precioRentArrayDD.slice(0, precioRentArrayDD.length - 1)
+      : [0, 100, 200, 300, 400, 500]
+  )
+  const [precioMaxRentArrayDD, setPrecioMaxRentArrayDD] = useState<number[]>(
+    precioRentArrayDD
+      ? precioRentArrayDD.slice(1, precioRentArrayDD.length)
+      : [100, 200, 300, 400, 500, 600]
+  )
+  const [precioMinSaleArrayDD, setPrecioMinSaleArrayDD] = useState<number[]>(
+    precioSaleArrayDD
+      ? precioSaleArrayDD.slice(0, precioSaleArrayDD.length - 1)
+      : [0, 50000, 100000, 150000, 200000, 250000]
+  )
+  const [precioMaxSaleArrayDD, setPrecioMaxSaleArrayDD] = useState<number[]>(
+    precioSaleArrayDD
+      ? precioSaleArrayDD.slice(1, precioSaleArrayDD.length)
+      : [50000, 100000, 150000, 200000, 250000, 300000]
+  )
 
   const [filters, setFilters] = useState<Filters>({
-    operacion: 'operacion-en-venta',
-    tipo: 'tipo-adosado',
-    precioMin: '0',
-    precioMax: precioSaleArrayDD.slice(-1).toString(),
+    operacion:
+      searchParams.get('operacion') !== null ||
+      searchParams.get('operacion') !== ''
+        ? searchParams.get('operacion')!
+        : 'operacion-en-venta',
+    tipo:
+      searchParams.get('tipo') !== null || searchParams.get('tipo') !== ''
+        ? searchParams.get('tipo')!
+        : 'tipo-adosado',
+    localizacion: searchParams.has('localizacion')
+      ? searchParams.get('localizacion')!
+      : '',
+    precioMin: searchParams.has('precioMin')
+      ? searchParams.get('precioMin')!
+      : '0',
+    precioMax: searchParams.has('precioMax')
+      ? searchParams.get('precioMax')!
+      : searchParams.has('operacion') &&
+        searchParams.get('operacion') === 'operacion-en-alquiler'
+      ? precioMaxRentArrayDD.slice(-1).toString()
+      : precioMaxSaleArrayDD.slice(-1).toString(),
   })
-
-  useEffect(() => {
-    for (const [key, value] of searchParams.entries()) {
-      if (key == 'operacion' && value == 'operacion-en-alquiler') {
-        setFilters((prevFilters) => ({
-          ...prevFilters,
-          operacion: value,
-          precioMax: precioMaxRentArrayDD.slice(-1).toString(),
-        }))
-      }
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        [key]: value,
-      }))
-    }
-  }, [])
 
   const bathroomsArrayDD = createNumArray(bathroomsDD, 1)
   const bedroomsArrayDD = createNumArray(bedroomsDD, 1)
 
   function handleOperacion(value: string) {
-    value == 'operacion-en-alquiler'
+    value === 'operacion-en-alquiler'
       ? setFilters((prevFilters) => ({
           ...prevFilters,
           operacion: value,
@@ -122,12 +116,12 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
   }
 
   function handlePrecioMin(value: string) {
-    filters.operacion == 'operacion-en-alquiler'
+    filters.operacion === 'operacion-en-alquiler'
       ? setPrecioMaxRentArrayDD(
-          precioMaxRentArrayDD.filter((f) => f > Number(value))
+          precioRentArrayDD.filter((f) => f > Number(value))
         )
       : setPrecioMaxSaleArrayDD(
-          precioMaxSaleArrayDD.filter((f) => f > Number(value))
+          precioSaleArrayDD.filter((f) => f > Number(value))
         )
 
     setFilters((prevFilters) => ({
@@ -137,12 +131,12 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
   }
 
   function handlePrecioMax(value: string) {
-    filters.operacion == 'operacion-en-alquiler'
+    filters.operacion === 'operacion-en-alquiler'
       ? setPrecioMinRentArrayDD(
-          precioMinRentArrayDD.filter((f) => f < Number(value))
+          precioRentArrayDD.filter((f) => f < Number(value))
         )
       : setPrecioMinSaleArrayDD(
-          precioMinSaleArrayDD.filter((f) => f < Number(value))
+          precioSaleArrayDD.filter((f) => f < Number(value))
         )
 
     setFilters((prevFilters) => ({
@@ -151,7 +145,7 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
     }))
   }
 
-  const createQueryString = useCallback((filters: Filters) => {
+  const createQueryString = (filters: Filters) => {
     const params = new URLSearchParams()
     for (const [key, value] of Object.entries(filters)) {
       if (value !== '') {
@@ -160,7 +154,7 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
     }
 
     return params.toString()
-  }, [])
+  }
 
   function handleFilters() {
     handleClose && handleClose()
@@ -188,71 +182,76 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
         ))}
       </ToggleGroup>
 
-      <Select
-        name='tipo'
-        defaultValue={filters.tipo}
-        value={filters.tipo}
-        onValueChange={(value) =>
-          setFilters((prevFilters) => ({
-            ...prevFilters,
-            tipo: value,
-          }))
-        }
-      >
-        <SelectTrigger className='hover:shadow-inset'>
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent
-          position='popper'
-          sideOffset={1}
-          className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
+      <div className='grid w-full  items-center justify-stretch gap-1'>
+        <Label>{dict.filters.tipo_label}</Label>
+        <Select
+          name='tipo'
+          value={filters.tipo}
+          onValueChange={(value) =>
+            setFilters((prevFilters) => ({
+              ...prevFilters,
+              tipo: value,
+            }))
+          }
         >
-          {tipoDD.map((item) => (
-            <SelectItem key={item.value} value={item.value}>
-              {item.name}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+          <SelectTrigger className='hover:shadow-inset'>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent
+            position='popper'
+            sideOffset={1}
+            className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
+          >
+            {tipoDD.map((item) => (
+              <SelectItem key={item.value} value={item.value}>
+                {item.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
-      <Select
-        name='localizacion'
-        defaultValue={filters.localizacion}
-        onValueChange={(value) =>
-          setFilters((prevFilters) => ({
-            ...prevFilters,
-            localizacion: value,
-          }))
-        }
-      >
-        <SelectTrigger>
-          <SelectValue placeholder={dict.filters.localizacion_placeholder} />
-        </SelectTrigger>
-        <SelectContent
-          position='popper'
-          sideOffset={1}
-          className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
+      <div className='grid w-full  items-center justify-stretch gap-1'>
+        <Label>{dict.filters.localizacion_label}</Label>
+        <Select
+          name='localizacion'
+          value={filters.localizacion}
+          onValueChange={(value) =>
+            setFilters((prevFilters) => ({
+              ...prevFilters,
+              localizacion: value,
+            }))
+          }
         >
-          {localizacionDD.map((localizacion: ParentLocalizacion) => (
-            <SelectGroup key={localizacion.value}>
-              <SelectLabel>{localizacion.name}</SelectLabel>
-              {localizacion.children &&
-                localizacion.children.map((child) => (
-                  <SelectItem key={child.value} value={child.value}>
-                    {child.name}
-                  </SelectItem>
-                ))}
-            </SelectGroup>
-          ))}
-        </SelectContent>
-      </Select>
+          <SelectTrigger>
+            <SelectValue placeholder={dict.filters.localizacion_placeholder} />
+          </SelectTrigger>
+          <SelectContent
+            position='popper'
+            sideOffset={1}
+            className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
+          >
+            {localizacionDD.map((localizacion: ParentLocalizacion) => (
+              <SelectGroup key={localizacion.value}>
+                <SelectLabel>{localizacion.name}</SelectLabel>
+                {localizacion.children &&
+                  localizacion.children.map((child) => (
+                    <SelectItem key={child.value} value={child.value}>
+                      {child.name}
+                    </SelectItem>
+                  ))}
+              </SelectGroup>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
       <div className='grid w-full  items-center justify-stretch gap-1'>
         <Label>{dict.filters.banos_label}</Label>
         <ToggleGroup
           className='bg-zinc-700/10'
           type='single'
-          defaultValue={filters.banos}
+          value={filters.banos}
           onValueChange={(value) =>
             setFilters((prevFilters) => ({
               ...prevFilters,
@@ -272,9 +271,9 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
       <div className='grid w-full  items-center justify-stretch gap-1'>
         <Label>{dict.filters.habitaciones_label}</Label>
         <ToggleGroup
-          className='inline-flex gap-1 rounded-lg bg-zinc-700/10 p-1'
+          className='bg-zinc-700/10'
           type='single'
-          defaultValue={filters.habitaciones}
+          value={filters.habitaciones}
           onValueChange={(value) =>
             setFilters((prevFilters) => ({
               ...prevFilters,
@@ -296,7 +295,6 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
           <Label>{dict.filters.precioMin_label}</Label>
           <Select
             name='precio'
-            defaultValue={filters.precioMin}
             value={filters.precioMin}
             onValueChange={(value) => handlePrecioMin(value)}
           >
@@ -327,7 +325,6 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
           <Label>{dict.filters.precioMax_label}</Label>
           <Select
             name='precio'
-            defaultValue={filters.precioMax}
             value={filters.precioMax}
             onValueChange={(value) => handlePrecioMax(value)}
           >

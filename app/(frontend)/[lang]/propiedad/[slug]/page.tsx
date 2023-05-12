@@ -14,16 +14,13 @@ import { formatEUR } from '@/lib/utils'
 import clsx from 'clsx'
 import { getAllPropiedadesSlug, getPropiedadBySlug } from 'lib/sanity.client'
 
-type Props = {
-  params: {
-    slug: string
-    lang: Locale
-  }
-}
-
-export default async function Propiedad({ params: { slug, lang } }: Props) {
-  const dict = await getDictionary(lang)
-  const propiedadData = getPropiedadBySlug(slug, lang)
+export default async function Propiedad({
+  params,
+}: {
+  params: { lang: Locale; slug: string }
+}) {
+  const dict = await getDictionary(params.lang)
+  const propiedadData = getPropiedadBySlug(params.lang, params.slug)
   const propiedad = await propiedadData
 
   return (
@@ -62,9 +59,12 @@ export default async function Propiedad({ params: { slug, lang } }: Props) {
             <h1 className='grow text-xl font-semibold tracking-wide'>
               {propiedad.title}
             </h1>
-            <button className='hidden h-10 items-center justify-center gap-1 rounded-md bg-gradient-to-b from-green-500 via-green-600  via-60% to-green-700 px-4 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 sm:inline-flex '>
+            <a
+              href={`mailto:info@inmogolfbonalba.com?subject=${dict.footer.contacto.contacto_label}%3A%20${propiedad.title}`}
+              className='hidden h-10 items-center justify-center gap-1 rounded-md bg-gradient-to-b from-green-500 via-green-600  via-60% to-green-700 px-4 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 sm:inline-flex '
+            >
               {dict.contactar_button}
-            </button>
+            </a>
           </div>
           <div className='hidden sm:block'>
             <span className='text-2xl font-bold text-zinc-900 '>
@@ -179,9 +179,12 @@ export default async function Propiedad({ params: { slug, lang } }: Props) {
             )}
           </div>
         )}
-        <button className='h-10 grow items-center justify-center gap-1 rounded-md bg-gradient-to-b from-green-500 via-green-600  via-60% to-green-700 px-4 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 sm:inline-flex '>
+        <a
+          href={`mailto:info@inmogolfbonalba.com?subject=${dict.footer.contacto.contacto_label}%3A%20${propiedad.title}`}
+          className='flex h-10 grow items-center justify-center gap-1 rounded-md bg-gradient-to-b from-green-500 via-green-600  via-60% to-green-700 px-4 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 sm:inline-flex '
+        >
           {dict.contactar_button}
-        </button>
+        </a>
       </div>
     </div>
   )
@@ -195,8 +198,6 @@ export async function generateStaticParams() {
       return { lang: locale, slug: slug.slug }
     })
   })
-
-  console.log(`propiedad params`, params)
 
   return params
 }

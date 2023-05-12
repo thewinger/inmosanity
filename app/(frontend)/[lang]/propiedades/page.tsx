@@ -24,11 +24,12 @@ export default async function PropiedadesPage({ params, searchParams }: Props) {
     searchParams,
     params.lang as Locale
   )
+
   return (
     <>
       <FilterBar dict={dict} filtersDD={filtersDD} />
       <div className=' mx-auto max-w-5xl flex-col gap-6 px-4 py-20 lg:flex lg:flex-row lg:px-6 lg:py-12'>
-        <div className='relative isolate hidden w-[18.5rem] flex-col lg:flex'>
+        <div className='relative isolate hidden w-[19.5rem] flex-col lg:flex'>
           <h2 className='py-2 text-sm font-semibold uppercase  tracking-wide text-zinc-800 lg:px-0'>
             {dict.filters.filtros_title}
           </h2>

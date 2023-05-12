@@ -20,6 +20,8 @@
   "filters": {
     "filtros_title": "Filtros",
     "search_button": "Buscar",
+    "tipo_label": "Tipo",
+    "localizacion_label": "Localización",
     "localizacion_placeholder": "Selecciona una localizacion...",
     "precioMin_label": "Precio min.",
     "precioMax_label": "Precio max.",

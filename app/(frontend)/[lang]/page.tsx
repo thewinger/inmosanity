@@ -1,12 +1,11 @@
-import FeaturedSlider from '@/components/FeaturedSlider'
 import Hero from '@/components/Hero'
+import ProductSliderDesktop from '@/components/ProductSliderDesktop'
 import PropiedadCard from '@/components/ui/PropiedadCard'
 import { getDictionary } from '@/get-dictionary'
 import { Locale } from '@/i18n-config'
 import { getFiltersDropdownValues, getFrontPage } from '@/lib/sanity.client'
 import Link from 'next/link'
 import { Suspense } from 'react'
-import { Image } from 'sanity'
 
 function HeroFallBack() {
   return <>placeholder</>
@@ -21,12 +20,6 @@ export default async function FrontPage({
   const { featured, latest } = await getFrontPage(params.lang)
   const filtersDD = await getFiltersDropdownValues(params.lang)
 
-  let slides: Image[] = []
-
-  featured.map((item) => {
-    slides.push(item.coverImage)
-  })
-
   return (
     <>
       <Suspense fallback={<HeroFallBack />}>
@@ -36,11 +29,11 @@ export default async function FrontPage({
         <h2 className='p-2 px-4 text-sm font-semibold  uppercase tracking-wide text-zinc-800 lg:px-0'>
           {dict.destacados}
         </h2>
-        <div className='lg:hidden'>
+        {/* <div className='lg:hidden'>
           <FeaturedSlider propiedades={featured} />
-        </div>
-        <div className='hidden lg:block'>
-          {/* <ProductSlider slides={slides} /> */}
+        </div> */}
+        <div className='xhidden lg:block'>
+          <ProductSliderDesktop propiedades={featured} />
         </div>
       </section>
       <section className='relative mx-auto max-w-5xl p-4 py-16 '>

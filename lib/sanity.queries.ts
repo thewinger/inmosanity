@@ -51,8 +51,9 @@ export const propiedadBySlugQuery = groq`
     "title": select(
       @->title[$lang] != "" => @->title[$lang],
       @->title['es']),
-  },    "images": images[],
-    "description": description[$lang],
+    },
+    "images": images[],
+    "description": coalesce(description[$lang], description['es']),
   }
 `
 

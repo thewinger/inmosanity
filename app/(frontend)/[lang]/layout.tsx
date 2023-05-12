@@ -21,6 +21,12 @@ export const metadata: Metadata = {
   description: 'Inmobiliaria en el campo de golf Bonalba',
 }
 
+/* export async function generateStaticParams() {
+  const locales = i18n.locales.map((locale) => ({ lang: locale }))
+
+  return locales
+} */
+
 type Props = {
   children?: ReactNode
   params: { lang: Locale }
