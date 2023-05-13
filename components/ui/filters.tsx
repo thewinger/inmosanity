@@ -3,16 +3,14 @@
 import { Dict, FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
 import { createNumArray, formatEUR, getRoundedZeros } from '@/lib/utils'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { MagnifyingGlassIcon } from '../ui/icons'
 import { Label } from '../ui/label'
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '../ui/select'
@@ -20,7 +18,7 @@ import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'
 
 interface Filters {
   operacion: string
-  tipo: string
+  tipo?: string
   precioMin?: string
   precioMax?: string
   habitaciones?: string
@@ -48,6 +46,27 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
     priceSaleDD,
     priceRentDD,
   } = filtersDD
+
+  const preparedTipoDD = useMemo(() => {
+    return [
+      {
+        name: `${dict.filters.tipo_allValue}`,
+        value: 'tipo-todos',
+      },
+      ...tipoDD,
+    ]
+  }, [tipoDD, dict.filters.tipo_allValue])
+
+  const preparedLocalizacionDD = useMemo(() => {
+    return [
+      {
+        name: `${dict.filters.localizacion_allValue}`,
+        value: 'localizacion-todas',
+        children: [],
+      },
+      ...localizacionDD,
+    ]
+  }, [localizacionDD, dict.filters.localizacion_allValue])
 
   let precioSaleArrayDD = createNumArray(getRoundedZeros(priceSaleDD), 50000)
   let precioRentArrayDD = createNumArray(getRoundedZeros(priceRentDD), 100)
@@ -78,13 +97,10 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
       searchParams.get('operacion') !== ''
         ? searchParams.get('operacion')!
         : 'operacion-en-venta',
-    tipo:
-      searchParams.get('tipo') !== null || searchParams.get('tipo') !== ''
-        ? searchParams.get('tipo')!
-        : 'tipo-adosado',
+    tipo: searchParams.has('tipo') ? searchParams.get('tipo')! : 'tipo-todos',
     localizacion: searchParams.has('localizacion')
       ? searchParams.get('localizacion')!
-      : '',
+      : 'localizacion-todas',
     precioMin: searchParams.has('precioMin')
       ? searchParams.get('precioMin')!
       : '0',
@@ -195,14 +211,14 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
           }
         >
           <SelectTrigger className='hover:shadow-inset'>
-            <SelectValue />
+            <SelectValue placeholder={dict.filters.tipo_placeholder} />
           </SelectTrigger>
           <SelectContent
             position='popper'
             sideOffset={1}
             className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
           >
-            {tipoDD.map((item) => (
+            {preparedTipoDD.map((item) => (
               <SelectItem key={item.value} value={item.value}>
                 {item.name}
               </SelectItem>
@@ -231,17 +247,24 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
             sideOffset={1}
             className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
           >
-            {localizacionDD.map((localizacion: ParentLocalizacion) => (
-              <SelectGroup key={localizacion.value}>
-                <SelectLabel>{localizacion.name}</SelectLabel>
-                {localizacion.children &&
-                  localizacion.children.map((child) => (
-                    <SelectItem key={child.value} value={child.value}>
-                      {child.name}
-                    </SelectItem>
-                  ))}
-              </SelectGroup>
-            ))}
+            {preparedLocalizacionDD &&
+              preparedLocalizacionDD.map((localizacion: ParentLocalizacion) => (
+                <>
+                  <SelectItem
+                    key={localizacion.value}
+                    value={localizacion.value}
+                    className='py-1.5 pl-8 pr-2 text-sm font-semibold'
+                  >
+                    {localizacion.name}
+                  </SelectItem>
+                  {localizacion.children.length > 0 &&
+                    localizacion.children.map((child) => (
+                      <SelectItem key={child.value} value={child.value}>
+                        {child.name}
+                      </SelectItem>
+                    ))}
+                </>
+              ))}
           </SelectContent>
         </Select>
       </div>

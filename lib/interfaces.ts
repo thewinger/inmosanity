@@ -103,7 +103,10 @@ export interface Dict {
     filtros_title: string
     search_button: string
     tipo_label: string
+    tipo_allValue: string
+    tipo_placeholder: string
     localizacion_label: string
+    localizacion_allValue: string
     localizacion_placeholder: string
     precioMin_label: string
     precioMax_label: string

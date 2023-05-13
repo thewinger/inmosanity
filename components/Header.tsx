@@ -37,20 +37,20 @@ const Header = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className='w-fit'>
               <DropdownMenuItem className='h-10'>
-                <Link
+                <a
                   href='tel:965959663'
                   className='w-full text-center leading-10'
                 >
                   965959663
-                </Link>
+                </a>
               </DropdownMenuItem>
               <DropdownMenuItem className='h-10'>
-                <Link
+                <a
                   href='tel:655849409'
                   className=' w-full text-center leading-10'
                 >
                   655849409
-                </Link>
+                </a>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

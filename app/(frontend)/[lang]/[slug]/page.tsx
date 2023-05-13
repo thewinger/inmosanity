@@ -23,8 +23,6 @@ export default async function Page({ params: { slug, lang } }: Props) {
 export async function generateStaticParams() {
   const slugs = await getAllPagesSlug()
   const locales = i18n.locales
-  console.log(`slugs`, slugs)
-  console.log(`locales`, locales)
 
   const params = locales!.flatMap((locale) => {
     return slugs!.map((slug) => {

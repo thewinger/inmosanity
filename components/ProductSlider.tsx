@@ -25,8 +25,6 @@ const ProductSlider = ({ slides, vertical }: PropType) => {
   const pathName = usePathname()
 
   const segments = pathName.split('/')
-  console.log(`product slider`, pathName)
-  console.log(`product segments`, segments)
 
   const onThumbClick = useCallback(
     (index: number) => {

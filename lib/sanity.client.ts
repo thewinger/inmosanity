@@ -84,15 +84,29 @@ export function getSearchProperties(
 ): Promise<Propiedad[]> {
   if (client) {
     let query = `*[_type == 'propiedad'`
+    const queryMap = {
+      precioMin: (value: string) => `price >= ${Number(value)}`,
+      precioMax: (value: string) => `price <= ${Number(value)}`,
+      banos: (value: string) => `bathrooms == ${value}`,
+      habitaciones: (value: string) => `bedrooms == ${value}`,
+      localizacion: (value: string) => {
+        if (value == 'localizacion-todas') {
+          return `(localizacion._ref != '${value}' || localizacion->parent._ref != '${value}')`
+        }
+        return `(localizacion._ref == '${value}' || localizacion->parent._ref == '${value}')`
+      },
+      tipo: (value: string) => {
+        if (value == 'tipo-todos') {
+          return `tipo._ref != '${value}'`
+        }
+        return `tipo._ref == '${value}'`
+      },
+    }
+
     for (const [key, value] of Object.entries(searchParams)) {
-      if (key == 'precioMin') {
-        query += ` && price >= ${Number(value)} `
-      } else if (key == 'precioMax') {
-        query += ` && price <= ${Number(value)} `
-      } else if (key == 'banos') {
-        query += ` && bathrooms == ${value} `
-      } else if (key == 'habitaciones') {
-        query += ` && bedrooms == ${value} `
+      const queryFn = queryMap[key]
+      if (queryFn) {
+        query += ` && ${queryFn(value)} `
       } else {
         query += ` && ${key}._ref == '${value}' `
       }
@@ -102,6 +116,8 @@ export function getSearchProperties(
         "coverImage": images[0],
         _createdAt,
     } | order(_createdAt desc)[0...50]`
+
+    console.log(query)
 
     return client.fetch(query, { lang })
   }
