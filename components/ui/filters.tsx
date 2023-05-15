@@ -260,7 +260,7 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
                   {localizacion.children.length > 0 &&
                     localizacion.children.map((child) => (
                       <SelectItem key={child.value} value={child.value}>
-                        {child.name}
+                        - {child.name}
                       </SelectItem>
                     ))}
                 </>
