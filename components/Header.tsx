@@ -9,13 +9,18 @@ import {
 } from './ui/dropdown-menu'
 import { EnvelopeSimpleIcon, PhoneIcon } from './ui/icons'
 
+import { Locale } from '@/i18n-config'
 import logo from '/public/Logo_Inmogolf.png'
 
-const Header = () => {
+type Props = {
+  params: { lang: Locale }
+}
+
+const Header = ({ params }: Props) => {
   return (
     <header className='relative z-20 bg-white shadow-sm '>
       <div className='flex items-center justify-between  px-4 py-2 md:px-6'>
-        <Link href={`/`}>
+        <Link href={`/${params.lang}`}>
           <h1 className='sr-only'>Inmogolf Bonalba</h1>
           <Image
             src={logo}

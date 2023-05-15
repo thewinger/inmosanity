@@ -33,7 +33,7 @@ export default async function RootLayout({ children, params }: Props) {
     <html lang={params.lang} className={inter.variable}>
       <body>
         <div className='flex min-h-screen flex-col'>
-          <Header />
+          <Header params={params} />
           <main className='relative grow bg-zinc-50'>{children}</main>
           <Footer params={params} dict={dict} />
           <TailwindIndicator />

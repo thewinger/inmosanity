@@ -33,7 +33,7 @@ export default async function FrontPage({
           <FeaturedSlider propiedades={featured} />
         </div> */}
         <div className='xhidden lg:block'>
-          <ProductSliderDesktop propiedades={featured} />
+          <ProductSliderDesktop params={params} propiedades={featured} />
         </div>
       </section>
       <section className='relative mx-auto max-w-5xl p-4 py-16 '>

@@ -1,5 +1,6 @@
 'use client'
 
+import { Locale } from '@/i18n-config'
 import { Featured } from '@/lib/interfaces'
 import { urlForImage } from '@/lib/sanity.image'
 import clsx from 'clsx'
@@ -11,11 +12,12 @@ import useMedia from 'use-media'
 import Shimmer from './Shimmer'
 import Pill from './ui/Pill'
 
-type PropType = {
+type Props = {
   propiedades: Featured[]
+  params: { lang: Locale }
 }
 
-const ProductSliderDesktop = ({ propiedades }: PropType) => {
+const ProductSliderDesktop = ({ propiedades, params }: Props) => {
   const vertical = useMedia({ minWidth: '1024px' })
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [mainViewportRef, embla] = useEmblaCarousel({ skipSnaps: false })
@@ -69,7 +71,7 @@ const ProductSliderDesktop = ({ propiedades }: PropType) => {
             {propiedades.map((propiedad) => (
               <Link
                 key={propiedad.slug}
-                href={`/propiedad/${propiedad.slug}`}
+                href={`/${params.lang}/propiedad/${propiedad.slug}`}
                 className='embla__slide xmax-h-[420px] xbasis-5/5 relative aspect-[3/2] min-w-full shrink-0 grow-0 overflow-hidden rounded-md '
               >
                 <Pill>{`${propiedad.tipo} - ${propiedad.operacion}`}</Pill>
