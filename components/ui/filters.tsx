@@ -3,7 +3,7 @@
 import { Dict, FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
 import { createNumArray, formatEUR, getRoundedZeros } from '@/lib/utils'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
-import { useMemo, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 
 import { MagnifyingGlassIcon } from '../ui/icons'
 import { Label } from '../ui/label'
@@ -248,23 +248,31 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
             className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
           >
             {preparedLocalizacionDD &&
-              preparedLocalizacionDD.map((localizacion: ParentLocalizacion) => (
-                <>
-                  <SelectItem
-                    key={localizacion.value}
-                    value={localizacion.value}
-                    className='py-1.5 pl-8 pr-2 text-sm font-semibold'
-                  >
-                    {localizacion.name}
-                  </SelectItem>
-                  {localizacion.children.length > 0 &&
-                    localizacion.children.map((child) => (
-                      <SelectItem key={child.value} value={child.value}>
-                        - {child.name}
-                      </SelectItem>
-                    ))}
-                </>
-              ))}
+              preparedLocalizacionDD.map(
+                (localizacion: ParentLocalizacion, i) => (
+                  <Fragment key={i}>
+                    <SelectItem
+                      aria-label={localizacion.value}
+                      key={localizacion.value}
+                      value={localizacion.value}
+                      className='py-1.5 pl-8 pr-2 text-sm font-semibold'
+                    >
+                      {localizacion.name}
+                    </SelectItem>
+                    {localizacion.children &&
+                      localizacion.children.length > 0 &&
+                      localizacion.children.map((child) => (
+                        <SelectItem
+                          aria-label={child.value}
+                          key={child.value}
+                          value={child.value}
+                        >
+                          - {child.name}
+                        </SelectItem>
+                      ))}
+                  </Fragment>
+                )
+              )}
           </SelectContent>
         </Select>
       </div>

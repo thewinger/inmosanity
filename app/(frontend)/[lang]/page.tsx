@@ -2,7 +2,7 @@ import Hero from '@/components/Hero'
 import ProductSliderDesktop from '@/components/ProductSliderDesktop'
 import PropiedadCard from '@/components/ui/PropiedadCard'
 import { getDictionary } from '@/get-dictionary'
-import { Locale } from '@/i18n-config'
+import { Locale, i18n } from '@/i18n-config'
 import { getFiltersDropdownValues, getFrontPage } from '@/lib/sanity.client'
 import Link from 'next/link'
 import { Suspense } from 'react'
@@ -53,4 +53,10 @@ export default async function FrontPage({
       </section>
     </>
   )
+}
+
+export async function generateStaticParams() {
+  const locales = i18n.locales.map((locale) => ({ lang: locale }))
+
+  return locales
 }

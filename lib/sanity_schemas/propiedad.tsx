@@ -73,7 +73,7 @@ const propiedad = {
       title: 'Localización',
       type: 'reference',
       to: [{ type: 'localizacion' }],
-      options: { filter: 'defined(parent)' },
+      /* options: { filter: 'defined(parent)' }, */
     },
     {
       name: 'price',

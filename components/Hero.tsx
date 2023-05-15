@@ -3,7 +3,7 @@
 import { Locale } from '@/i18n-config'
 import { Dict, FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
 import { useRouter } from 'next/navigation'
-import { useCallback, useMemo, useState } from 'react'
+import { Fragment, useCallback, useMemo, useState } from 'react'
 import { MagnifyingGlassIcon } from './ui/icons'
 import {
   Select,
@@ -136,25 +136,29 @@ export default function Hero({ params, dict, filtersDD }: Props) {
             className='max-h-[var(--radix-select-content-available-height)] w-[var(--radix-select-trigger-width)]'
           >
             {preparedLocalizacionDD &&
-              preparedLocalizacionDD.map((localizacion: ParentLocalizacion) => (
-                <>
-                  <SelectItem
-                    key={localizacion.value}
-                    value={localizacion.value}
-                    className='py-1.5 pl-8 pr-2 text-sm font-semibold'
-                  >
-                    {localizacion.name}
-                  </SelectItem>
-                  {localizacion.children.length > 0 &&
-                    localizacion.children.map((child) => (
-                      <SelectItem key={child.value} value={child.value}>
-                        - {child.name}
-                      </SelectItem>
-                    ))}
-                </>
-              ))}
+              preparedLocalizacionDD.map(
+                (localizacion: ParentLocalizacion, i) => (
+                  <Fragment key={i}>
+                    <SelectItem
+                      key={localizacion.value}
+                      value={localizacion.value}
+                      className='py-1.5 pl-8 pr-2 text-sm font-semibold'
+                    >
+                      {localizacion.name}
+                    </SelectItem>
+                    {localizacion.children &&
+                      localizacion.children.length > 0 &&
+                      localizacion.children.map((child) => (
+                        <SelectItem key={child.value} value={child.value}>
+                          - {child.name}
+                        </SelectItem>
+                      ))}
+                  </Fragment>
+                )
+              )}
           </SelectContent>
         </Select>
+
         <button
           onClick={() => handleFilters()}
           className='col-span-2 inline-flex h-9 items-center justify-center gap-1 rounded-md bg-gradient-to-b from-green-500 via-green-600 via-60% to-green-700  font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 md:col-span-2  md:row-start-3 lg:col-span-4'

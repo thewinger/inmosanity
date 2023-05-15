@@ -1,5 +1,6 @@
 import { Locale } from '@/i18n-config'
 import { createClient } from 'next-sanity'
+import { cache } from 'react'
 import { apiVersion, dataset, projectId, useCdn } from './env'
 import { FiltersDD, FrontPage, Propiedad } from './interfaces'
 import {
@@ -21,9 +22,11 @@ import {
 
 export const client = createClient({ apiVersion, dataset, projectId, useCdn })
 
+const clientFetch = cache(client.fetch.bind(client))
+
 export async function getFrontPage(lang: Locale): Promise<FrontPage> {
   if (client) {
-    return (await client.fetch(frontPageQuery, { lang })) || ({} as any)
+    return (await clientFetch(frontPageQuery, { lang })) || ({} as any)
   }
 
   return {} as any
@@ -33,14 +36,14 @@ export async function getFiltersDropdownValues(
   lang: Locale
 ): Promise<FiltersDD> {
   if (client) {
-    const bathroomsData = client.fetch(bathroomsDD)
-    const bedroomsData = client.fetch(bedroomsDD)
-    const priceRentData = client.fetch(maxPriceRentDD)
-    const priceSaleData = client.fetch(maxPriceSaleDD)
-    const localizacionData = client.fetch(localizacionDD)
-    const tipoData = client.fetch(tipoDD, { lang })
-    const operacionData = client.fetch(operacionDD, { lang })
-    const totalData = client.fetch(total)
+    const bathroomsData = clientFetch(bathroomsDD)
+    const bedroomsData = clientFetch(bedroomsDD)
+    const priceRentData = clientFetch(maxPriceRentDD)
+    const priceSaleData = clientFetch(maxPriceSaleDD)
+    const localizacionData = clientFetch(localizacionDD)
+    const tipoData = clientFetch(tipoDD, { lang })
+    const operacionData = clientFetch(operacionDD, { lang })
+    const totalData = clientFetch(total)
 
     const [
       bathroomsValues,
@@ -78,7 +81,7 @@ export async function getFiltersDropdownValues(
   return {} as any
 }
 
-export function getSearchProperties(
+export async function getSearchProperties(
   searchParams: { [key: string]: string | string[] | undefined },
   lang: Locale
 ): Promise<Propiedad[]> {
@@ -117,7 +120,7 @@ export function getSearchProperties(
         _createdAt,
     } | order(_createdAt desc)[0...50]`
 
-    return client.fetch(query, { lang })
+    return await clientFetch(query, { lang }, { next: { cache: 'no-store' } })
   }
 
   return {} as any
@@ -127,7 +130,7 @@ export async function getAllPropiedadesSlug(): Promise<
   Pick<Propiedad, 'slug'>[]
 > {
   if (client) {
-    const slugs: string[] = await client.fetch(propiedadSlugsQuery)
+    const slugs: string[] = await clientFetch(propiedadSlugsQuery)
     return slugs.map((slug) => ({ slug }))
   }
   return []
@@ -139,7 +142,7 @@ export async function getPropiedadBySlug(
 ): Promise<Propiedad> {
   if (client) {
     return (
-      (await client.fetch(propiedadBySlugQuery, { slug, lang })) || ({} as any)
+      (await clientFetch(propiedadBySlugQuery, { slug, lang })) || ({} as any)
     )
   }
 
@@ -148,13 +151,13 @@ export async function getPropiedadBySlug(
 
 export async function getAllPagesSlug() {
   if (client) {
-    const slugs: string[] = await client.fetch(pageSlugsQuery)
+    const slugs: string[] = await clientFetch(pageSlugsQuery)
     return slugs
   }
 }
 export async function getPageBySlug(slug: string, lang: Locale) {
   if (client) {
-    return (await client.fetch(pageBySlugQuery, { slug, lang })) || ({} as any)
+    return (await clientFetch(pageBySlugQuery, { slug, lang })) || ({} as any)
   }
 
   return {} as any
