@@ -56,7 +56,15 @@ export default async function FrontPage({
 }
 
 export async function generateStaticParams() {
-  const locales = i18n.locales.map((locale) => ({ lang: locale }))
+  const locales = i18n.locales
 
-  return locales
+  const params = locales!.flatMap((locale) => {
+    return {
+      lang: locale,
+    }
+  })
+
+  console.log(params)
+
+  return params
 }
