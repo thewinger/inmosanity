@@ -22,12 +22,13 @@ export default function PropiedadCard({ dict, propiedad }: Props) {
     <>
       <div className='relative isolate  flex flex-col gap-4 rounded-md bg-white pb-6 text-slate-800 shadow-md'>
         <Pill>{propiedad.operacion.name}</Pill>
-        <div className='relative aspect-[3/2] w-full overflow-hidden rounded-t-md '>
+        <div className='relative aspect-[2.78/2] w-full overflow-hidden rounded-t-md '>
           {propiedad.coverImage && (
             <Image
               src={urlForImage(propiedad.coverImage).url()}
               alt={propiedad.title}
-              fill
+              width={765}
+              height={553}
             />
           )}
         </div>

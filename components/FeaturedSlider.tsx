@@ -81,7 +81,6 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
                     placeholder='blur'
                     blurDataURL={Shimmer}
                     fill
-                    priority
                   />
                 )}
               </Link>
@@ -127,9 +126,7 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
                     className='embla__slide__thumbnail  relative block rounded object-cover'
                     src={slide.sourceUrl}
                     alt={slide.title ? slide.title : ''}
-                    sizes='(max-width: 420px) 100vw, 420px'
                     fill
-                    priority
                   />
                 </button>
               </div>
