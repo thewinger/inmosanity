@@ -1,4 +1,9 @@
 {
+  "header": {
+    "email": "Contact via email",
+    "telefono": "Contact phone numbers",
+    "lang_switcher": "Switch language"
+  },
   "slogan": "Discover the perfect home near the greens!",
   "destacados": "Highlights",
   "ultimos_anadidos": "Latest",

@@ -1,6 +1,11 @@
 {
+  "header": {
+    "email": "Contactar por correo",
+    "telefono": "Teléfonos de contacto",
+    "lang_switcher": "Cambiar idioma"
+  },
   "slogan": "¡Descubre la casa perfecta cerca de los greens!",
-  "destacados": "destacados",
+  "destacados": "Destacados",
   "ultimos_anadidos": "Últimos añadidos",
   "contactar_button": "Contactar",
   "alquiler_tag": "mes",

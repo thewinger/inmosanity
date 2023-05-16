@@ -78,8 +78,15 @@ export default function Hero({ params, dict, filtersDD }: Props) {
 
   return (
     <div className='xw-full relative mb-64 h-56 sm:h-80 md:mb-48  lg:h-[480px]'>
-      <Image src={BgHeroImg} alt='Campo de golf' priority fill />
-      <div className='absolute top-full grid w-full max-w-4xl -translate-y-1/4 auto-rows-auto grid-cols-1 gap-3 rounded-xl bg-gray-200/80  p-4 pb-6 shadow-xl backdrop-blur md:auto-rows-min md:grid-cols-2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 lg:grid-cols-4 lg:grid-rows-2 lg:gap-4 lg:pb-4 '>
+      <Image
+        src={BgHeroImg}
+        alt='Campo de golf'
+        quality={100}
+        priority
+        fill
+        className='object-cover'
+      />
+      <div className='absolute top-full grid w-full max-w-4xl -translate-y-1/4 auto-rows-auto grid-cols-1 gap-3 rounded-xl bg-gray-200/80  p-4 pb-6 shadow-xl backdrop-blur md:left-1/2 md:-translate-x-1/2 md:auto-rows-min md:grid-cols-2 lg:-translate-y-1/2 lg:grid-cols-4 lg:grid-rows-2 lg:gap-4 lg:pb-4 '>
         {/* <h2 className='scroll-m-20 pb-2 text-center text-2xl font-semibold tracking-tight text-green-950 transition-colors first:mt-0 md:col-span-2 lg:col-span-4'>
           {dict.slogan}
         </h2> */}
@@ -108,7 +115,10 @@ export default function Hero({ params, dict, filtersDD }: Props) {
           /* defaultValue={initialState.tipo} */
           onValueChange={(value) => updateFilters('tipo', value)}
         >
-          <SelectTrigger className='hover:shadow-inset xlg:row-start-3 col-span-2 md:col-span-1 md:row-start-2 lg:col-span-2'>
+          <SelectTrigger
+            aria-label={dict.filters.tipo_label}
+            className='hover:shadow-inset xlg:row-start-3 col-span-2 md:col-span-1 md:row-start-2 lg:col-span-2'
+          >
             <SelectValue
               className='truncate'
               placeholder={dict.filters.tipo_placeholder}
@@ -131,7 +141,10 @@ export default function Hero({ params, dict, filtersDD }: Props) {
           name='localizacion'
           onValueChange={(value) => updateFilters('localizacion', value)}
         >
-          <SelectTrigger className='col-span-2 md:col-span-1 md:col-start-2 md:row-start-2 lg:col-span-2'>
+          <SelectTrigger
+            aria-label={dict.filters.localizacion_label}
+            className='col-span-2 md:col-span-1 md:col-start-2 md:row-start-2 lg:col-span-2'
+          >
             <SelectValue placeholder={dict.filters.localizacion_placeholder} />
           </SelectTrigger>
           <SelectContent
@@ -164,6 +177,7 @@ export default function Hero({ params, dict, filtersDD }: Props) {
         </Select>
 
         <button
+          aria-label={dict.filters.search_button}
           onClick={() => handleFilters()}
           className='col-span-2 inline-flex h-9 items-center justify-center gap-1 rounded-md bg-gradient-to-b from-green-500 via-green-600 via-60% to-green-700  font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 md:col-span-2  md:row-start-3 lg:col-span-4'
         >

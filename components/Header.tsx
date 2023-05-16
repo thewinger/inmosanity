@@ -10,13 +10,15 @@ import {
 import { EnvelopeSimpleIcon, PhoneIcon } from './ui/icons'
 
 import { Locale } from '@/i18n-config'
+import { Dict } from '@/lib/interfaces'
 import logo from '/public/Logo_Inmogolf.png'
 
 type Props = {
   params: { lang: Locale }
+  dict: Dict
 }
 
-const Header = ({ params }: Props) => {
+const Header = ({ params, dict }: Props) => {
   return (
     <header className='relative z-20 bg-white shadow-sm '>
       <div className='flex items-center justify-between  px-4 py-2 md:px-6'>
@@ -31,13 +33,16 @@ const Header = ({ params }: Props) => {
         </Link>
 
         <div className='flex justify-between gap-4 text-green-600'>
-          <LocaleSwitcher />
-          <a href='mailto:info@inmogolfbonalba.com'>
+          <LocaleSwitcher dict={dict} />
+          <a
+            aria-label={dict.header.email}
+            href='mailto:info@inmogolfbonalba.com'
+          >
             <EnvelopeSimpleIcon size={32} />
           </a>
 
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger aria-label={dict.header.telefono}>
               <PhoneIcon size={32} />
             </DropdownMenuTrigger>
             <DropdownMenuContent className='w-fit'>

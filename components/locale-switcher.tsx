@@ -1,6 +1,7 @@
 'use client'
 
 import { i18n } from '@/i18n-config'
+import { Dict } from '@/lib/interfaces'
 import spainFlag from '@/public/es.svg'
 import ukFlag from '@/public/uk.svg'
 import Image from 'next/image'
@@ -29,7 +30,11 @@ interface Filters {
   precioMax?: string
 }
 
-export default function LocaleSwitcher() {
+type Props = {
+  dict: Dict
+}
+
+export default function LocaleSwitcher({ dict }: Props) {
   const pathName = usePathname()
   const params = useParams()
   const searchParams = useSearchParams()
@@ -60,7 +65,10 @@ export default function LocaleSwitcher() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className='uppercase'>
+      <DropdownMenuTrigger
+        aria-label={dict.header.lang_switcher}
+        className='uppercase'
+      >
         {params.lang == 'es' ? (
           <Image src={spainFlag} width={24} height={24} alt='Idioma Español' />
         ) : (

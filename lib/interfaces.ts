@@ -83,6 +83,11 @@ export interface FiltersDD {
 }
 
 export interface Dict {
+  header: {
+    email: string
+    telefono: string
+    lang_switcher: string
+  }
   slogan: string
   destacados: string
   ultimos_anadidos: string

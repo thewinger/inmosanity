@@ -29,15 +29,12 @@ export default async function FrontPage({
         <h2 className='p-2 px-4 text-sm font-semibold  uppercase tracking-wide text-zinc-800 lg:px-0'>
           {dict.destacados}
         </h2>
-        {/* <div className='lg:hidden'>
-          <FeaturedSlider propiedades={featured} />
-        </div> */}
         <div className='xhidden lg:block'>
           <FeaturedSlider params={params} propiedades={featured} />
         </div>
       </section>
       <section className='relative mx-auto max-w-5xl p-4 py-16 '>
-        <h2 className='py-2 text-sm font-semibold uppercase  tracking-wide text-zinc-800 lg:px-0'>
+        <h2 className='py-2 text-sm font-semibold uppercase tracking-wide text-zinc-800 lg:px-0'>
           {dict.ultimos_anadidos}
         </h2>
         <div className='grid grid-cols-cards gap-6'>
@@ -63,8 +60,6 @@ export async function generateStaticParams() {
       lang: locale,
     }
   })
-
-  console.log(params)
 
   return params
 }

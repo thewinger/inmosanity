@@ -1,23 +1,12 @@
 import Link from 'next/link'
 
 import { Locale } from '@/i18n-config'
+import { Dict } from '@/lib/interfaces'
 import { CaretRightIcon, FacebookIcon, InstagramIcon } from './ui/icons'
 
 type Props = {
   params: { lang: Locale }
-  dict: {
-    footer: {
-      quienes_somos: {
-        quienes_somos_label: string
-        quienes_somos_text: string
-        aviso_legal_label: string
-      }
-      contacto: {
-        contacto_label: string
-        horario: string
-      }
-    }
-  }
+  dict: Dict
 }
 
 export function Footer({ dict, params }: Props) {
@@ -89,6 +78,7 @@ export function Footer({ dict, params }: Props) {
             <div className='basis-1/2'>
               <div className='h-full w-full overflow-hidden rounded-md '>
                 <iframe
+                  title='Google maps'
                   src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3124.9347420700537!2d-0.4396482870882033!3d38.44297627326901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd623a620272964f%3A0xe3358cd49c71b93!2sInmobiliaria%20Inmogolf%20Bonalba!5e0!3m2!1sen!2ses!4v1682507335851!5m2!1sen!2ses'
                   style={{ border: 0, width: '100%', height: '100%' }}
                   /* allowFullScreen */
