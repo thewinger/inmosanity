@@ -4,6 +4,7 @@ import { Locale } from '@/i18n-config'
 import { Featured } from '@/lib/interfaces'
 import { urlForImage } from '@/lib/sanity.image'
 import clsx from 'clsx'
+import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -20,7 +21,11 @@ type Props = {
 const FeaturedSlider = ({ propiedades, params }: Props) => {
   const vertical = useMedia({ minWidth: '1024px' })
   const [selectedIndex, setSelectedIndex] = useState(0)
-  const [mainViewportRef, embla] = useEmblaCarousel({ skipSnaps: false })
+  const [mainViewportRef, embla] = useEmblaCarousel({ skipSnaps: false }, [
+    Autoplay({
+      stopOnMouseEnter: true,
+    }),
+  ])
   const [thumbViewportRef, emblaThumbs] = useEmblaCarousel({
     containScroll: 'keepSnaps',
     dragFree: true,
