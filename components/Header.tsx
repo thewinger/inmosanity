@@ -27,8 +27,9 @@ const Header = ({ params, dict }: Props) => {
           <Image
             src={logo}
             alt='Inmogolf Bonalba'
+            width={156}
+            height={48}
             priority
-            className='h-12 w-auto'
           />
         </Link>
 

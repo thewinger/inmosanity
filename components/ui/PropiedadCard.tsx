@@ -27,8 +27,7 @@ export default function PropiedadCard({ dict, propiedad }: Props) {
             <Image
               src={urlForImage(propiedad.coverImage).url()}
               alt={propiedad.title}
-              width={765}
-              height={553}
+              fill
             />
           )}
         </div>
