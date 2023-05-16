@@ -37,7 +37,7 @@ export const searchPropiedades = groq`
 *[_type == 'propiedad' && operacion._ref == $operacion  && tipo._ref == $tipo && localizacion._ref == $localizacion && bathrooms == $bathrooms && bedrooms == $bedrooms && price >= $priceMin && price <= $priceMax]{
   ${PROPIEDAD_FIELDS}
   "coverImage": images[0],
-}
+}| order(_createdAt desc)
 `
 
 export const propiedadSlugsQuery = groq`
