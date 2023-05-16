@@ -4,7 +4,6 @@ import { urlForImage } from '@/lib/sanity.image'
 import clsx from 'clsx'
 import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import { Image as SanityImage } from 'sanity'
 import Shimmer from './Shimmer'
@@ -22,9 +21,6 @@ const ProductSlider = ({ slides, vertical }: PropType) => {
     dragFree: true,
     axis: vertical ? 'x' : 'y',
   })
-  const pathName = usePathname()
-
-  const segments = pathName.split('/')
 
   const onThumbClick = useCallback(
     (index: number) => {
@@ -71,7 +67,6 @@ const ProductSlider = ({ slides, vertical }: PropType) => {
                     src={slide.sourceUrl}
                     alt={slide.title ? slide.title : ''}
                     fill
-                    sizes='(max-width: 1024px) 100vw, 768px'
                     placeholder='blur'
                     blurDataURL={Shimmer}
                     priority
@@ -120,7 +115,6 @@ const ProductSlider = ({ slides, vertical }: PropType) => {
                     className='embla__slide__thumbnail  relative block rounded object-cover'
                     src={slide.sourceUrl}
                     alt={slide.title ? slide.title : ''}
-                    sizes='(max-width: 420px) 100vw, 420px'
                     fill
                     priority
                   />

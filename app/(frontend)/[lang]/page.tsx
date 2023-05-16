@@ -1,5 +1,5 @@
+import FeaturedSlider from '@/components/FeaturedSlider'
 import Hero from '@/components/Hero'
-import ProductSliderDesktop from '@/components/ProductSliderDesktop'
 import PropiedadCard from '@/components/ui/PropiedadCard'
 import { getDictionary } from '@/get-dictionary'
 import { Locale, i18n } from '@/i18n-config'
@@ -33,7 +33,7 @@ export default async function FrontPage({
           <FeaturedSlider propiedades={featured} />
         </div> */}
         <div className='xhidden lg:block'>
-          <ProductSliderDesktop params={params} propiedades={featured} />
+          <FeaturedSlider params={params} propiedades={featured} />
         </div>
       </section>
       <section className='relative mx-auto max-w-5xl p-4 py-16 '>

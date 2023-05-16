@@ -2,6 +2,7 @@
 
 import { Locale } from '@/i18n-config'
 import { Dict, FiltersDD, ParentLocalizacion } from '@/lib/interfaces'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Fragment, useCallback, useMemo, useState } from 'react'
 import { MagnifyingGlassIcon } from './ui/icons'
@@ -13,6 +14,8 @@ import {
   SelectValue,
 } from './ui/select'
 import { ToggleGroup, ToggleGroupItem } from './ui/toggle-group'
+
+import BgHeroImg from '@/public/hero-golf.jpg'
 
 interface Filters {
   operacion: string
@@ -74,8 +77,9 @@ export default function Hero({ params, dict, filtersDD }: Props) {
   }
 
   return (
-    <div className='relative mb-72 h-56 w-full bg-heroImg bg-cover bg-center bg-no-repeat pt-40 md:mb-48 lg:mb-24 lg:h-[480px]'>
-      <div className='absolute  grid w-full max-w-4xl auto-rows-auto grid-cols-1 gap-3 rounded-xl  bg-gray-200/80 p-4 pb-6 shadow-xl backdrop-blur md:auto-rows-min md:grid-cols-2 lg:-bottom-16 lg:left-1/2 lg:-translate-x-1/2 lg:grid-cols-4 lg:grid-rows-2 lg:gap-4 lg:pb-4 '>
+    <div className='xw-full relative mb-64 h-56 sm:h-80 md:mb-48  lg:h-[480px]'>
+      <Image src={BgHeroImg} alt='Campo de golf' priority fill />
+      <div className='absolute top-full grid w-full max-w-4xl -translate-y-1/4 auto-rows-auto grid-cols-1 gap-3 rounded-xl bg-gray-200/80  p-4 pb-6 shadow-xl backdrop-blur md:auto-rows-min md:grid-cols-2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 lg:grid-cols-4 lg:grid-rows-2 lg:gap-4 lg:pb-4 '>
         {/* <h2 className='scroll-m-20 pb-2 text-center text-2xl font-semibold tracking-tight text-green-950 transition-colors first:mt-0 md:col-span-2 lg:col-span-4'>
           {dict.slogan}
         </h2> */}
