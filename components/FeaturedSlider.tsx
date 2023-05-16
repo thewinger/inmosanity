@@ -81,6 +81,7 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
                     placeholder='blur'
                     blurDataURL={Shimmer}
                     fill
+                    priority
                   />
                 )}
               </Link>
