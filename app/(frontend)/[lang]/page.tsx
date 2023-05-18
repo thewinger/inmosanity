@@ -4,11 +4,30 @@ import PropiedadCard from '@/components/ui/PropiedadCard'
 import { getDictionary } from '@/get-dictionary'
 import { Locale, i18n } from '@/i18n-config'
 import { getFiltersDropdownValues, getFrontPage } from '@/lib/sanity.client'
+import { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
 function HeroFallBack() {
   return <>placeholder</>
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: Locale }
+}): Promise<Metadata> {
+  const title =
+    params.lang === 'en'
+      ? 'InmoGolfBonalba | Tu real estate agent in Bonalba '
+      : 'InmoGolfBonalba | Tu inmobiliaria en Bonalba'
+
+  return {
+    title: {
+      default: title,
+      template: 'InmoGolf Bonalba | %s',
+    },
+  }
 }
 
 export default async function FrontPage({
