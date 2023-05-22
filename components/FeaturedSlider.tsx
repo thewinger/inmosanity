@@ -19,7 +19,7 @@ type Props = {
 }
 
 const FeaturedSlider = ({ propiedades, params }: Props) => {
-  const vertical = useMedia({ minWidth: '1024px' })
+  const isBigScreen = useMedia({ minWidth: '1024px' })
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [mainViewportRef, embla] = useEmblaCarousel({ skipSnaps: false }, [
     Autoplay({
@@ -60,23 +60,28 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
   })
 
   return (
-    <div className={clsx('flex w-full gap-4', !vertical && 'flex-col')}>
+    <div
+      className={clsx(
+        'grid w-full gap-4',
+        isBigScreen ? 'grid-cols-[9.9rem_1fr]' : 'grid-cols-1'
+      )}
+    >
       <div
         className={clsx(
           'embla relative m-0 block aspect-[3/2] w-full overflow-hidden rounded p-0',
-          vertical && 'order-2 '
+          isBigScreen && 'order-2 '
         )}
       >
         <div
           className='embla__viewport aspect-[3/2] w-full'
           ref={mainViewportRef}
         >
-          <div className='embla__container xoverflow-x-hidden flex h-full gap-2'>
+          <div className='embla__container flex h-full gap-2'>
             {propiedades.map((propiedad) => (
               <Link
                 key={propiedad.slug}
                 href={`/${params.lang}/propiedad/${propiedad.slug}`}
-                className='embla__slide xmax-h-[420px] xbasis-5/5 relative aspect-[3/2] min-w-full shrink-0 grow-0 overflow-hidden rounded-md '
+                className='embla__slide  relative aspect-[3/2] min-w-full shrink-0 grow-0 overflow-hidden rounded-md '
               >
                 <Pill>{`${propiedad.tipo} - ${propiedad.operacion}`}</Pill>
                 {propiedad && propiedad.coverImage && (
@@ -96,30 +101,30 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
 
       <div
         className={clsx(
-          'embla embla--thumb relative m-0 block overflow-hidden p-0',
-          !vertical && 'w-full',
-          vertical && 'order-1 w-40'
+          'embla embla--thumb relative m-0  block h-full overflow-hidden p-0',
+          !isBigScreen && 'w-full',
+          isBigScreen && 'order-1 '
         )}
       >
         <div
-          className={clsx('embla__viewport w-full', vertical && 'h-full')}
+          className={clsx('embla__viewport w-full', isBigScreen && 'h-full')}
           ref={thumbViewportRef}
         >
           <div
             className={clsx(
-              'embla__container embla__container--thumb xh-full flex gap-1',
-              vertical && 'flex-col gap-1'
+              'embla__container embla__container--thumb grid gap-1',
+              isBigScreen ? `grid-rows-5 ` : `grid-cols-5`
             )}
           >
             {formattedSlides.map((slide, index) => (
               <div
                 key={index}
                 className={clsx(
-                  'embla__slide embla__slide--thumb aspect-[3/2] w-full basis-1/6 rounded transition-opacity',
+                  'embla__slide embla__slide--thumb xw-full aspect-[3/2] rounded transition-opacity',
                   index == selectedIndex &&
                     'is-selected border-2 border-green-500 opacity-100',
                   !(index == selectedIndex) && 'opacity-75',
-                  vertical && 'w-full'
+                  isBigScreen && 'w-full'
                 )}
               >
                 <button

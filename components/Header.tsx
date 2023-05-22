@@ -11,6 +11,7 @@ import { EnvelopeSimpleIcon, PhoneIcon } from './ui/icons'
 
 import { Locale } from '@/i18n-config'
 import { Dict } from '@/lib/interfaces'
+import { Suspense } from 'react'
 import logo from '/public/Logo_Inmogolf.png'
 
 type Props = {
@@ -34,7 +35,9 @@ const Header = ({ params, dict }: Props) => {
         </Link>
 
         <div className='flex justify-between gap-4 text-green-600'>
-          <LocaleSwitcher dict={dict} />
+          <Suspense>
+            <LocaleSwitcher dict={dict} />
+          </Suspense>
           <a
             aria-label={dict.header.email}
             href='mailto:info@inmogolfbonalba.com'
