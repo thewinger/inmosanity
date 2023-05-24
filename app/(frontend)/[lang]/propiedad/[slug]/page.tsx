@@ -1,11 +1,19 @@
 import ProductSlider from '@/components/ProductSlider'
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import {
   BathtubIcon,
   BedIcon,
   BuildingsIcon,
   CalendarBlankIcon,
+  EnvelopeSimpleIcon,
   MapPinIcon,
+  PhoneIcon,
   RulerIcon,
+  WhatsappLogoIcon,
 } from '@/components/ui/icons'
 import Pill from '@/components/ui/Pill'
 import { getDictionary } from '@/get-dictionary'
@@ -59,12 +67,38 @@ export default async function Propiedad({
             <h1 className='grow text-xl font-semibold tracking-wide'>
               {propiedad.title}
             </h1>
-            <a
-              href={`mailto:info@inmogolfbonalba.com?subject=${dict.footer.contacto.contacto_label}%3A%20${propiedad.title}`}
-              className='hidden h-10 items-center justify-center gap-1 rounded-md bg-gradient-to-b from-green-500 via-green-600  via-60% to-green-700 px-4 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 sm:inline-flex '
-            >
-              {dict.contactar_button}
-            </a>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className='hidden h-10 items-center justify-center gap-1 rounded-md bg-gradient-to-b from-green-500 via-green-600  via-60% to-green-700 px-4 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 sm:inline-flex '>
+                  {dict.contactar_button}
+                </button>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent className='w-fit'>
+                <div className='flex w-full justify-start gap-3'>
+                  <a
+                    className='text-green-600'
+                    aria-label={dict.header.email}
+                    href={`mailto:info@inmogolfbonalba.com?subject=${dict.footer.contacto.contacto_label}%3A%20${propiedad.title}`}
+                  >
+                    <EnvelopeSimpleIcon size={40} />
+                  </a>
+
+                  <a
+                    className='text-green-600'
+                    aria-label='Whatsapp'
+                    href='https://wa.me/34655849409'
+                  >
+                    <WhatsappLogoIcon size={40} />
+                  </a>
+
+                  <a href='tel:655849409' className=' text-green-600'>
+                    <PhoneIcon size={40} />
+                  </a>
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
           <div className='hidden sm:block'>
             <span className='text-2xl font-bold text-zinc-900 '>
@@ -179,12 +213,37 @@ export default async function Propiedad({
             )}
           </div>
         )}
-        <a
-          href={`mailto:info@inmogolfbonalba.com?subject=${dict.footer.contacto.contacto_label}%3A%20${propiedad.title}`}
-          className='flex h-10 grow items-center justify-center gap-1 rounded-md bg-gradient-to-b from-green-500 via-green-600  via-60% to-green-700 px-4 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 sm:inline-flex '
-        >
-          {dict.contactar_button}
-        </a>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className='flex h-10 grow items-center justify-center gap-1 rounded-md bg-gradient-to-b from-green-500 via-green-600  via-60% to-green-700 px-4 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 sm:inline-flex '>
+              {dict.contactar_button}
+            </button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent className='w-fit'>
+            <div className='flex w-full justify-start gap-3'>
+              <a
+                className='text-green-600'
+                aria-label={dict.header.email}
+                href={`mailto:info@inmogolfbonalba.com?subject=${dict.footer.contacto.contacto_label}%3A%20${propiedad.title}`}
+              >
+                <EnvelopeSimpleIcon size={40} />
+              </a>
+
+              <a
+                className='text-green-600'
+                aria-label='Whatsapp'
+                href='https://wa.me/34655849409'
+              >
+                <WhatsappLogoIcon size={40} />
+              </a>
+
+              <a href='tel:655849409' className=' text-green-600'>
+                <PhoneIcon size={40} />
+              </a>
+            </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   )
