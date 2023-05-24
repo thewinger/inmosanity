@@ -20,6 +20,7 @@ import {
   MapPin,
   Phone,
   Ruler,
+  WhatsappLogo,
   X,
 } from '@phosphor-icons/react'
 
@@ -55,6 +56,10 @@ export const BedIcon = (props: IconProps) => {
 
 export const RulerIcon = (props: IconProps) => {
   return <Ruler {...props} />
+}
+
+export const WhatsappLogoIcon = (props: IconProps) => {
+  return <WhatsappLogo {...props} />
 }
 
 export const MapPinIcon = (props: IconProps) => {

@@ -2,7 +2,12 @@ import Link from 'next/link'
 
 import { Locale } from '@/i18n-config'
 import { Dict } from '@/lib/interfaces'
-import { CaretRightIcon, FacebookIcon, InstagramIcon } from './ui/icons'
+import {
+  CaretRightIcon,
+  FacebookIcon,
+  InstagramIcon,
+  WhatsappLogoIcon,
+} from './ui/icons'
 
 type Props = {
   params: { lang: Locale }
@@ -43,6 +48,12 @@ export function Footer({ dict, params }: Props) {
           <div className='flex flex-col gap-4 sm:flex-row'>
             <div className='flex basis-1/2 flex-col gap-4'>
               <div className='flex w-full justify-start gap-3'>
+                <Link
+                  className='text-green-50'
+                  href='https://wa.me/34655849409'
+                >
+                  <WhatsappLogoIcon size={44} weight='regular' />
+                </Link>
                 <Link
                   className='text-green-50'
                   href='https://www.facebook.com/BonalbaInmogolf/'
