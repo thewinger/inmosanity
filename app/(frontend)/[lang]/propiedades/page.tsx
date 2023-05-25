@@ -8,7 +8,6 @@ import {
   getSearchProperties,
 } from '@/lib/sanity.client'
 import clsx from 'clsx'
-import Link from 'next/link'
 
 type Props = {
   params: {
@@ -49,12 +48,12 @@ export default async function PropiedadesPage({ params, searchParams }: Props) {
             )}
           >
             {propiedades.map((propiedad) => (
-              <Link
+              <PropiedadCard
                 key={propiedad.slug}
-                href={`/${params.lang}/propiedad/${propiedad.slug}`}
-              >
-                <PropiedadCard dict={dict} propiedad={propiedad} />
-              </Link>
+                params={params}
+                dict={dict}
+                propiedad={propiedad}
+              />
             ))}
           </div>
         </div>

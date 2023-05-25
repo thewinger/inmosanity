@@ -1,7 +1,9 @@
+import { Locale } from '@/i18n-config'
 import { urlForImage } from '@/lib/sanity.image'
 import { formatEUR } from '@/lib/utils'
 import { Dict, Propiedad } from 'lib/interfaces'
 import Image from 'next/image'
+import Link from 'next/link'
 import Pill from './Pill'
 import {
   BathtubIcon,
@@ -13,13 +15,17 @@ import {
 } from './icons'
 
 type Props = {
+  params: { lang: Locale }
   propiedad: Propiedad
   dict: Dict
 }
 
-export default function PropiedadCard({ dict, propiedad }: Props) {
+export default function PropiedadCard({ params, dict, propiedad }: Props) {
   return (
-    <>
+    <Link
+      key={propiedad.slug}
+      href={`${params.lang}/propiedad/${propiedad.slug}`}
+    >
       <div className='relative isolate  flex flex-col gap-4 rounded-md bg-white pb-6 text-slate-800 shadow-md'>
         <Pill>{propiedad.operacion.name}</Pill>
         <div className='relative aspect-[2.78/2] w-full overflow-hidden rounded-t-md '>
@@ -105,6 +111,6 @@ export default function PropiedadCard({ dict, propiedad }: Props) {
           </div>
         </div>
       </div>
-    </>
+    </Link>
   )
 }

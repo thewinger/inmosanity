@@ -5,7 +5,6 @@ import { getDictionary } from '@/get-dictionary'
 import { Locale, i18n } from '@/i18n-config'
 import { getFiltersDropdownValues, getFrontPage } from '@/lib/sanity.client'
 import { Metadata } from 'next'
-import Link from 'next/link'
 import { Suspense } from 'react'
 
 function HeroFallBack() {
@@ -58,12 +57,12 @@ export default async function FrontPage({
         </h2>
         <div className='grid grid-cols-cards gap-6'>
           {latest.map((propiedad) => (
-            <Link
+            <PropiedadCard
               key={propiedad.slug}
-              href={`${params.lang}/propiedad/${propiedad.slug}`}
-            >
-              <PropiedadCard dict={dict} propiedad={propiedad} />
-            </Link>
+              params={params}
+              dict={dict}
+              propiedad={propiedad}
+            />
           ))}
         </div>
       </section>
