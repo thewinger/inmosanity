@@ -78,23 +78,26 @@ export default async function Propiedad({
               <DropdownMenuContent className='w-fit'>
                 <div className='flex w-full justify-start gap-3'>
                   <a
-                    className='text-green-600'
+                    className='grid h-10 w-10 place-items-center rounded-full text-green-600 hover:bg-green-50'
                     aria-label={dict.header.email}
                     href={`mailto:info@inmogolfbonalba.com?subject=${dict.footer.contacto.contacto_label}%3A%20${propiedad.title}`}
                   >
-                    <EnvelopeSimpleIcon size={40} />
+                    <EnvelopeSimpleIcon size={28} />
                   </a>
 
                   <a
-                    className='text-green-600'
+                    className='grid h-10 w-10 place-items-center rounded-full text-green-600 hover:bg-green-50'
                     aria-label='Whatsapp'
                     href='https://wa.me/34655849409'
                   >
-                    <WhatsappLogoIcon size={40} />
+                    <WhatsappLogoIcon size={28} />
                   </a>
 
-                  <a href='tel:655849409' className=' text-green-600'>
-                    <PhoneIcon size={40} />
+                  <a
+                    href='tel:+34655849409'
+                    className='grid h-10 w-10 place-items-center rounded-full text-green-600 hover:bg-green-50'
+                  >
+                    <PhoneIcon size={28} />
                   </a>
                 </div>
               </DropdownMenuContent>
@@ -223,23 +226,26 @@ export default async function Propiedad({
           <DropdownMenuContent className='w-fit'>
             <div className='flex w-full justify-start gap-3'>
               <a
-                className='text-green-600'
+                className='grid h-10 w-10 place-items-center rounded-full text-green-600 hover:bg-green-50'
                 aria-label={dict.header.email}
                 href={`mailto:info@inmogolfbonalba.com?subject=${dict.footer.contacto.contacto_label}%3A%20${propiedad.title}`}
               >
-                <EnvelopeSimpleIcon size={40} />
+                <EnvelopeSimpleIcon size={28} />
               </a>
 
               <a
-                className='text-green-600'
+                className='grid h-10 w-10 place-items-center rounded-full text-green-600 hover:bg-green-50'
                 aria-label='Whatsapp'
                 href='https://wa.me/34655849409'
               >
-                <WhatsappLogoIcon size={40} />
+                <WhatsappLogoIcon size={28} />
               </a>
 
-              <a href='tel:655849409' className=' text-green-600'>
-                <PhoneIcon size={40} />
+              <a
+                href='tel:+34655849409'
+                className='grid h-10 w-10 place-items-center rounded-full text-green-600 hover:bg-green-50'
+              >
+                <PhoneIcon size={28} />
               </a>
             </div>
           </DropdownMenuContent>
