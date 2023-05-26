@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "prebuild": "node ./lib/pre-runner.mjs",
+    "prebuild": "node pre-runner.js",
     "build": "next build",
     "dev": "next dev",
     "format": "yarn prettier --write . --ignore-path .gitignore",
