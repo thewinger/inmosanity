@@ -21,8 +21,8 @@ interface Filters {
   tipo?: string
   precioMin?: string
   precioMax?: string
-  habitaciones?: string
-  banos?: string
+  habitaciones?: string | undefined
+  banos?: string | undefined
   localizacion?: string
 }
 
@@ -36,7 +36,6 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
   const params = useParams()
   const router = useRouter()
   const searchParams = useSearchParams()
-  console.log(`filters`, searchParams)
 
   const {
     bathroomsDD,
@@ -111,6 +110,17 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
         searchParams.get('operacion') === 'operacion-en-alquiler'
       ? precioMaxRentArrayDD.slice(-1).toString()
       : precioMaxSaleArrayDD.slice(-1).toString(),
+    banos:
+      searchParams.has('banos') &&
+      (searchParams.get('banos') !== null || searchParams.get('banos') !== '')
+        ? searchParams.get('banos')!
+        : undefined,
+    habitaciones:
+      searchParams.has('habitaciones') &&
+      (searchParams.get('habitaciones') !== null ||
+        searchParams.get('habitaciones') !== '')
+        ? searchParams.get('habitaciones')!
+        : undefined,
   })
 
   const bathroomsArrayDD = createNumArray(bathroomsDD, 1)
