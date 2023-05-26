@@ -1,10 +1,6 @@
-console.log('********** PREBUILDING **********')
-
-import fs from 'fs'
-import path from 'path'
-/**
- * EXPERIMENTAL: Hacking nextjs internals
- */
+console.log('********* PREBUILDING')
+const path = require('node:path')
+const fs = require('fs')
 const baseDir = process.cwd()
 
 const prebuildScripts = async () => {
