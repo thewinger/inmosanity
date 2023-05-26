@@ -54,7 +54,7 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
 
   const formattedSlides = propiedades.map((propiedad) => {
     return {
-      sourceUrl: urlForImage(propiedad.coverImage).url(),
+      sourceUrl: urlForImage(propiedad.coverImage).width(160).url().toString(),
       title: propiedad.coverImage.asset?._ref,
     }
   })
@@ -86,11 +86,15 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
                 <Pill>{`${propiedad.tipo} - ${propiedad.operacion}`}</Pill>
                 {propiedad && propiedad.coverImage && (
                   <Image
-                    src={urlForImage(propiedad.coverImage).url()}
+                    src={urlForImage(propiedad.coverImage)
+                      .width(1024)
+                      .url()
+                      .toString()}
                     alt={propiedad.title}
-                    placeholder='blur'
                     blurDataURL={Shimmer}
                     fill
+                    sizes='100vw'
+                    priority
                   />
                 )}
               </Link>
@@ -137,6 +141,7 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
                     src={slide.sourceUrl}
                     alt={slide.title ? slide.title : ''}
                     fill
+                    sizes='100vw'
                   />
                 </button>
               </div>

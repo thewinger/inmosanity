@@ -36,6 +36,7 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
   const params = useParams()
   const router = useRouter()
   const searchParams = useSearchParams()
+  console.log(`filters`, searchParams)
 
   const {
     bathroomsDD,

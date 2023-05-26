@@ -31,9 +31,13 @@ export default function PropiedadCard({ params, dict, propiedad }: Props) {
         <div className='relative aspect-[2.78/2] w-full overflow-hidden rounded-t-md '>
           {propiedad.coverImage && (
             <Image
-              src={urlForImage(propiedad.coverImage).url()}
+              src={urlForImage(propiedad.coverImage)
+                .width(740)
+                .url()
+                .toString()}
               alt={propiedad.title}
               fill
+              sizes='100vw'
             />
           )}
         </div>
