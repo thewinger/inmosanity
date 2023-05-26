@@ -59,6 +59,13 @@ export function middleware(request: NextRequest) {
   )
     return
 
+  if (
+    pathname.match(
+      /^\/api|assets|static|_next|.netlify|favicon.ico|footer_border.svg|hero-golf.jpg|Logo_Inmogolf.png|_ipx|studio.*/
+    )
+  )
+    return NextResponse.next()
+
   // Check if there is any supported locale in the pathname
   const pathnameIsMissingLocale = i18n.locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
@@ -83,7 +90,7 @@ export function middleware(request: NextRequest) {
   }
 }
 
-export const config = {
+/* export const config = {
   // Matcher ignoring `/_next/` and `/api/`
   matcher: ['/((?!api|_next/static|_ipx|studio|_next/image|favicon.ico).*)'],
-}
+} */
