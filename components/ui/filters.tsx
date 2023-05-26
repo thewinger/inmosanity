@@ -68,8 +68,14 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
     ]
   }, [localizacionDD, dict.filters.localizacion_allValue])
 
-  let precioSaleArrayDD = createNumArray(getRoundedZeros(priceSaleDD), 50000)
-  let precioRentArrayDD = createNumArray(getRoundedZeros(priceRentDD), 100)
+  let precioSaleArrayDD = createNumArray(
+    getRoundedZeros(priceSaleDD ? priceSaleDD : 300000),
+    50000
+  )
+  let precioRentArrayDD = createNumArray(
+    getRoundedZeros(priceRentDD ? priceRentDD : 600),
+    100
+  )
   const [precioMinRentArrayDD, setPrecioMinRentArrayDD] = useState<number[]>(
     precioRentArrayDD
       ? precioRentArrayDD.slice(0, precioRentArrayDD.length - 1)
@@ -110,17 +116,6 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
         searchParams.get('operacion') === 'operacion-en-alquiler'
       ? precioMaxRentArrayDD.slice(-1).toString()
       : precioMaxSaleArrayDD.slice(-1).toString(),
-    banos:
-      searchParams.has('banos') &&
-      (searchParams.get('banos') !== null || searchParams.get('banos') !== '')
-        ? searchParams.get('banos')!
-        : undefined,
-    habitaciones:
-      searchParams.has('habitaciones') &&
-      (searchParams.get('habitaciones') !== null ||
-        searchParams.get('habitaciones') !== '')
-        ? searchParams.get('habitaciones')!
-        : undefined,
   })
 
   const bathroomsArrayDD = createNumArray(bathroomsDD, 1)
