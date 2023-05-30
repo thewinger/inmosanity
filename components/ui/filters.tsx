@@ -191,7 +191,8 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
 
   function handleFilters() {
     handleClose && handleClose()
-    router.push(`/${params.lang}/propiedades?` + createQueryString(filters))
+    router.replace(`/${params.lang}/propiedades?` + createQueryString(filters))
+    /* router.refresh() */
   }
 
   return (
