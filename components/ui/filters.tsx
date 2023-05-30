@@ -401,13 +401,15 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
         </div>
       </div>
 
-      <button
-        onClick={() => handleFilters()}
+      <a
+        aria-label={dict.filters.search_button}
+        /* onClick={() => handleFilters()} */
+        href={`/${params.lang}/propiedades?` + createQueryString(filters)}
         className='inline-flex h-10 w-full items-center justify-center gap-1 rounded-md bg-gradient-to-b  from-green-500 via-green-600 via-60% to-green-700 font-medium text-white shadow-button hover:translate-y-1 hover:shadow active:from-green-600 active:via-green-600 active:to-green-600 '
       >
         <MagnifyingGlassIcon weight='bold' className='h-5 w-5' />
         {dict.filters.search_button}
-      </button>
+      </a>
     </div>
   )
 }
