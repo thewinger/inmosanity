@@ -20,12 +20,17 @@ export async function generateMetadata({
     params.lang === 'en'
       ? 'InmoGolfBonalba | Your real estate agent in Bonalba Golf Club'
       : 'InmoGolfBonalba | Tu inmobiliaria en Club de Golf Bonalba'
+  const description =
+    params.lang === 'en'
+      ? 'InmoGolf Bonalba, your real estate agent in Bonalba Golf Club'
+      : 'Inmogolf Bonalba, tu Inmobiliaria en el campo de golf Bonalba'
 
   return {
     title: {
       default: title,
       template: 'InmoGolf Bonalba | %s',
     },
+    description: description,
   }
 }
 

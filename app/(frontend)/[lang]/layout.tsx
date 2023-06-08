@@ -18,7 +18,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'Inmogolf Bonalba',
-  description: 'Inmobiliaria en el campo de golf Bonalba',
+  /* description: 'Inmogolf Bonalba, Inmobiliaria en el campo de golf Bonalba', */
   keywords: [
     'Inmobiliaria',
     'Bonalba',
