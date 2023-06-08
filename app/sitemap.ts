@@ -11,13 +11,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const propiedades = locales!.flatMap((locale) => {
     return slugs!.map((slug) => {
       return {
-        url: `${URL}/${locale}/propiedad/${slug.slug}`,
+        url: `${URL}/${locale}/propiedad/${slug}`,
         lastModified: new Date().toISOString(),
       }
     })
   })
 
-  const routes = ['', 'aviso-legal']
+  const routes = ['', '/aviso-legal']
 
   const staticRoutes = locales!.flatMap((locale) => {
     return routes!.map((route) => {

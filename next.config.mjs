@@ -20,25 +20,6 @@ const config = {
     /// Set this to false if you want production builds to abort if there's lint errors
     ignoreDuringBuilds: process.env.VERCEL_ENV === 'production',
   },
-  async redirects() {
-    return [
-      {
-        source: '/en-alquiler',
-        destination: '/propiedades?operacion=en-alquiler',
-        permanent: true,
-      },
-      {
-        source: '/en-venta',
-        destination: '/propiedades?operacion=en-venta',
-        permanent: true,
-      },
-      {
-        source: '/obra-nueva',
-        destination: '/propiedades?operacion=obra-nueva',
-        permanent: true,
-      },
-    ]
-  },
 }
 
 export default config
