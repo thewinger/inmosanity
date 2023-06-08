@@ -15,7 +15,7 @@ export default async function Page({ params: { slug, lang } }: Props) {
   const page = await pageData
 
   if (slug !== 'aviso-legal') {
-    redirect(`/${lang}/propiedades?operacion=${slug}`)
+    redirect(`/${lang}/propiedades?operacion=operacion-${slug}`)
   }
 
   return (
