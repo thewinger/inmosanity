@@ -31,10 +31,10 @@ export const metadata: Metadata = {
   colorScheme: 'light',
   themeColor: '#16a34a',
   alternates: {
-    canonical: '/',
+    canonical: 'https://inmogolfbonalba.com/',
     languages: {
-      en: '/en',
-      es: '/es',
+      en: 'https://inmogolfbonalba.com/en',
+      es: 'https://inmogolfbonalba.com/es',
     },
   },
 }
