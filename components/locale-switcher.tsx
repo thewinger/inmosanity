@@ -20,16 +20,6 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 
-interface Filters {
-  habitaciones?: string
-  banos?: string
-  operacion: string
-  localizacion?: string
-  tipo?: string
-  precioMin?: string
-  precioMax?: string
-}
-
 type Props = {
   dict: Dict
 }
@@ -69,7 +59,7 @@ export default function LocaleSwitcher({ dict }: Props) {
         aria-label={dict.header.lang_switcher}
         className='uppercase'
       >
-        {params.lang == 'es' ? (
+        {params?.lang == 'es' ? (
           <Image src={spainFlag} width={24} height={24} alt='Idioma Español' />
         ) : (
           <Image src={ukFlag} width={24} height={24} alt='English language' />

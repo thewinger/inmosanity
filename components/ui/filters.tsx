@@ -99,23 +99,31 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
 
   const [filters, setFilters] = useState<Filters>({
     operacion:
-      searchParams.get('operacion') !== null ||
-      searchParams.get('operacion') !== ''
+      searchParams &&
+      (searchParams.get('operacion') !== null ||
+        searchParams.get('operacion') !== '')
         ? searchParams.get('operacion')!
         : 'operacion-en-venta',
-    tipo: searchParams.has('tipo') ? searchParams.get('tipo')! : 'tipo-todos',
-    localizacion: searchParams.has('localizacion')
-      ? searchParams.get('localizacion')!
-      : 'localizacion-todas',
-    precioMin: searchParams.has('precioMin')
-      ? searchParams.get('precioMin')!
-      : '0',
-    precioMax: searchParams.has('precioMax')
-      ? searchParams.get('precioMax')!
-      : searchParams.has('operacion') &&
-        searchParams.get('operacion') === 'operacion-en-alquiler'
-      ? precioMaxRentArrayDD.slice(-1).toString()
-      : precioMaxSaleArrayDD.slice(-1).toString(),
+    tipo:
+      searchParams && searchParams.has('tipo')
+        ? searchParams.get('tipo')!
+        : 'tipo-todos',
+    localizacion:
+      searchParams && searchParams.has('localizacion')
+        ? searchParams.get('localizacion')!
+        : 'localizacion-todas',
+    precioMin:
+      searchParams && searchParams.has('precioMin')
+        ? searchParams.get('precioMin')!
+        : '0',
+    precioMax:
+      searchParams && searchParams.has('precioMax')
+        ? searchParams.get('precioMax')!
+        : searchParams &&
+          searchParams.has('operacion') &&
+          searchParams.get('operacion') === 'operacion-en-alquiler'
+        ? precioMaxRentArrayDD.slice(-1).toString()
+        : precioMaxSaleArrayDD.slice(-1).toString(),
   })
 
   const bathroomsArrayDD = createNumArray(bathroomsDD, 1)
@@ -180,7 +188,8 @@ function Filters({ dict, filtersDD, handleClose }: FilterBarProps) {
 
   function handleFilters() {
     handleClose && handleClose()
-    router.push(`/${params.lang}/propiedades?` + createQueryString(filters))
+    params &&
+      router.push(`/${params.lang}/propiedades?` + createQueryString(filters))
   }
 
   return (
