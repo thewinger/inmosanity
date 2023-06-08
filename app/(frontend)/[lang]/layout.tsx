@@ -30,7 +30,6 @@ export const metadata: Metadata = {
   ],
   colorScheme: 'light',
   themeColor: '#16a34a',
-  metadataBase: new URL('https://inmogolfbonalba.com'),
   alternates: {
     canonical: '/',
     languages: {
