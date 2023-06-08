@@ -18,8 +18,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const title =
     params.lang === 'en'
-      ? 'InmoGolfBonalba | Tu real estate agent in Bonalba '
-      : 'InmoGolfBonalba | Tu inmobiliaria en Bonalba'
+      ? 'InmoGolfBonalba | Your real estate agent in Bonalba Golf Club'
+      : 'InmoGolfBonalba | Tu inmobiliaria en Club de Golf Bonalba'
 
   return {
     title: {
