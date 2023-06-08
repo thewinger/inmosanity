@@ -19,6 +19,25 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Inmogolf Bonalba',
   description: 'Inmobiliaria en el campo de golf Bonalba',
+  keywords: [
+    'Inmobiliaria',
+    'Bonalba',
+    'Alicante',
+    'Alquiler',
+    'Compra',
+    'Mutxamel',
+    'Golf',
+  ],
+  colorScheme: 'light',
+  themeColor: '#16a34a',
+  metadataBase: new URL('https://inmogolfbonalba.com'),
+  alternates: {
+    canonical: '/',
+    languages: {
+      en: '/en',
+      es: '/es',
+    },
+  },
 }
 
 type Props = {
