@@ -23,21 +23,18 @@ const config = {
   async redirects() {
     return [
       {
-        source: 'https://inmogolfbonalba.com/en-alquiler/',
-        destination:
-          'https://inmogolfbonalba.com/propiedades?operacion=en-alquiler',
+        source: '/en-alquiler',
+        destination: '/propiedades?operacion=en-alquiler',
         permanent: true,
       },
       {
-        source: 'https://inmogolfbonalba.com/en-venta/',
-        destination:
-          'https://inmogolfbonalba.com/propiedades?operacion=en-venta',
+        source: '/en-venta',
+        destination: '/propiedades?operacion=en-venta',
         permanent: true,
       },
       {
-        source: 'https://inmogolfbonalba.com/obra-nueva/',
-        destination:
-          'https://inmogolfbonalba.com/propiedades?operacion=obra-nueva',
+        source: '/obra-nueva',
+        destination: '/propiedades?operacion=obra-nueva',
         permanent: true,
       },
     ]
