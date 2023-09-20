@@ -24,10 +24,10 @@ export default function PropiedadCard({ params, dict, propiedad }: Props) {
   return (
     <Link
       key={propiedad.slug}
-      href={`${params.lang}/propiedad/${propiedad.slug}`}
+      href={`/${params.lang}/propiedad/${propiedad.slug}`}
     >
       <div className='relative isolate  flex flex-col gap-4 rounded-md bg-white pb-6 text-slate-800 shadow-md'>
-        <Pill>{propiedad.operacion.name}</Pill>
+        <Pill>{propiedad.operacion.name} - {params.lang}</Pill>
         <div className='relative aspect-[2.78/2] w-full overflow-hidden rounded-t-md '>
           {propiedad.coverImage && (
             <Image
