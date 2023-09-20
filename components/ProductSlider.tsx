@@ -7,7 +7,7 @@ import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 import { Image as SanityImage } from 'sanity'
 import Shimmer from './Shimmer'
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from './ui/dialog'
+import { Dialog, DialogContent, DialogTrigger } from './ui/dialog'
 
 type PropType = {
   slides: SanityImage[]
