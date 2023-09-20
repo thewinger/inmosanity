@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 import { Image as SanityImage } from 'sanity'
 import Shimmer from './Shimmer'
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from './ui/dialog'
 
 type PropType = {
   slides: SanityImage[]
@@ -62,15 +63,29 @@ const ProductSlider = ({ slides, vertical }: PropType) => {
             {formattedSlides.map((slide, index) => (
               <div className='embla__slide min-w-full' key={index}>
                 <div className='embla__slide__inner relative aspect-[3/2] h-full overflow-hidden rounded'>
-                  <Image
-                    className='embla__slide__img relative block rounded object-cover'
-                    src={slide.sourceUrl}
-                    alt={slide.title ? slide.title : ''}
-                    fill
-                    placeholder='blur'
-                    blurDataURL={Shimmer}
-                    priority
-                  />
+                  <Dialog >
+                    <DialogTrigger>
+                      <Image
+                        className='embla__slide__img relative block rounded object-cover'
+                        src={slide.sourceUrl}
+                        alt={slide.title ? slide.title : ''}
+                        fill
+                        placeholder='blur'
+                        blurDataURL={Shimmer}
+                        priority
+                      />
+                    </DialogTrigger>
+                    <DialogContent className='w-full h-auto self-center aspect-[3/2] lg:max-w-4xl'>
+                      <Image
+                        className='embla__slide__img relative block rounded object-cover'
+                        src={slide.sourceUrl}
+                        alt={slide.title ? slide.title : ''}
+                        fill
+                        placeholder='blur'
+                        blurDataURL={Shimmer}
+                      />
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </div>
             ))}
@@ -101,7 +116,7 @@ const ProductSlider = ({ slides, vertical }: PropType) => {
                 className={clsx(
                   'embla__slide embla__slide--thumb aspect-[3/2] w-1/5 shrink-0 rounded transition-opacity',
                   index == selectedIndex &&
-                    'is-selected border-2 border-green-500 opacity-100',
+                  'is-selected border-2 border-green-500 opacity-100',
                   !(index == selectedIndex) && 'opacity-75',
                   !vertical && 'w-full'
                 )}

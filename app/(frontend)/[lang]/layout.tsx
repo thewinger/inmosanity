@@ -48,7 +48,7 @@ export default async function RootLayout({ children, params }: Props) {
   const dict = await getDictionary(params.lang)
 
   return (
-    <html lang={params.lang} className={inter.variable}>
+    <html lang={params.lang} className={`${inter.variable}`}>
       <body>
         <div className='flex min-h-screen flex-col'>
           <Header params={params} dict={dict} />
