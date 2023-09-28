@@ -132,7 +132,7 @@ export default async function Propiedad({
           </div>
 
           <div className='grid grid-flow-col grid-rows-1 border-y border-zinc-300 py-4'>
-            {propiedad.bedrooms && (
+            {propiedad.bedrooms.length > 0 && (
               <div className='flex items-center justify-center gap-1'>
                 <BedIcon size={20} weight='duotone' color='currentColor' />
                 <span className='text-md  text-zinc-800'>
@@ -141,7 +141,7 @@ export default async function Propiedad({
               </div>
             )}
 
-            {propiedad.bathrooms && (
+            {propiedad.bathrooms.length > 0 && (
               <div className='flex items-center justify-center gap-1'>
                 <BathtubIcon size={20} weight='duotone' color='currentColor' />
                 <span className='text-md  text-zinc-800'>
