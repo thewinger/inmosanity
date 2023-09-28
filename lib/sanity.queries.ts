@@ -41,7 +41,7 @@ export const searchPropiedades = groq`
 `
 
 export const propiedadSlugsQuery = groq`
-  *[_type == "propiedad" && defined(slug.current)][].slug.current
+  *[_type == "propiedad" && defined(slug.current)]|order(_createdAt desc)[].slug.current
 `
 
 export const propiedadBySlugQuery = groq`

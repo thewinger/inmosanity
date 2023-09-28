@@ -139,6 +139,7 @@ export async function getAllPropiedadesSlug(): Promise<
 > {
   if (client) {
     const slugs: string[] = await client.fetch(propiedadSlugsQuery)
+    console.log(slugs)
     return slugs.map((slug) => ({ slug }))
   }
   return []
