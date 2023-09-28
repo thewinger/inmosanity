@@ -30,7 +30,7 @@ export function Footer({ dict, params }: Props) {
               }}
             />
             <Link
-              href={`${params.lang}/aviso-legal`}
+              href={`/${params.lang}/aviso-legal`}
               className='mt-4 flex w-fit items-center gap-2 rounded-md bg-green-950/30 px-4 py-1 hover:bg-green-900 lg:justify-start'
             >
               <span className='nderline py-2 text-sm '>
