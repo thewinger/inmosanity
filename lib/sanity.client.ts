@@ -23,8 +23,10 @@ export const client = createClient({ apiVersion, dataset, projectId, useCdn })
 
 export async function getFrontPage(lang: Locale): Promise<FrontPage> {
   if (client) {
-    console.log()
-    return (await client.fetch(frontPageQuery, { lang })) || ({} as any)
+    return (
+      (await client.fetch(frontPageQuery, { lang }, { cache: 'no-store' })) ||
+      ({} as any)
+    )
   }
 
   return {} as any
