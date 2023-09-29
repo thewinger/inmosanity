@@ -1,6 +1,7 @@
 'use client'
 
 import {
+  ArrowLeft,
   Bathtub,
   Bed,
   Buildings,
@@ -23,6 +24,10 @@ import {
   WhatsappLogo,
   X,
 } from '@phosphor-icons/react'
+
+export const ArrowLeftIcon = (props: IconProps) => {
+  return <ArrowLeft {...props} />
+}
 
 export const PhoneIcon = (props: IconProps) => {
   return <Phone {...props} />

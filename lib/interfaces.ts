@@ -25,12 +25,12 @@ export interface Propiedad {
   _id: string
   title: string
   slug: string
-  bathrooms: string
-  bedrooms: string
+  bathrooms: number
+  bedrooms: number
   localizacion: string
   localizacionPadre?: Parent
   tipo: string
-  price: string
+  price: number
   operacion: FilterString
   coverImage: Image
   images?: Image[]

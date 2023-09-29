@@ -1,4 +1,5 @@
 import ProductSlider from '@/components/ProductSlider'
+import BackButton from '@/components/ui/BackButton'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,7 +33,16 @@ export default async function Propiedad({
   const propiedad = await propiedadData
 
   return (
-    <div className=' py-12 sm:py-12'>
+    <div className=' py-4 sm:py-4'>
+      <div
+        className={clsx(
+          'relative mx-auto max-w-5xl lg:pb-4 ',
+          propiedad.images && propiedad.images.length == 0 && 'pt-4'
+        )}
+      >
+        <BackButton>{dict.atras}</BackButton>
+      </div>
+
       <div
         className={clsx(
           'relative mx-auto mb-24 grid max-w-5xl auto-rows-auto grid-cols-1 gap-4 bg-white pb-12 text-zinc-800 shadow-md lg:grid-cols-2 lg:gap-y-10 lg:px-6 lg:pt-4',
@@ -132,7 +142,7 @@ export default async function Propiedad({
           </div>
 
           <div className='grid grid-flow-col grid-rows-1 border-y border-zinc-300 py-4'>
-            {propiedad.bedrooms && propiedad.bedrooms.length > 0 && (
+            {(propiedad.bedrooms || propiedad.bedrooms === 0) && (
               <div className='flex items-center justify-center gap-1'>
                 <BedIcon size={20} weight='duotone' color='currentColor' />
                 <span className='text-md  text-zinc-800'>
@@ -141,7 +151,7 @@ export default async function Propiedad({
               </div>
             )}
 
-            {propiedad.bathrooms && propiedad.bathrooms.length > 0 && (
+            {(propiedad.bathrooms || propiedad.bathrooms === 0) && (
               <div className='flex items-center justify-center gap-1'>
                 <BathtubIcon size={20} weight='duotone' color='currentColor' />
                 <span className='text-md  text-zinc-800'>
