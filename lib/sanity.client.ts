@@ -128,7 +128,14 @@ export async function getSearchProperties(
 
     /* console.log(query) */
 
-    return await client.fetch(query, { lang }, { cache: 'no-store' })
+    const propiedades = await client.fetch(
+      query,
+      { lang },
+      { cache: 'no-store' }
+    )
+    console.table(propiedades)
+
+    return propiedades
   }
 
   return {} as any
@@ -139,7 +146,7 @@ export async function getAllPropiedadesSlug(): Promise<
 > {
   if (client) {
     const slugs: string[] = await client.fetch(propiedadSlugsQuery)
-    console.log(slugs)
+    console.log(`propiedades: ${slugs}`)
     return slugs.map((slug) => ({ slug }))
   }
   return []
@@ -150,9 +157,13 @@ export async function getPropiedadBySlug(
   slug: string
 ): Promise<Propiedad> {
   if (client) {
-    return (
-      (await client.fetch(propiedadBySlugQuery, { slug, lang })) || ({} as any)
+    const propiedad: Propiedad = await client.fetch(
+      propiedadBySlugQuery,
+      { slug, lang },
+      { cache: 'no-store' } || ({} as any)
     )
+    console.log(propiedad)
+    return propiedad
   }
 
   return {} as any

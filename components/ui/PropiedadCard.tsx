@@ -77,7 +77,7 @@ export default function PropiedadCard({ params, dict, propiedad }: Props) {
             </div>
 
             <div className='text-md grid grid-flow-col grid-rows-1 border-t border-slate-300 pt-4'>
-              {(propiedad.bedrooms || propiedad.bedrooms === 0) && (
+              {!!propiedad.bedrooms && (
                 <div className='flex items-center justify-center gap-1 text-slate-500'>
                   <BedIcon size={20} weight='duotone' />
                   <span className='text-slate-700'>{propiedad.bedrooms}</span>
