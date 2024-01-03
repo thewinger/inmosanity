@@ -11,11 +11,12 @@ const Dialog = DialogPrimitive.Root
 const DialogTrigger = DialogPrimitive.Trigger
 
 const DialogPortal = ({
-  className,
+  // className,
   children,
   ...props
 }: DialogPrimitive.DialogPortalProps) => (
-  <DialogPrimitive.Portal className={cn(className)} {...props}>
+  // <DialogPrimitive.Portal className={cn(className)} {...props}>
+  <DialogPrimitive.Portal>
     <div className='fixed inset-0 z-50 flex items-start justify-center sm:items-center'>
       {children}
     </div>
@@ -50,13 +51,11 @@ const DialogClose = React.forwardRef<
     )}
     {...props}
   >
-
-        <XIcon size={16} />
-        <span className='sr-only'>Close</span>
-  </DialogPrimitive.Close >
+    <XIcon size={16} />
+    <span className='sr-only'>Close</span>
+  </DialogPrimitive.Close>
 ))
 DialogClose.displayName = DialogPrimitive.Close.displayName
-
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
@@ -130,11 +129,11 @@ DialogDescription.displayName = DialogPrimitive.Description.displayName
 
 export {
   Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
   DialogClose,
+  DialogContent,
   DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 }

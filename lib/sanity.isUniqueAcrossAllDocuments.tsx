@@ -2,7 +2,7 @@
 // have it on the `slug` field at the root
 export async function isUniqueAcrossAllDocuments(slug: string, context: any) {
   const { document, getClient } = context
-  const client = getClient({ apiVersion: '2022-12-07' })
+  const client = getClient({ apiVersion: '2023-01-01' })
   const id = document._id.replace(/^drafts\./, '')
   const params = {
     draft: `drafts.${id}`,

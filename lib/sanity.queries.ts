@@ -40,8 +40,12 @@ export const searchPropiedades = groq`
 }| order(_createdAt desc)
 `
 
-export const propiedadSlugsQuery = groq`
+export const propiedadSlugsQueryBak = groq`
   *[_type == "propiedad" && defined(slug.current)]|order(_createdAt desc)[].slug.current
+`
+
+export const propiedadSlugsQuery = groq`
+  *[_type == "propiedad" && !(_id in path("drafts.**")) && defined(slug.current)]|order(_createdAt desc)[].slug.current
 `
 
 export const propiedadBySlugQuery = groq`

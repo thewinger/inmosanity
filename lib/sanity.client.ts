@@ -28,7 +28,7 @@ export async function getFrontPage(lang: Locale): Promise<FrontPage> {
       { lang },
       { cache: 'no-store' }
     )
-    console.log({ latest })
+    // console.log({ latest })
     return {
       featured,
       latest,
@@ -128,14 +128,14 @@ export async function getSearchProperties(
 
     /* console.log(query) */
 
-    const propiedades = await client.fetch(
+    /* const propiedades = await client.fetch(
       query,
       { lang },
       { cache: 'no-store' }
     )
-    console.table(propiedades)
+    console.table(propiedades) */
 
-    return propiedades
+    return await client.fetch(query, { lang }, { cache: 'no-store' })
   }
 
   return {} as any
@@ -146,7 +146,8 @@ export async function getAllPropiedadesSlug(): Promise<
 > {
   if (client) {
     const slugs: string[] = await client.fetch(propiedadSlugsQuery)
-    console.log(`propiedades: ${slugs}`)
+    console.log(`propiedades publicadas: ${slugs}`)
+    console.log(`length: ${slugs.length}`)
     return slugs.map((slug) => ({ slug }))
   }
   return []
@@ -157,13 +158,13 @@ export async function getPropiedadBySlug(
   slug: string
 ): Promise<Propiedad> {
   if (client) {
-    const propiedad: Propiedad = await client.fetch(
-      propiedadBySlugQuery,
-      { slug, lang },
-      { cache: 'no-store' } || ({} as any)
+    return (
+      (await client.fetch(
+        propiedadBySlugQuery,
+        { slug, lang },
+        { cache: 'no-store' }
+      )) || ({} as any)
     )
-    console.log(propiedad)
-    return propiedad
   }
 
   return {} as any
@@ -175,6 +176,7 @@ export async function getAllPagesSlug() {
     return slugs
   }
 }
+
 export async function getPageBySlug(slug: string, lang: Locale) {
   if (client) {
     return (await client.fetch(pageBySlugQuery, { slug, lang })) || ({} as any)
