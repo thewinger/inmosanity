@@ -12,7 +12,7 @@ import { EnvelopeSimpleIcon, PhoneIcon } from './ui/icons'
 import { Locale } from '@/i18n-config'
 import { Dict } from '@/lib/interfaces'
 import { Suspense } from 'react'
-import logo from '/public/Logo_Inmogolf.png'
+import logo from '@/public/Logo_Inmogolf.png'
 
 type Props = {
   params: { lang: Locale }

@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const config = {
-  swcMinify: true,
   images: {
     remotePatterns: [
       { hostname: 'cdn.sanity.io' },
