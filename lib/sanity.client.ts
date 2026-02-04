@@ -42,14 +42,14 @@ export async function getFiltersDropdownValues(
   lang: Locale
 ): Promise<FiltersDD> {
   if (client) {
-    const bathroomsData = client.fetch(bathroomsDD)
-    const bedroomsData = client.fetch(bedroomsDD)
-    const priceRentData = client.fetch(maxPriceRentDD)
-    const priceSaleData = client.fetch(maxPriceSaleDD)
-    const localizacionData = client.fetch(localizacionDD)
-    const tipoData = client.fetch(tipoDD, { lang })
-    const operacionData = client.fetch(operacionDD, { lang })
-    const totalData = client.fetch(total)
+    const bathroomsData = client.fetch(bathroomsDD, {}, { next: { revalidate: 60 } })
+    const bedroomsData = client.fetch(bedroomsDD, {}, { next: { revalidate: 60 } })
+    const priceRentData = client.fetch(maxPriceRentDD, {}, { next: { revalidate: 60 } })
+    const priceSaleData = client.fetch(maxPriceSaleDD, {}, { next: { revalidate: 60 } })
+    const localizacionData = client.fetch(localizacionDD, {}, { next: { revalidate: 60 } })
+    const tipoData = client.fetch(tipoDD, { lang }, { next: { revalidate: 60 } })
+    const operacionData = client.fetch(operacionDD, { lang }, { next: { revalidate: 60 } })
+    const totalData = client.fetch(total, {}, { next: { revalidate: 60 } })
 
     const [
       bathroomsValues,
@@ -145,7 +145,7 @@ export async function getAllPropiedadesSlug(): Promise<
   Pick<Propiedad, 'slug'>[]
 > {
   if (client) {
-    const slugs: string[] = await client.fetch(propiedadSlugsQuery)
+    const slugs: string[] = await client.fetch(propiedadSlugsQuery, {}, { next: { revalidate: 60 } })
     console.log(`propiedades publicadas: ${slugs}`)
     console.log(`length: ${slugs.length}`)
     return slugs.map((slug) => ({ slug }))
@@ -172,14 +172,14 @@ export async function getPropiedadBySlug(
 
 export async function getAllPagesSlug() {
   if (client) {
-    const slugs: string[] = await client.fetch(pageSlugsQuery)
+    const slugs: string[] = await client.fetch(pageSlugsQuery, {}, { next: { revalidate: 60 } })
     return slugs
   }
 }
 
 export async function getPageBySlug(slug: string, lang: Locale) {
   if (client) {
-    return (await client.fetch(pageBySlugQuery, { slug, lang })) || ({} as any)
+    return (await client.fetch(pageBySlugQuery, { slug, lang }, { next: { revalidate: 60 } })) || ({} as any)
   }
 
   return {} as any
