@@ -4,13 +4,20 @@ import { PortableText } from '@portabletext/react'
 import { redirect } from 'next/navigation'
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string
     lang: Locale
-  }
+  }>
 }
 
-export default async function Page({ params: { slug, lang } }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params;
+
+  const {
+    slug,
+    lang
+  } = params;
+
   const pageData = getPageBySlug(slug, lang)
   const page = await pageData
 

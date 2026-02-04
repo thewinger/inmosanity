@@ -10,13 +10,15 @@ import {
 import clsx from 'clsx'
 
 type Props = {
-  params: {
+  params: Promise<{
     lang: Locale
-  }
-  searchParams: { [key: string]: string | string[] }
+  }>
+  searchParams: Promise<{ [key: string]: string | string[] }>
 }
 
-export default async function PropiedadesPage({ params, searchParams }: Props) {
+export default async function PropiedadesPage(props: Props) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const dict = await getDictionary(params.lang)
   const filtersDD = await getFiltersDropdownValues(params.lang)
   const propiedades = await getSearchProperties(

@@ -11,11 +11,12 @@ function HeroFallBack() {
   return <>placeholder</>
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { lang: Locale }
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ lang: Locale }>
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const title =
     params.lang === 'en'
       ? 'InmoGolfBonalba | Your real estate agent in Bonalba Golf Club'
@@ -34,11 +35,12 @@ export async function generateMetadata({
   }
 }
 
-export default async function FrontPage({
-  params,
-}: {
-  params: { lang: Locale }
-}) {
+export default async function FrontPage(
+  props: {
+    params: Promise<{ lang: Locale }>
+  }
+) {
+  const params = await props.params;
   const dict = await getDictionary(params.lang)
   const { featured, latest } = await getFrontPage(params.lang)
   const filtersDD = await getFiltersDropdownValues(params.lang)

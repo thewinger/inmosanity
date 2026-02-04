@@ -41,10 +41,16 @@ export const metadata: Metadata = {
 
 type Props = {
   children?: ReactNode
-  params: { lang: Locale }
+  params: Promise<{ lang: Locale }>
 }
 
-export default async function RootLayout({ children, params }: Props) {
+export default async function RootLayout(props: Props) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   const dict = await getDictionary(params.lang)
 
   return (

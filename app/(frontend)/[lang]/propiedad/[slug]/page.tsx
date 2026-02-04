@@ -23,11 +23,12 @@ import { formatEUR } from '@/lib/utils'
 import clsx from 'clsx'
 import { getAllPropiedadesSlug, getPropiedadBySlug } from 'lib/sanity.client'
 
-export default async function Propiedad({
-  params,
-}: {
-  params: { lang: Locale; slug: string }
-}) {
+export default async function Propiedad(
+  props: {
+    params: Promise<{ lang: Locale; slug: string }>
+  }
+) {
+  const params = await props.params;
   const dict = await getDictionary(params.lang)
   const propiedadData = getPropiedadBySlug(params.lang, params.slug)
   const propiedad = await propiedadData
