@@ -4,7 +4,7 @@
     "build": "next build",
     "dev": "next dev",
     "format": "yarn prettier --write . --ignore-path .gitignore",
-    "lint": "next lint -- --ignore-path .gitignore",
+    "lint": "next lint --ignore-path .gitignore",
     "lint:fix": "yarn run format && yarn run lint -- --fix",
     "start": "next start",
     "type-check": "tsc --noEmit"
