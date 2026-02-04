@@ -1,27 +1,11 @@
-'use client'
+import { NextStudio } from 'next-sanity/studio'
+import config from '../../../sanity.config'
 
-import dynamic from 'next/dynamic'
+export const dynamic = 'force-static'
 
-const NextStudio = dynamic(() => import('next-sanity/studio').then((mod) => mod.NextStudio), {
-  ssr: false,
-  loading: () => (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#101112',
-        color: '#fff',
-        fontFamily: 'system-ui, sans-serif',
-      }}
-    >
-      Loading Studio...
-    </div>
-  ),
-})
+// Metadata exports from next-sanity/studio caused build errors in previous attempts
+// Using hardcoded values instead (see layout.tsx for metadata/viewport)
 
 export default function StudioPage() {
-  const config = require('sanity.config').default
   return <NextStudio config={config} />
 }

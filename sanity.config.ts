@@ -1,5 +1,7 @@
+'use client'
+
 /**
- * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
+ * This config is used to set up Sanity Studio that's mounted on the `/studio/[[...index]]` route
  */
 // see https://www.sanity.io/docs/api-versioning for how versioning works
 import { visionTool } from '@sanity/vision'

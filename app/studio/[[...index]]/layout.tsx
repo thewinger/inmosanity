@@ -1,8 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 
-// Force static generation to avoid serverless timeout
-export const dynamic = 'force-static'
-
 export const metadata: Metadata = {
   title: 'Sanity Studio',
   robots: 'noindex, nofollow',
