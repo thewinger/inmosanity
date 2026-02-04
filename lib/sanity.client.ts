@@ -26,7 +26,7 @@ export async function getFrontPage(lang: Locale): Promise<FrontPage> {
     const { featured, latest } = await client.fetch(
       frontPageQuery,
       { lang },
-      { cache: 'no-store' }
+      { next: { revalidate: 60 } }
     )
     // console.log({ latest })
     return {
@@ -135,7 +135,7 @@ export async function getSearchProperties(
     )
     console.table(propiedades) */
 
-    return await client.fetch(query, { lang }, { cache: 'no-store' })
+    return await client.fetch(query, { lang }, { next: { revalidate: 60 } })
   }
 
   return {} as any
@@ -162,7 +162,7 @@ export async function getPropiedadBySlug(
       (await client.fetch(
         propiedadBySlugQuery,
         { slug, lang },
-        { cache: 'no-store' }
+        { next: { revalidate: 60 } }
       )) || ({} as any)
     )
   }
