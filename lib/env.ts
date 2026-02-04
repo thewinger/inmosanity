@@ -15,7 +15,9 @@ export const readToken = process.env.SANITY_API_READ_TOKEN
 
 export const previewSecretDocumentId: `${string}.${string}` = 'preview.secret'
 
-export const useCdn = true
+// Disable CDN to ensure fresh data after webhook revalidation
+// Sanity CDN caches responses ~60s independently of Next.js cache
+export const useCdn = false
 
 function assertValue<T>(v: T | undefined, errorMessage: string): T {
   if (v === undefined) {
