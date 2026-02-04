@@ -1,5 +1,5 @@
-import { ChaoticOrbit } from '@uiball/loaders'
-import { Suspense } from 'react'
+'use client'
+import { Suspense, useEffect } from 'react'
 
 export default function SearchLayout({
   children,
@@ -10,5 +10,11 @@ export default function SearchLayout({
 }
 
 const Fallback = () => {
-  return <ChaoticOrbit size={25} speed={1.5} color='black' />
+  useEffect(() => {
+    import('ldrs').then(({ ring }) => {
+      ring.register()
+    })
+  }, [])
+
+  return <l-ring size="25" speed="1.5" color="black"></l-ring>
 }
