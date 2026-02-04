@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 
 type Props = {
   children?: ReactNode
-  params: Promise<{ lang: Locale }>
+  params: Promise<{ lang: string }>
 }
 
 export default async function RootLayout(props: Props) {
@@ -51,15 +51,16 @@ export default async function RootLayout(props: Props) {
     children
   } = props;
 
-  const dict = await getDictionary(params.lang)
+  const dict = await getDictionary(params.lang as Locale)
+  const typedParams = { lang: params.lang as Locale }
 
   return (
     <html lang={params.lang} className={`${inter.variable}`}>
       <body>
         <div className='flex min-h-screen flex-col'>
-          <Header params={params} dict={dict} />
+          <Header params={typedParams} dict={dict} />
           <main className='relative grow bg-zinc-50'>{children}</main>
-          <Footer params={params} dict={dict} />
+          <Footer params={typedParams} dict={dict} />
           <TailwindIndicator />
         </div>
       </body>
