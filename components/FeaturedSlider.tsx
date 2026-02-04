@@ -91,6 +91,7 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
                     placeholder='blur'
                     blurDataURL={Shimmer}
                     fill
+                    sizes="(max-width: 1024px) 100vw, 75vw"
                   />
                 )}
               </Link>
@@ -137,6 +138,7 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
                     src={slide.sourceUrl}
                     alt={slide.title ? slide.title : ''}
                     fill
+                    sizes="(max-width: 1024px) 20vw, 160px"
                   />
                 </button>
               </div>

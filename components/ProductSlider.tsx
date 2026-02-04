@@ -70,6 +70,7 @@ const ProductSlider = ({ slides, vertical }: PropType) => {
                         src={slide.sourceUrl}
                         alt={slide.title ? slide.title : ''}
                         fill
+                        sizes="(max-width: 1024px) 100vw, 75vw"
                         placeholder='blur'
                         blurDataURL={Shimmer}
                         priority
@@ -81,6 +82,7 @@ const ProductSlider = ({ slides, vertical }: PropType) => {
                         src={slide.sourceUrl}
                         alt={slide.title ? slide.title : ''}
                         fill
+                        sizes="(max-width: 1024px) 90vw, 80vw"
                         placeholder='blur'
                         blurDataURL={Shimmer}
                       />
@@ -131,6 +133,7 @@ const ProductSlider = ({ slides, vertical }: PropType) => {
                     src={slide.sourceUrl}
                     alt={slide.title ? slide.title : ''}
                     fill
+                    sizes="(max-width: 1024px) 20vw, 160px"
                     priority
                   />
                 </button>

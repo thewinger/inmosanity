@@ -1,4 +1,12 @@
 {
+  "error": {
+    "not_found_title": "Page not found",
+    "not_found_message": "Could not find the resource you're looking for.",
+    "error_title": "Something went wrong!",
+    "error_message": "An unexpected error occurred.",
+    "try_again": "Try again",
+    "go_home": "Go home"
+  },
   "header": {
     "email": "Contact via email",
     "telefono": "Contact phone numbers",

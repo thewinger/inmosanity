@@ -1,4 +1,12 @@
 {
+  "error": {
+    "not_found_title": "Página no encontrada",
+    "not_found_message": "No hemos podido encontrar el recurso que buscas.",
+    "error_title": "¡Algo salió mal!",
+    "error_message": "Ha ocurrido un error inesperado.",
+    "try_again": "Intentar de nuevo",
+    "go_home": "Volver al inicio"
+  },
   "header": {
     "email": "Contactar por correo",
     "telefono": "Teléfonos de contacto",

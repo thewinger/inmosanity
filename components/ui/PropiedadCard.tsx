@@ -34,6 +34,7 @@ export default function PropiedadCard({ params, dict, propiedad }: Props) {
               src={urlForImage(propiedad.coverImage).url()}
               alt={propiedad.title}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           )}
         </div>
