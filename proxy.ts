@@ -20,6 +20,12 @@ function getLocale(request: NextRequest): string | undefined {
 
 export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname
+
+  // Early return for studio routes - critical for avoiding serverless timeout
+  if (pathname.startsWith('/studio')) {
+    return
+  }
+
   const searchParams = request.nextUrl.searchParams
   const newSearchParams = new URLSearchParams()
 
