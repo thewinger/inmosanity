@@ -18,6 +18,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'Inmogolf Bonalba',
+
   /* description: 'Inmogolf Bonalba, Inmobiliaria en el campo de golf Bonalba', */
   keywords: [
     'Inmobiliaria',
@@ -28,15 +29,14 @@ export const metadata: Metadata = {
     'Mutxamel',
     'Golf',
   ],
-  colorScheme: 'light',
-  themeColor: '#16a34a',
+
   alternates: {
     canonical: 'https://inmogolfbonalba.com/',
     languages: {
       en: 'https://inmogolfbonalba.com/en',
       es: 'https://inmogolfbonalba.com/es',
     },
-  },
+  }
 }
 
 type Props = {
@@ -60,3 +60,8 @@ export default async function RootLayout({ children, params }: Props) {
     </html>
   )
 }
+
+export const viewport = {
+  colorScheme: 'light',
+  themeColor: '#16a34a'
+};
