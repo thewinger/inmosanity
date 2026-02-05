@@ -21,7 +21,7 @@ export default function NotFound() {
         No hemos podido encontrar el recurso que buscas.
       </p>
       <p className="mt-1 max-w-md text-sm text-zinc-500">
-        Could not find the resource you're looking for.
+        Could not find the resource you&apos;re looking for.
       </p>
       <Link
         href="/"

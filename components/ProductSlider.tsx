@@ -39,8 +39,15 @@ const ProductSlider = ({ slides, vertical }: PropType) => {
 
   useEffect(() => {
     if (!embla) return
-    onSelect()
+    // Subscribe to events - 'init' handles initial state, 'select' handles user interaction
+    embla.on('init', onSelect)
+    embla.on('reInit', onSelect)
     embla.on('select', onSelect)
+    return () => {
+      embla.off('init', onSelect)
+      embla.off('reInit', onSelect)
+      embla.off('select', onSelect)
+    }
   }, [embla, onSelect])
 
   const formattedSlides = slides.map((slide) => {
